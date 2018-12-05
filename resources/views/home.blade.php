@@ -1,23 +1,37 @@
-@extends('layouts.app')
+@extends('layouts.argon')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+    <!-- Sidebar -->
+    @include('partials.sidebar')
 
-                    You are logged in!
+    <!-- Main content -->
+    <div class="main-content">
+        @include('partials.navbar')
+        @include('partials.header')
+        <div class="container-fluid mt--7">
+            <div class="row">
+                <div class="col-xl-4">
+                    @component('partials.cards.card')
+                        @slot('title') Student List @endslot
+                        @slot('body')
+                            <div class="card-body">
+                                <p>Students here...</p>
+                            </div>
+                        @endslot
+                    @endcomponent
+                </div>
+                <div class="col-xl-8">
+                    @component('partials.cards.card')
+                        @slot('title') Latest Concerns @endslot
+                        @slot('body')
+                            @include('partials.tables')
+                        @endslot
+                    @endcomponent
                 </div>
             </div>
+            @include('partials.footer')
         </div>
     </div>
-</div>
+
 @endsection

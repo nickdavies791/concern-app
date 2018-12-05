@@ -78,7 +78,10 @@
                 </li>
             </ul>
 
-            <button type="button" class="mt-3 btn btn-outline-primary">Sign out</button>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="mt-3 btn btn-outline-primary btn-block">Sign out</button>
+            </form>
 
         </div>
     </div>

@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/blank', function () {
+    return view('partials.blank');
+});
+
 Auth::routes([
     'register' => false,
     'reset' => false

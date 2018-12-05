@@ -13,3 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
+
+mix.js('resources/js/argon.min.js', 'public/js');
+mix.copyDirectory('resources/images', 'public/images');
+mix.copyDirectory('resources/fonts', 'public/fonts');

@@ -19,4 +19,11 @@ class Concern extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+
+    /**
+    * return students associated with a concern
+    */
+    public function students(){
+        return $this->hasMany(Student::class);
+    }
 }

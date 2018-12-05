@@ -13,9 +13,15 @@ class Group extends Model
     protected $guarded = [];
 
     /**
+    * Disable created_at and updated_at fields.
+    * @var boolean
+    */
+    public $timestamps = false;
+
+    /**
     * returns the users of a particular group
     */
     public function users(){
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class);
     }
 }

@@ -6,7 +6,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand pt-0" href="#">
+        <a class="navbar-brand pt-0" href="{{ route('home') }}">
             <img src="{{ asset('images/clpt-logo.svg') }}" class="navbar-brand-img" alt="...">
         </a>
         <!-- Collapse -->
@@ -15,7 +15,7 @@
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        <a href="./index.html">
+                        <a href="{{ route('home') }}">
                             <img src="{{ asset('images/clpt-logo.svg') }}">
                         </a>
                     </div>
@@ -42,7 +42,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('home') }}">
                         <i class="ni ni-tv-2 text-primary"></i> Dashboard
                     </a>
                 </li>
@@ -50,7 +50,7 @@
 
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="#">
                         <i class="ni ni-collection text-red"></i> Report a Concern
                     </a>
                 </li>

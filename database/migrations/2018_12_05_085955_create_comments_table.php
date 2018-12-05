@@ -16,11 +16,9 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id')->index();
             $table->unsignedInteger('concern_id')->index();
-            //$table->unsignedInteger('group_id')->index();
             $table->string('title');
             $table->text('comment');
             $table->text('action_taken');
-            $table->datetime('resolved_on')->nullable();
             $table->timestamps();
         });
     }

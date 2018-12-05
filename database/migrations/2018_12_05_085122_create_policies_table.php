@@ -13,7 +13,7 @@ class CreatePoliciesTable extends Migration
      */
     public function up()
     {
-        Schema::table('policies', function (Blueprint $table) {
+        Schema::create('policies', function (Blueprint $table) {
             $table->increments('id')->index();
             $table->string('name');
             $table->string('file_path');

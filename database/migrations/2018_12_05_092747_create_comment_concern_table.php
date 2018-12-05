@@ -13,7 +13,7 @@ class CreateCommentConcernTable extends Migration
      */
     public function up()
     {
-        Schema::table('comment_concern', function (Blueprint $table) {
+        Schema::create('comment_concern', function (Blueprint $table) {
             $table->increments('id')->index();
             $table->unsignedInteger('concern_id');
             $table->unsignedInteger('comment_id');

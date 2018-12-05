@@ -13,7 +13,7 @@ class CreateStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('students', function (Blueprint $table) {
+        Schema::create('students', function (Blueprint $table) {
             $table->increments('id')->index();
             $table->integer('admission_number')->unique();
             $table->string('upn')->unique();
@@ -21,7 +21,7 @@ class CreateStudentsTable extends Migration
             $table->string('surname');
             $table->integer('year_group');
             $table->date('birth_date');
-            $table->increments();
+            $table->timestamps();
         });
     }
 

@@ -13,7 +13,7 @@ class CreateConcernsTable extends Migration
      */
     public function up()
     {
-        Schema::table('concerns', function (Blueprint $table) {
+        Schema::create('concerns', function (Blueprint $table) {
             $table->increments('id')->index();
             $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('student_id')->index();

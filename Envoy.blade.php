@@ -47,7 +47,13 @@
 @task('git:pull')
     cd {{ $project_directory }}/{{ $project }};
     git checkout {{ $branch }};
+    git reset --hard;
     git pull origin {{ $branch }};
+@endtask
+
+@task('git:reset')
+    cd {{ $project_directory }}/{{ $project }};
+    git reset --hard
 @endtask
 
 @task('permissions:set')

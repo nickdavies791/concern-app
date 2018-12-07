@@ -13,6 +13,7 @@ $factory->define(App\Concern::class, function (Faker $faker) {
         'group_id' => function(){
             return (Group::inRandomOrder()->first())->id;
         },
+        'title' => $faker->sentence(),
         'resolved_on' => function() use($faker){
             $coin = $faker->boolean($chanceOfGettingTrue = 50);
 

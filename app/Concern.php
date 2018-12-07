@@ -24,6 +24,7 @@ class Concern extends Model
     * return students associated with a concern
     */
     public function students(){
-        return $this->hasMany(Student::class);
+        return $this->belongsToMany(Student::class);
     }
+
 }

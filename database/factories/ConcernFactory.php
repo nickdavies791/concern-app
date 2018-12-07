@@ -10,9 +10,6 @@ $factory->define(App\Concern::class, function (Faker $faker) {
         'user_id' => function(){
             return (User::inRandomOrder()->first())->id;
         },
-        'student_id' => function(){
-            return (Student::inRandomOrder()->first())->id;
-        },
         'group_id' => function(){
             return (Group::inRandomOrder()->first())->id;
         },

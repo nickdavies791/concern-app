@@ -8,7 +8,6 @@ $factory->define(App\Comment::class, function (Faker $faker) {
         'concern_id' => function(){
             return (Concern::inRandomOrder()->first())->id;
         },
-        'title' => $faker->sentence(),
         'comment' => $faker->paragraph(),
         'action_taken' => $faker->paragraph()
     ];

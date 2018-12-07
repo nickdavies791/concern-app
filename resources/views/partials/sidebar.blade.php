@@ -50,6 +50,11 @@
 
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('concerns.index') }}">
+                        <i class="ni ni-ungroup text-success"></i> View All Concerns
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="ni ni-collection text-red"></i> Report a Concern
                     </a>

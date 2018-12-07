@@ -15,10 +15,10 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id')->index();
-            $table->integer('admission_number')->unique();
+            $table->string('admission_number')->unique();
             $table->string('upn')->unique();
-            $table->string('forename');
-            $table->string('surname');
+            $table->text('forename');
+            $table->text('surname');
             $table->integer('year_group');
             $table->date('birth_date');
             $table->timestamps();

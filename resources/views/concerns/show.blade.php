@@ -41,15 +41,16 @@
                     @component('partials.cards.card')
                         @slot('title') Comments @endslot
                         @slot('body')
-                            <div class="card-body">
-                                <ol>
-                                    @forelse($concern->comments as $comment)
-                                        <li>{{ $comment->comment }}</li>
-                                    @empty
-                                        <p class="ml-3">There are no comments for this concern.</p>
-                                    @endforelse
-                                </ol>
-                            </div>
+                            <table class="table">
+                                @forelse($concern->comments as $comment)
+                                    <tr>
+                                        <td>{{ $comment->created_at }}</td>
+                                        <td>{{ $comment->comment }}</td>
+                                    </tr>
+                                @empty
+                                    <p>There are no comments for this concern.</p>
+                                @endforelse
+                            </table>
                         @endslot
                     @endcomponent
                 </div>

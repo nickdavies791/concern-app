@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Concern extends Model
 {
-
     /**
     * The attributes that are not mass assignable.
     * @var array
@@ -25,5 +25,12 @@ class Concern extends Model
     */
     public function students(){
         return $this->hasMany(Student::class);
+    }
+
+    /**
+    * return user associated with a concern
+    */
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

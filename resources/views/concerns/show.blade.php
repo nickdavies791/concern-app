@@ -14,9 +14,41 @@
             <div class="row">
                 <div class="col-xl-12">
                     @component('partials.cards.card')
-                        @slot('title') Concern @endslot
+                        @slot('title') Concern #{{ $concern->id }} - {{ $concern->title }} @endslot
                         @slot('body')
                             <div class="card-body">
+                                <div class="row">
+                                    <div class="col-xl-4">
+                                        <h3>Date Reported</h3>
+                                        <p>{{ $concern->reported_at }}</p>
+                                    </div>
+                                    <div class="col-xl-4">
+                                        <h3>Student</h3>
+                                        <p>
+                                            @foreach($concern->students as $student)
+                                                {{ $student->forename }} {{ $student->surname }} (Year {{ $student->year_group }})<br>
+                                            @endforeach
+                                        </p>
+                                    </div>
+                                    <div class="col-xl-4">
+                                        <h3>Reported By</h3>
+                                        <p>{{ $concern->user->name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endslot
+                    @endcomponent
+                    @component('partials.cards.card')
+                        @slot('title') Comments @endslot
+                        @slot('body')
+                            <div class="card-body">
+                                <ol>
+                                    @forelse($concern->comments as $comment)
+                                        <li>{{ $comment->comment }}</li>
+                                    @empty
+                                        <p class="ml-3">There are no comments for this concern.</p>
+                                    @endforelse
+                                </ol>
                             </div>
                         @endslot
                     @endcomponent
@@ -24,6 +56,6 @@
             </div>
             @include('partials.footer')
         </div>
-    </div>{{ $concern->id }}
+    </div>
 
 @endsection

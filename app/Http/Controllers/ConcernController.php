@@ -25,7 +25,12 @@ class ConcernController extends Controller
      */
     public function index()
     {
-        //
+        $concerns = $this->concern->with([
+            'user:id,name',
+            'students:student_id,forename,surname,year_group',
+        ])->simplePaginate(5);
+
+        return view('concerns.index', ['concerns' => $concerns]);
     }
 
     /**
@@ -52,12 +57,18 @@ class ConcernController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Concern $concern
+     * @return void
      */
-    public function show($id)
+    public function show(Concern $concern)
     {
-        //
+        $concern = $this->concern->with([
+            'user:id,name',
+            'students:student_id,forename,surname,year_group',
+            'comments'
+        ])->find($concern->id);
+
+        return view('concerns.show', ['concern' => $concern]);
     }
 
     /**

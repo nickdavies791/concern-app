@@ -25,6 +25,12 @@ class Concern extends Model
     protected $guarded = [];
 
     /**
+    * The attributes that are dates.
+    * @var array
+    */
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    /**
     * return comments associated with a concern
     */
     public function comments(){
@@ -43,6 +49,14 @@ class Concern extends Model
     */
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Return mutated created_at property
+     * @return mixed
+     */
+    public function getReportedAtAttribute(){
+        return $this->created_at->format('d M Y g:ia');
     }
 
 }

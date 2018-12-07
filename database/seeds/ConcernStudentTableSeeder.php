@@ -18,7 +18,7 @@ class ConcernStudentTableSeeder extends Seeder
             //shuffle array to get random order;
             shuffle($concerns);
             //attach random policies to each user
-            $student->concerns()->attach(array_slice($concerns, 0, rand(1, 500)));
+            $student->concerns()->attach(array_slice($concerns, 0, rand(1, 6)));
         });
     }
 }

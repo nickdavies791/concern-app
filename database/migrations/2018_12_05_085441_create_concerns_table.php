@@ -16,7 +16,6 @@ class CreateConcernsTable extends Migration
         Schema::create('concerns', function (Blueprint $table) {
             $table->increments('id')->index();
             $table->unsignedInteger('user_id')->index();
-            $table->unsignedInteger('student_id')->index();
             $table->unsignedInteger('group_id')->index();
             $table->datetime('resolved_on')->nullable();
             $table->timestamps();

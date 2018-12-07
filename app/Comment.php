@@ -14,7 +14,6 @@ class Comment extends Model
 	 * @var array
 	 */
 	protected $encryptable = [
-		'title',
 		'comment',
         'action_taken'
 	];

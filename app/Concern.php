@@ -3,10 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use GregoryDuckworth\Encryptable\EncryptableTrait;
 
 
 class Concern extends Model
 {
+    use EncryptableTrait;
+
+    /**
+	 * Encrypted Fields
+	 * @var array
+	 */
+	protected $encryptable = [
+	    'title'
+	];
+
     /**
     * The attributes that are not mass assignable.
     * @var array

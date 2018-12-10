@@ -59,6 +59,11 @@
                         <i class="ni ni-curved-next text-yellow"></i> Update a Concern
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('settings')}}">
+                        <i class="ni ni-settings text-success"></i> Settings
+                    </a>
+                </li>
             </ul>
             <!-- Divider -->
             <hr class="my-3">

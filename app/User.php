@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Repositories\Assembly;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,7 +16,7 @@ class User extends Authenticatable
     * @var array
     */
     protected $fillable = [
-        'name', 'email', 'password',
+        'role_id', 'staff_code', 'name', 'email', 'password',
     ];
 
     /**
@@ -46,5 +47,24 @@ class User extends Authenticatable
     */
     public function concerns(){
         return $this->hasMany(Concern::class);
+    }
+
+    /**
+     * gets student data from sims api and formats it appropriately
+     * @return array
+     */
+    public function getSimsData(){
+        $staffMembers = (new Assembly())->getStaffMembers();
+        //dd($staffMembers);
+
+        foreach ($staffMembers as $staff) {
+            $data[$staff->getId()] = [
+                'code' => $staff->getStaffCode(),
+                'email' => strtolower($staff->getFirstName() .'.'. $staff->getLastName().'@heathpark.net'),
+                'name' => $staff->getFirstName() .' '. $staff->getLastName()
+            ];
+        }
+
+        return json_decode(json_encode($data), FALSE);
     }
 }

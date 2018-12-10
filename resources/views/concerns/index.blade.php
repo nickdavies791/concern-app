@@ -50,7 +50,9 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{ $concerns->links() }}
+                            <div class="mx-3 ml-auto">
+                                {{ $concerns->links() }}
+                            </div>
                         @endslot
                     @endcomponent
                 </div>

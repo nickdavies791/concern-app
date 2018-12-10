@@ -40,4 +40,11 @@ return [
         ],
     ],
 
+    'assembly' => [
+        'client_id' => env('ASSEMBLY_CLIENT_ID'),
+        'client_secret' => env('ASSEMBLY_CLIENT_SECRET'),
+        'redirect_uri' => 'http://concern.test/assembly/token/authorise',
+        'scopes' => env('ASSEMBLY_SCOPES')
+    ],
+
 ];

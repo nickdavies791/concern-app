@@ -49,7 +49,7 @@ class CommentController extends Controller
             'body' => $request->body,
             'action_taken' => $request->action_taken
         ]);
-        return back();
+        return redirect()->route('concerns.show', ['id' => $request->concern]);
     }
 
 }

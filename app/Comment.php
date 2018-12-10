@@ -14,7 +14,7 @@ class Comment extends Model
 	 * @var array
 	 */
 	protected $encryptable = [
-		'comment',
+		'body',
         'action_taken'
 	];
     /**
@@ -29,4 +29,20 @@ class Comment extends Model
     public function concern(){
         return $this->belongsTo(Concern::class);
     }
+
+    /**
+     * Returns the User associated with a Comment
+     */
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Return mutated created_at property
+     * @return mixed
+     */
+    public function getPostedAtAttribute(){
+        return $this->created_at->format('d M Y g:ia');
+    }
+
 }

@@ -47,4 +47,11 @@ class User extends Authenticatable
     public function concerns(){
         return $this->hasMany(Concern::class);
     }
+
+    /**
+     * Returns the Comments associated with a User
+     */
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }

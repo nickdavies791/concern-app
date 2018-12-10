@@ -3,19 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Concern;
+use App\Group;
+use App\Student;
+use App\Http\Requests\ConcernRequest;
 use Illuminate\Http\Request;
 
 class ConcernController extends Controller
 {
     protected $concern;
+    protected $group;
+    protected $student;
 
     /**
      * ConcernController constructor.
      * @param Concern $concern
+     * @param Group $group
+     * @param Student $student
      */
-    public function __construct(Concern $concern)
+    public function __construct(Concern $concern, Group $group, Student $student)
     {
         $this->concern = $concern;
+        $this->group = $group;
+        $this->student = $student;
     }
 
     /**
@@ -40,18 +49,27 @@ class ConcernController extends Controller
      */
     public function create()
     {
-        //
+        $students = $this->student->all();
+        $groups = $this->group->all();
+        return view('concerns.create', ['groups' => $groups, 'students' => $students]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param ConcernRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ConcernRequest $request)
     {
-        //
+        $student = $this->student->find($request->student);
+        $concern = $this->concern->create([
+            'user_id' => auth()->id(),
+            'group_id' => $request->group,
+            'title' => $request->title,
+        ]);
+        $concern->students()->attach($student);
+        return back();
     }
 
     /**
@@ -79,7 +97,7 @@ class ConcernController extends Controller
      */
     public function edit($id)
     {
-        //
+        // TODO: Create the form for editing concerns
     }
 
     /**
@@ -91,7 +109,7 @@ class ConcernController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: Create the method to update the concern
     }
 
     /**

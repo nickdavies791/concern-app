@@ -1,0 +1,15 @@
+// Comments
+
+.comments {
+    margin: 0;
+    padding: 0;
+}
+
+.comments li {
+    list-style-type: none;
+    padding: 1.25em;
+    border-radius: 5px;
+    &:hover {
+        background: #f9f9f9;
+    }
+}

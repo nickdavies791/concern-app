@@ -25,7 +25,7 @@
                         @slot('body')
                             <div class="card-body">
                                 <a href="{{ route('concerns.create') }}" class="btn btn-lg btn-danger">Report a Concern</a>
-                                <a href="" class="btn btn-lg btn-primary">Update a Concern</a>
+                                <a href="{{ route('comments.create') }}" class="btn btn-lg btn-primary">Update a Concern</a>
                             </div>
                         @endslot
                     @endcomponent

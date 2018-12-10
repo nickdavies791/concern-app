@@ -35,3 +35,4 @@ Route::resource('students', 'StudentController')->except(['update']);
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('concerns', 'ConcernController');
+Route::resource('comments', 'CommentController');

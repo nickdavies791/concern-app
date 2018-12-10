@@ -20,37 +20,47 @@
                                 <div class="row">
                                     <div class="col-xl-4">
                                         <h3>Date Reported</h3>
-                                        <p>{{ $concern->reported_at }}</p>
+                                        <small>{{ $concern->reported_at }}</small>
                                     </div>
                                     <div class="col-xl-4">
-                                        <h3>Student</h3>
+                                        <h3>Students</h3>
                                         <p>
                                             @foreach($concern->students as $student)
-                                                {{ $student->forename }} {{ $student->surname }} (Year {{ $student->year_group }})<br>
+                                                <small>{{ $student->forename }} {{ $student->surname }} (Year {{ $student->year_group }})</small>
                                             @endforeach
                                         </p>
                                     </div>
                                     <div class="col-xl-4">
                                         <h3>Reported By</h3>
-                                        <p>{{ $concern->user->name }}</p>
+                                        <small>{{ $concern->user->name }}</small>
                                     </div>
                                 </div>
                             </div>
                         @endslot
                     @endcomponent
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-xl-12">
                     @component('partials.cards.card')
                         @slot('title') Comments @endslot
                         @slot('body')
-                            <table class="table">
-                                @forelse($concern->comments as $comment)
-                                    <tr>
-                                        <td>{{ $comment->created_at }}</td>
-                                        <td>{{ $comment->comment }}</td>
-                                    </tr>
-                                @empty
-                                    <p>There are no comments for this concern.</p>
-                                @endforelse
-                            </table>
+                            <div class="card-body">
+
+
+                                <ul class="comments">
+                                    @forelse($concern->comments as $comment)
+                                        <li>
+                                            <h4>{{ $comment->user->name }} on {{ $comment->posted_at }}</h4>
+                                            <small>{{ $comment->body }}</small>
+                                        </li>
+                                    @empty
+                                        <li>There are no comments for this concern.</li>
+                                    @endforelse
+                                </ul>
+
+
+                            </div>
                         @endslot
                     @endcomponent
                 </div>

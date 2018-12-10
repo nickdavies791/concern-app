@@ -83,7 +83,9 @@ class ConcernController extends Controller
         $concern = $this->concern->with([
             'user:id,name',
             'students:student_id,forename,surname,year_group',
-            'comments'
+            'comments' => function($query) {
+                $query->orderBy('created_at', 'desc');
+            }
         ])->find($concern->id);
 
         return view('concerns.show', ['concern' => $concern]);

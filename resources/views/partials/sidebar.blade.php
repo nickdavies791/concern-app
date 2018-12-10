@@ -60,7 +60,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('comments.create') }}">
                         <i class="ni ni-curved-next text-yellow"></i> Update a Concern
                     </a>
                 </li>

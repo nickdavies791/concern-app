@@ -52,7 +52,8 @@
                                     @forelse($concern->comments as $comment)
                                         <li>
                                             <h4>{{ $comment->user->name }} on {{ $comment->posted_at }}</h4>
-                                            <small>{{ $comment->body }}</small>
+                                            <small>{{ $comment->body }}</small><br>
+                                            <small>{{ $comment->action_taken }}</small>
                                         </li>
                                     @empty
                                         <li>There are no comments for this concern.</li>

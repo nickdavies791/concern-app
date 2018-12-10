@@ -59,4 +59,14 @@ class Concern extends Model
         return $this->created_at->format('d M Y g:ia');
     }
 
+    /**
+     * Return all unresolved concerns in latest order
+     * @param $query
+     * @return mixed
+     */
+    public function scopeLatestUnresolved($query)
+    {
+        return $query->where('resolved_on', null)->latest();
+    }
+
 }

@@ -64,7 +64,7 @@ class ConcernController extends Controller
     {
         $student = $this->student->find($request->student);
         $concern = $this->concern->create([
-            'user_id' => auth()->id(),
+            'user_id' => $request->user_id,
             'group_id' => $request->group,
             'title' => $request->title,
         ]);

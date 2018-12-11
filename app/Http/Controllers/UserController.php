@@ -68,20 +68,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update()
+    public function update(User $user)
     {
-        foreach ((new User())->getSimsData() as $staff) {
-            $staffMember = User::updateOrCreate(['staff_code' => $staff->code],[
-                'staff_code' => $staff->code,
-                'name' => $staff->name,
-                'email' => $staff->email
-            ]);
+        $recordsUpdated = $user->updateStaffRecords();
 
-            if($staffMember->wasRecentlyCreated){
-                $staffMember->role_id = 1;
-                $staffMember->password = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; // secret
-                $staffMember->save();
-            }
+        if(!$recordsUpdated){
+            alert()->warning('Oops!', 'The staff data has not been updated, Please try again')->showConfirmButton('Got it!');
         }
 
         alert()->success('Success!', 'The staff data has been updated correctly');

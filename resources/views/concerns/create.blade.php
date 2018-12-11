@@ -33,6 +33,11 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                         <a class="text-primary" data-toggle="modal" data-target="#body-map">Include a Body Map</a>
+                                        @include('partials.modals.body-map')
+                                        <input type="hidden" id="bodymap_dataurl" name="bodymap_dataurl" value="">
+                                    </div>
+                                    <div class="form-group">
                                         <label>Notify Group</label>
                                         <select name="group" class="form-control">
                                             @foreach($groups as $group)

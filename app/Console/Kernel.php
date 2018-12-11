@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\User;
+use App\Student;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +26,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        //sync database with SIMS API
+        $schedule->call(function () {
+            (new Student)->updateStudentRecords();
+            info(['Database synced' => 'Student records updated']);
+        })->monthly()->runInBackground();
+
+        $schedule->call(function () {
+            (new User)->updateStaffRecords();
+            info(['Database synced' => 'Staff records updated']);
+        })->monthly()->runInBackground();
     }
 
     /**

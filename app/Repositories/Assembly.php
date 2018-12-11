@@ -9,6 +9,39 @@ use Assembly\Client\Api\AssemblyApi;
 
 class Assembly {
 
+    public function authorise($code){
+        $response = (new Client())->post('https://platform.assembly.education/oauth/token', [
+            'form_params' => [
+                'grant_type' => 'authorization_code',
+                'client_id' => config('services.assembly.client_id'),
+                'client_secret' => config('services.assembly.client_secret'),
+                'redirect_uri' => config('services.assembly.redirect_uri'),
+                'code' => $code,
+            ],
+        ]);
+
+        return json_decode($response->getBody());
+    }
+
+    protected function refreshToken(Token $token){
+        $response = (new Client())->post('https://platform.assembly.education/oauth/token', [
+            'form_params' => [
+                'grant_type' => 'refresh_token',
+                'client_id' => config('services.assembly.client_id'),
+                'client_secret' => config('services.assembly.client_secret'),
+                'refresh_token' => $token->refresh_token,
+            ]
+        ]);
+
+        $assembly = json_decode($response->getBody());
+
+        $refreshedToken = $token->update([
+            'secret' => $assembly->access_token
+        ]);
+
+        return $refreshedToken ? true : false;
+    }
+
     /**
      * configures the assembly api client
      * @return Assembly\Client\Api\AssemblyApi Instance of Assembly API Client
@@ -17,7 +50,7 @@ class Assembly {
         $token = Token::first();
 
         if($token->expires_in){
-            $token->refresh();
+            $this->refreshToken($token);
         }
 
         $config = Configuration::getDefaultConfiguration()

@@ -69,20 +69,11 @@ class StudentController extends Controller
      */
     public function update(Student $student)
     {
-        $students = (new Student())->getSimsData();
-        foreach ($students as $data) {
-            try {
-                $student->updateOrCreate(['admission_number' => $data->admission_number],[
-                    'admission_number' => $data->admission_number,
-                    'upn' => $data->upn,
-                    'forename' => $data->forename,
-                    'surname' => $data->surname,
-                    'year_group' => $data->year_group,
-                    'birth_date' => $data->birth_date
-                ]);
-            } catch (\Exception $e) {
-                info(['student not added' => ['data' => $student, 'error' => $e]]);
-            }
+
+        $recordsUpdated = $student->updateStudentRecords();
+
+        if(!$recordsUpdated){
+            alert()->warning('Oops!', 'The students data has not been updated, Please try again')->showConfirmButton('Got it!');
         }
 
         alert()->success('Success!', 'The students data has been updated correctly');

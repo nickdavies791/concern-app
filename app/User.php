@@ -53,9 +53,8 @@ class User extends Authenticatable
      * gets student data from sims api and formats it appropriately
      * @return array
      */
-    public function getSimsData(){
+    private function getSimsData(){
         $staffMembers = (new Assembly())->getStaffMembers();
-        //dd($staffMembers);
 
         foreach ($staffMembers as $staff) {
             $data[$staff->getId()] = [
@@ -66,5 +65,21 @@ class User extends Authenticatable
         }
 
         return json_decode(json_encode($data), FALSE);
+    }
+
+    public function updateStaffRecords(){
+        foreach ($this->getSimsData() as $staff) {
+            $staffMember = $this->updateOrCreate(['staff_code' => $staff->code],[
+                'staff_code' => $staff->code,
+                'name' => $staff->name,
+                'email' => $staff->email
+            ]);
+
+            if($staffMember->wasRecentlyCreated){
+                $staffMember->role_id = 1;
+                $staffMember->password = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; // secret
+                $staffMember->save();
+            }
+        }
     }
 }

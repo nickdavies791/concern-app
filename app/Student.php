@@ -38,7 +38,7 @@ class Student extends Model
      * gets student data from sims api and formats it appropriately
      * @return array
      */
-    public function getSimsData(){
+    private function getSimsData(){
         $students = (new Assembly())->getStudents();
 
         foreach ($students as $student) {
@@ -53,5 +53,22 @@ class Student extends Model
         }
 
         return json_decode(json_encode($data), FALSE);
+    }
+
+    public function updateStudentRecords(){
+        foreach ($this->getSimsData() as $student) {
+            try {
+                $this->updateOrCreate(['admission_number' => $student->admission_number],[
+                    'admission_number' => $student->admission_number,
+                    'upn' => $student->upn,
+                    'forename' => $student->forename,
+                    'surname' => $student->surname,
+                    'year_group' => $student->year_group,
+                    'birth_date' => $student->birth_date
+                ]);
+            } catch (\Exception $e) {
+                info(['student not added' => ['data' => $data, 'error' => $e]]);
+            }
+        }
     }
 }

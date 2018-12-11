@@ -11,7 +11,7 @@
 
             <div class="modal-body pb-0">
                 <!-- The area that will be used to draw -->
-                <div><canvas id="canvas-bodymap" width="800" height="702"></canvas></div>
+                <canvas id="canvas-bodymap" width="800" height="702"></canvas>
                 <!-- The image drawn onto the canvas -->
                 <img class="d-none" id="image-bodymap" src="{{ asset('images/body-map.png') }}" width="800" height="702">
             </div>

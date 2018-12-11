@@ -31,6 +31,7 @@
     </div>
     @include('sweetalert::alert')
     @include('partials.modals.sync-help')
+    @include('partials.modals.body-map')
     <script defer="defer" src="{{ asset('js/body-map.js') }}"></script>
 </body>
 </html>

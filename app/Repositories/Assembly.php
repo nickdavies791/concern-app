@@ -9,6 +9,11 @@ use Assembly\Client\Api\AssemblyApi;
 
 class Assembly {
 
+    /**
+     * Gets the Oauth details from the Assembly api
+     * @param  string $code authorisation code
+     * @return object Oauth token details
+     */
     public function authorise($code){
         $response = (new Client())->post('https://platform.assembly.education/oauth/token', [
             'form_params' => [
@@ -23,6 +28,11 @@ class Assembly {
         return json_decode($response->getBody());
     }
 
+    /**
+     * refreshes access token in database
+     * @param  App\Token  $token
+     * @return boolean Success of refresh token
+     */
     protected function refreshToken(Token $token){
         $response = (new Client())->post('https://platform.assembly.education/oauth/token', [
             'form_params' => [
@@ -73,6 +83,10 @@ class Assembly {
         )->getData();
     }
 
+    /**
+     * gets the staff data from sims for teaching staff
+     * @return object staff sims data
+     */
     public function getStaffMembers(){
         $assembly = $this->configureClient();
 

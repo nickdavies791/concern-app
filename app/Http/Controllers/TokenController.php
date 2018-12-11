@@ -9,7 +9,7 @@ class TokenController extends Controller
 {
     /**
     * Show the form for creating a new resource.
-    *
+    * @param  \App\Token  $token
     * @return \Illuminate\Http\Response
     */
     public function create(Token $token)
@@ -31,9 +31,9 @@ class TokenController extends Controller
     }
 
     /**
-    * Store a newly created resource in storage.
-    *
+    * Stores Oauth token in the database.
     * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Token  $token
     * @return \Illuminate\Http\Response
     */
     public function store(Request $request, Token $token)

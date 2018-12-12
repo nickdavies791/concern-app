@@ -33,8 +33,8 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                         <a href="#" class="text-primary" data-toggle="modal" data-target="#body-map">Include a Body Map</a>
-                                        <input type="hidden" id="bodymap_dataurl" name="bodymap_dataurl" value="">
+                                        <a href="#" class="text-primary" data-toggle="modal" data-target="#body-map">Include a Body Map</a>
+                                        <input type="hidden" id="url" name="url" value="">
                                     </div>
                                     <div class="form-group">
                                         <label>Notify Group</label>

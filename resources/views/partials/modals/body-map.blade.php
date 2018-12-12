@@ -17,8 +17,10 @@
             </div>
 
             <div class="modal-footer">
-                <button id="clear" type="button" class="mx-auto btn btn-primary">Clear</button>
-                <button id="save" type="button" class="mx-auto btn btn-primary" data-dismiss="modal">Save Body Map</button>
+                <div class="mx-auto">
+                    <button id="save" type="button" class="btn btn-success" data-dismiss="modal">Save Body Map</button>
+                    <button id="clear" type="button" class="btn btn-danger">Clear</button>
+                </div>
             </div>
 
         </div>

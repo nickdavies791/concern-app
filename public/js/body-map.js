@@ -82,23 +82,31 @@ $(function () {
     // The context for this canvas
     var context = canvas.getContext("2d");
     // The radius of the pin drawn on the canvas
-    var pointSize = 6;
+    var pointSize = 4;
     // The width of the canvas and image
     var pointColor = "#ff0a11";
+    // The count label next to the pin
+    var pointCount = 0;
 
-    // On load, draw the image
-
-
-    var img = document.getElementById("image-bodymap");
-    context.drawImage(img, 0, 0);
+    // Draw the image onto the canvas
+    drawImage();
     // When canvas is clicked get the position and draw the co-ordinates
     $("#canvas-bodymap").on("click", function (event) {
         getPosition(event);
     });
     // When save is clicked get the data URL and output value to textarea
-    $("#save").on("click", function (z) {
+    $("#save").on("click", function () {
         saveImage();
     });
+    $("#clear").on("click", function () {
+        clearCanvas();
+    });
+
+    // Draw the image onto the canvas
+    function drawImage() {
+        var image = document.getElementById("image-bodymap");
+        context.drawImage(image, 0, 0);
+    }
 
     // Get size and position of canvas and pass to drawCoordinates()
     function getPosition(event) {
@@ -114,13 +122,27 @@ $(function () {
         context.beginPath();
         context.arc(x, y, pointSize, 0, Math.PI * 2, true);
         context.fill();
+        drawLabel(x, y);
+    }
+
+    // Draw a counter next to the pointer which increments
+    function drawLabel(x, y) {
+        pointCount++;
+        context.font = "bold 16px Arial";
+        context.fillText(pointCount, x + 12, y);
+    }
+
+    // Clear canvas, reset the counter and redraw the image
+    function clearCanvas() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        pointCount = 0;
+        drawImage();
     }
 
     // Get the Data URL for the canvas and pass to the textarea
     function saveImage() {
         var data = canvas.toDataURL();
-        console.log(data);
-        $("#bodymap_dataurl").val(data);
+        $("#url").val(data);
     }
 });
 

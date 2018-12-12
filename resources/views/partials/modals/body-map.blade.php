@@ -17,6 +17,7 @@
             </div>
 
             <div class="modal-footer">
+                <button id="clear" type="button" class="mx-auto btn btn-primary">Clear</button>
                 <button id="save" type="button" class="mx-auto btn btn-primary" data-dismiss="modal">Save Body Map</button>
             </div>
 

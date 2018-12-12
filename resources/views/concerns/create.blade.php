@@ -33,6 +33,10 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
+                                        <a href="#" class="text-primary" data-toggle="modal" data-target="#body-map">Include a Body Map</a>
+                                        <input type="hidden" id="url" name="url" value="">
+                                    </div>
+                                    <div class="form-group">
                                         <label>Notify Group</label>
                                         <select name="group" class="form-control">
                                             @foreach($groups as $group)

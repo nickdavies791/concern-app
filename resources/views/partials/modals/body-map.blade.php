@@ -3,7 +3,7 @@
         <div class="modal-content" style="width: 900px;">
 
             <div class="modal-header">
-                <h3 class="modal-title" id="modal-title-default">Body Map</h3>
+                <h3 class="modal-title" id="modal-title-default">Include a Body Map</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -11,9 +11,9 @@
 
             <div class="modal-body pb-0">
                 <!-- The area that will be used to draw -->
-                <canvas id="canvas-bodymap" width="800" height="702"></canvas>
+                <canvas id="canvas-bodymap" width="800" height="631"></canvas>
                 <!-- The image drawn onto the canvas -->
-                <img class="d-none" id="image-bodymap" src="{{ asset('images/body-map.png') }}" width="800" height="702">
+                <img class="d-none" id="image-bodymap" src="{{ asset('images/body-map.png') }}" width="800" height="631">
             </div>
 
             <div class="modal-footer">

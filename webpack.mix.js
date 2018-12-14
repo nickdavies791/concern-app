@@ -16,5 +16,5 @@ mix.js('resources/js/app.js', 'public/js')
 
 mix.js('resources/js/argon.min.js', 'public/js');
 mix.js('resources/js/body-map.js', 'public/js');
-mix.copyDirectory('resources/images', 'public/images');
-mix.copyDirectory('resources/fonts', 'public/fonts');
+mix.copy('resources/images', 'public/images');
+mix.copy('resources/fonts', 'public/fonts');

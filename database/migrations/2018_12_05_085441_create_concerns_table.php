@@ -18,6 +18,7 @@ class CreateConcernsTable extends Migration
             $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('group_id')->index();
             $table->text('title');
+            $table->datetime('concern_date');
             $table->datetime('resolved_on')->nullable();
             $table->timestamps();
         });

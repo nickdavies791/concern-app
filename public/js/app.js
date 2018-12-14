@@ -30553,9 +30553,17 @@ module.exports = __webpack_require__(173);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(162);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+throw new Error("Cannot find module \"vue-datetime\"");
+throw new Error("Cannot find module \"vue-datetime/dist/vue-datetime.css\"");
 __webpack_require__(140);
 
 
+
+
+// You need a specific loader for CSS files
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_datetime___default.a);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('group-select', __webpack_require__(165));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('policy-table', __webpack_require__(169));

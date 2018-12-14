@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Group;
 use App\Student;
 use App\Concern;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\ConcernRequest;
 use Illuminate\Support\Facades\Storage;
@@ -68,13 +69,14 @@ class ConcernController extends Controller
             'user_id' => $request->user_id,
             'group_id' => $request->group,
             'title' => $request->title,
+            'concern_date' => $request->concern_date,
         ]);
 
         $concern->students()->attach(
             $this->student->find($request->student)
         );
 
-        return back();
+        return redirect()->route('concerns.show', ['id' => $concern->id]);
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Group;
 use App\Student;
 use App\Http\Requests\ConcernRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ConcernController extends Controller
 {

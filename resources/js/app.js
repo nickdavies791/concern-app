@@ -17,6 +17,7 @@ $(document).ready( function(){
         data :{
             loading : false,
             loadingStaff: false,
+            datetime: null
         }
     });
 

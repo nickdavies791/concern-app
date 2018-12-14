@@ -14,7 +14,7 @@ $factory->define(App\Concern::class, function (Faker $faker) {
             return (Group::inRandomOrder()->first())->id;
         },
         'title' => $faker->sentence(),
-        'concern_date' => $faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/London'),
+        'concern_date' => now(),
         'resolved_on' => function() use($faker){
             $coin = $faker->boolean($chanceOfGettingTrue = 50);
 

@@ -46,6 +46,7 @@
     @include('partials.modals.sync-help')
     @include('partials.modals.group-help')
     @include('partials.modals.body-map')
+    @include('partials.modals.protection')
     <script defer="defer" src="{{ asset('js/body-map.js') }}"></script>
 </body>
 </html>

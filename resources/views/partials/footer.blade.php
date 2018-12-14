@@ -9,7 +9,7 @@
         <div class="col-xl-6">
             <ul class="nav nav-footer justify-content-center justify-content-xl-end">
                 <li class="nav-item">
-                    <a href="#" class="nav-link" target="_blank">Privacy Policy</a>
+                    <a href="#" data-toggle="modal" data-target="#protection" class="nav-link" target="_blank">Data Protection</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" target="_blank">Report an Issue</a>

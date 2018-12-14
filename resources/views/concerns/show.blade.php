@@ -29,6 +29,12 @@
                                 <small>{{ $concern->user->name }}</small>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <h3>Concern Details</h3>
+                                <small>{{ $concern->body }}</small>
+                            </div>
+                        </div>
                     </div>
                 @endslot
             @endcomponent

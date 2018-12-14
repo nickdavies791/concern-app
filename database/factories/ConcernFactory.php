@@ -14,6 +14,7 @@ $factory->define(App\Concern::class, function (Faker $faker) {
             return (Group::inRandomOrder()->first())->id;
         },
         'title' => $faker->sentence(),
+        'body' => $faker->paragraph(),
         'concern_date' => now(),
         'resolved_on' => function() use($faker){
             $coin = $faker->boolean($chanceOfGettingTrue = 50);

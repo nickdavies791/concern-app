@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Concern;
-use App\Http\Requests\CommentRequest;
 use Illuminate\Http\Request;
+use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
 {
@@ -31,8 +31,9 @@ class CommentController extends Controller
      */
     public function create()
     {
-        $concerns = $this->concern->all();
-        return view('comments.create', ['concerns' => $concerns]);
+        return view('comments.create', [
+            'concerns' => $this->concern->all()
+        ]);
     }
 
     /**

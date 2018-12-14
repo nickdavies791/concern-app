@@ -26,16 +26,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //sync database with SIMS API
         $schedule->call(function () {
+            //Updates student records to match data held in schools SIMS service
             (new Student)->updateStudentRecords();
             info(['Database synced' => 'Student records updated']);
-        })->monthly()->runInBackground();
 
-        $schedule->call(function () {
+            //Updates staff records to match data held in schools SIMS service
             (new User)->updateStaffRecords();
             info(['Database synced' => 'Staff records updated']);
-        })->monthly()->runInBackground();
+        })
+        ->monthly()
+        ->runInBackground();
     }
 
     /**

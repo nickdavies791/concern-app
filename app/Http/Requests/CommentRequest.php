@@ -13,6 +13,7 @@ class CommentRequest extends FormRequest
      */
     public function authorize()
     {
+        // TODO: needs policies setting up
         return true;
     }
 
@@ -27,6 +28,19 @@ class CommentRequest extends FormRequest
             'concern' => 'required|exists:concerns,id',
             'body' => 'required',
             'action_taken' => 'required',
+        ];
+    }
+
+    /**
+     * returns user friendly validation errors
+     * @return array
+     */
+    public function messages(){
+        return [
+            'concern.required' => 'Please select a concern which relates to your comment.',
+            'concern.exists' => 'The concern you have selected does not exist anymore.',
+            'body.required' => 'Please add a comment in the comment box.',
+            'action_taken.required' => 'Please enter any action taken, if no action was taken enter "none". '
         ];
     }
 }

@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Policy;
 use App\Group;
+use App\Policy;
 use Illuminate\Http\Request;
 use App\Http\Requests\PolicyRequest;
 
 class PolicyController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * Returns policies associated with logged in user.
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -21,7 +20,6 @@ class PolicyController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -31,26 +29,23 @@ class PolicyController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param  \App\Http\Requests\PolicyRequest  $request
+     * @param  \App\Policy $policy
+     * @param  \App\Group $group
      * @return \Illuminate\Http\Response
      */
     public function store(PolicyRequest $request, Policy $policy, Group $group)
     {
+        //store attached policy
         $file = $request->file_path->storeAs('documents',
-            $request->name .'.'. $request->file_path->getClientOriginalExtension(), 'public');
+            $request->name .'.'. $request->file_path->getClientOriginalExtension(),
+        'public');
 
+        //create a db record
         $policy = $policy->create(['name' => $request->name, 'file_path' => $file]);
 
-        foreach ($request->groups as $groupId) {
-            foreach ($group->find($groupId)->users as $user) {
-                try {
-                    $user->policies()->attach($policy->id);
-                } catch (\Exception $e) {
-                    info("user already assigned to policy", ['errror' => $e]);
-                }
-            }
-        }
+        //assign policies to the selected groups
+        $group->assignPolicies($request->groups, $policy->id);
 
         alert()->success('Success!', 'Policy has been uploaded successfully')->showConfirmButton('Got it!');
         return redirect('settings');
@@ -64,10 +59,12 @@ class PolicyController extends Controller
      */
     public function show($id)
     {
+        //mark as read
         auth()->user()
         ->policies()
         ->updateExistingPivot($id, ['read_at' => now()]);
 
+        //return policy sotrage location for the front end
         $policy = Policy::where('id', '=', $id)->first();
         return asset('storage/'. $policy->file_path);
     }

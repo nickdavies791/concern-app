@@ -17,6 +17,8 @@ class CreateConcernStudentTable extends Migration
             $table->increments('id')->index();
             $table->unsignedInteger('concern_id');
             $table->unsignedInteger('student_id');
+            $table->foreign('concern_id')->references('id')->on('concerns')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
         });
     }
 

@@ -17,6 +17,7 @@ class Comment extends Model
 		'body',
         'action_taken'
 	];
+    
     /**
     * The attributes that are not mass assignable.
     * @var array

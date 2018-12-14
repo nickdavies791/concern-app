@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Concern;
 use App\Group;
 use App\Student;
-use App\Http\Requests\ConcernRequest;
+use App\Concern;
 use Illuminate\Http\Request;
+use App\Http\Requests\ConcernRequest;
 use Illuminate\Support\Facades\Storage;
 
 class ConcernController extends Controller
@@ -50,9 +50,10 @@ class ConcernController extends Controller
      */
     public function create()
     {
-        $students = $this->student->all();
-        $groups = $this->group->all();
-        return view('concerns.create', ['groups' => $groups, 'students' => $students]);
+        return view('concerns.create', [
+            'groups' => $this->group->all(),
+            'students' => $this->student->all()
+        ]);
     }
 
     /**
@@ -63,13 +64,16 @@ class ConcernController extends Controller
      */
     public function store(ConcernRequest $request)
     {
-        $student = $this->student->find($request->student);
         $concern = $this->concern->create([
             'user_id' => $request->user_id,
             'group_id' => $request->group,
             'title' => $request->title,
         ]);
-        $concern->students()->attach($student);
+
+        $concern->students()->attach(
+            $this->student->find($request->student)
+        );
+
         return back();
     }
 

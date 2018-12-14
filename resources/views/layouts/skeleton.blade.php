@@ -13,7 +13,6 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" ></script>
     <script src="{{ asset('js/argon.min.js') }}" ></script>
-    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}" ></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -21,31 +20,15 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('fonts/nucleo/nucleo.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
         <main class="app-wrapper">
-            <!-- Sidebar -->
-            @include('partials.sidebar')
-
-            <!-- Main content -->
             <div class="main-content">
-                @include('partials.navbar')
-                @include('partials.header')
-                <div class="container-fluid mt--7">
-                    @yield('content')
-                    @include('partials.footer')
-                </div>
+                @yield('content')
             </div>
         </main>
     </div>
-    @include('sweetalert::alert')
-    @include('partials.modals.sync-help')
-    @include('partials.modals.group-help')
-    @include('partials.modals.body-map')
-    <script defer="defer" src="{{ asset('js/body-map.js') }}"></script>
 </body>
 </html>

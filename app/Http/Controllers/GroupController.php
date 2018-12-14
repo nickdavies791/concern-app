@@ -8,8 +8,7 @@ use Illuminate\Http\Request;
 class GroupController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * Returns groups for vue-multiselect.
      * @return \Illuminate\Http\Response
      */
     public function index()

@@ -10,7 +10,7 @@
     @foreach($concerns as $concern)
         <tr>
             <td>{{ $concern->id }}</td>
-            <td>{{ $concern->title }}</td>
+            <td><a href="{{ route('concerns.show', ['id' => $concern->id]) }}">{{ $concern->title }}</a></td>
             <td>{{ $concern->reported_at }}</td>
         </tr>
     @endforeach

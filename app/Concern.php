@@ -15,7 +15,7 @@ class Concern extends Model
 	 * @var array
 	 */
 	protected $encryptable = [
-	    'title'
+	    'title', 'body'
 	];
 
     /**

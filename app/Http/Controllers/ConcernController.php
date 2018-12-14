@@ -69,6 +69,7 @@ class ConcernController extends Controller
             'user_id' => $request->user_id,
             'group_id' => $request->group,
             'title' => $request->title,
+            'body' => $request->body,
             'concern_date' => $request->concern_date,
         ]);
 

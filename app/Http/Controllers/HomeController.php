@@ -28,4 +28,8 @@ class HomeController extends Controller
         $concerns = $concern->latestUnresolved()->limit(5)->get();
         return view('home', compact('concerns'));
     }
+
+    public function settings(){
+        return view('settings');
+    }
 }

@@ -70,29 +70,6 @@ class PolicyController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update($id)
-    {
-
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -100,6 +77,11 @@ class PolicyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $policy = Policy::where('id', '=', $id)->first();
+        unlink(public_path("storage/". $policy->file_path));
+        $policy->delete();
+
+        alert()->success('Success!', 'Policy has been deleted')->showConfirmButton('Got it!');
+        return 'Policy Deleted';
     }
 }

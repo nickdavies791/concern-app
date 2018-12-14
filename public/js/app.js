@@ -64187,6 +64187,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -64213,6 +64217,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             policy.pivot.read_at = __WEBPACK_IMPORTED_MODULE_0_moment___default()().format('MMMM Do YYYY, h:mm:ss a');
             axios.get(route('policies.show', { id: policy.id })).then(function (response) {
                 window.open(response.data);
+            });
+        },
+        deletePolicy: function deletePolicy(policy) {
+            axios.delete(route('policies.destroy', { id: policy.id })).then(function (response) {
+                window.location.replace(route('settings'));
             });
         }
     },
@@ -64558,6 +64567,23 @@ var render = function() {
                 ) +
                 "\n            "
             )
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-danger",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.deletePolicy(policy)
+                  }
+                }
+              },
+              [_vm._v("Remove")]
+            )
           ])
         ])
       })
@@ -64575,7 +64601,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Read")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Read on")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Read on")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Delete Policies")])
       ])
     ])
   }

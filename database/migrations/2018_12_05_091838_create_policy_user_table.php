@@ -17,6 +17,8 @@ class CreatePolicyUserTable extends Migration
             $table->primary(['user_id', 'policy_id']);
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('policy_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('policy_id')->references('id')->on('policies')->onDelete('cascade');
             $table->datetime('read_at')->nullable();
         });
     }

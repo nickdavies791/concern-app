@@ -5,6 +5,7 @@
                 <th scope="col">Policy Name</th>
                 <th scope="col">Read</th>
                 <th scope="col">Read on</th>
+                <th scope="col">Delete Policies</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,9 @@
                 </td>
                 <td>
                     {{policy.pivot.read_at ? moment(policy.pivot.read_at).format('MMMM Do YYYY') : '-'}}
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-danger" @click.prevent="deletePolicy(policy)">Remove</button>
                 </td>
             </tr>
         </tbody>
@@ -48,10 +52,16 @@ export default {
         markAsRead(policy){
             policy.pivot.read_at = moment().format('MMMM Do YYYY, h:mm:ss a');
             axios.get(route('policies.show', {id: policy.id}))
-                .then(response => {
-                    window.open(response.data);
-                })
+            .then(response => {
+                window.open(response.data);
+            })
 
+        },
+        deletePolicy(policy){
+            axios.delete(route('policies.destroy', {id: policy.id}))
+            .then(response =>{
+                window.location.replace(route('settings'));
+            })
         }
     },
     created(){

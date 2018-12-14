@@ -14,7 +14,7 @@ class CreatePolicyUserTable extends Migration
     public function up()
     {
         Schema::create('policy_user', function (Blueprint $table) {
-            $table->increments('id')->index();
+            $table->primary(['user_id', 'policy_id']);
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('policy_id');
             $table->datetime('read_at')->nullable();

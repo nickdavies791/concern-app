@@ -24,4 +24,22 @@ class Group extends Model
     public function users(){
         return $this->belongsToMany(User::class);
     }
+
+    /**
+     * assigns users in groups to the uploaded policy
+     * @param  array  $groups   array of group ids
+     * @param  string $policyId id of policy uploaded
+     * @return void
+     */
+    public function assignPolicies(array $groups, string $policyId){
+        foreach ($groups as $groupId) {
+            foreach ($this->find($groupId)->users as $user) {
+                try {
+                    $user->policies()->attach($policyId);
+                } catch (\Exception $e) {
+                    info("user already assigned to policy", ['errror' => $e]);
+                }
+            }
+        }
+    }
 }

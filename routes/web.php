@@ -11,30 +11,21 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
 
-Route::get('/blank', function () {
-    return view('partials.blank');
-});
+// Route::get('/blank', function () {
+//     return view('partials.blank');
+// });
 
-Auth::routes([
-    'register' => false,
-    'reset' => false
-]);
-
+Auth::routes(['register' => false, 'reset' => false]);
+Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('settings','HomeController@settings')->name('settings');
 Route::get('assembly/token/create', 'TokenController@create')->name('authorise-assembly');
 Route::get('assembly/token/authorise', 'TokenController@store');
-Route::get('students/sync', 'StudentController@update')->name('syncStudents');
 Route::get('staff/sync', 'UserController@update')->name('syncStaff');
-Route::get('groups', 'GroupController@index');
+Route::get('students/sync', 'StudentController@update')->name('syncStudents');
 Route::resource('students', 'StudentController')->except(['update']);
+Route::resource('groups', 'GroupController');
 Route::resource('policies', 'PolicyController');
-
-
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::resource('concerns', 'ConcernController');
 Route::resource('comments', 'CommentController');

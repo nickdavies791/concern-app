@@ -14,7 +14,6 @@ class PolicyRequest extends FormRequest
     public function authorize()
     {
         // TODO: needs policies setting up
-        //return in_array(auth()->id(), [2, 3]);
         return true;
     }
 

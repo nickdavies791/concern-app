@@ -20716,6 +20716,16 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   bottom: 0;
 }
 
+.fa-exclamation-circle {
+  font-size: 1.3em;
+}
+
+/*
+*
+* Custom Pagination Styles
+*
+*/
+
 .page-link-c {
   position: relative;
   display: block;
@@ -20746,6 +20756,12 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   cursor: pointer;
 }
 
+/*
+*
+* Vue Multiselect Styles
+*
+*/
+
 .multiselect__option--highlight {
   background: #f8f9fe;
   color: #35495e;
@@ -20773,9 +20789,5 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   -webkit-box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);
           box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02);
   padding: 10px 40px 0 10px;
-}
-
-.fa-exclamation-circle {
-  font-size: 1.3em;
 }
 

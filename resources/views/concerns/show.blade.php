@@ -8,11 +8,15 @@
                 @slot('body')
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-xl-4">
+                            <div class="col-xl-3">
+                                <h3>Date of Concern</h3>
+                                <small>{{ $concern->concern_date }}</small>
+                            </div>
+                            <div class="col-xl-3">
                                 <h3>Date Reported</h3>
                                 <small>{{ $concern->reported_at }}</small>
                             </div>
-                            <div class="col-xl-4">
+                            <div class="col-xl-3">
                                 <h3>Students</h3>
                                 <p>
                                     @foreach($concern->students as $student)
@@ -20,7 +24,7 @@
                                     @endforeach
                                 </p>
                             </div>
-                            <div class="col-xl-4">
+                            <div class="col-xl-3">
                                 <h3>Reported By</h3>
                                 <small>{{ $concern->user->name }}</small>
                             </div>

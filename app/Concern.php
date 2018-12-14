@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
 
@@ -27,7 +28,7 @@ class Concern extends Model
     * The attributes that are dates.
     * @var array
     */
-    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+    protected $dates = ['concern_date', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
     * return comments associated with a concern
@@ -52,10 +53,29 @@ class Concern extends Model
 
     /**
      * Return mutated created_at property
+     * @param $value
      * @return mixed
      */
-    public function getReportedAtAttribute(){
-        return $this->created_at->format('d M Y g:ia');
+    public function getReportedAtAttribute($value){
+        return Carbon::parse($value)->format('d M Y g:ia');
+    }
+
+    /**
+     * Return the formatted concern_date attribute
+     * @param $value
+     * @return string
+     */
+    public function getConcernDateAttribute($value){
+        return Carbon::parse($value)->format('d M Y g:ia');
+    }
+
+    /**
+     * Store formatted concern_date attribute
+     * @param $value
+     * @return string
+     */
+    public function setConcernDateAttribute($value){
+        return $this->attributes['concern_date'] = Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 
     /**

@@ -52,6 +52,13 @@ class Concern extends Model
     }
 
     /**
+     * Return the attachments associated with the concern
+     */
+    public function attachments(){
+        return $this->hasMany(Attachment::class);
+    }
+
+    /**
      * Return mutated created_at property
      * @param $value
      * @return mixed

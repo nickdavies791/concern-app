@@ -3,30 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Repositories\Image;
 use App\Student;
 use App\Concern;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Requests\ConcernRequest;
-use Illuminate\Support\Facades\Storage;
 
 class ConcernController extends Controller
 {
     protected $concern;
     protected $group;
     protected $student;
+    protected $image;
 
     /**
      * ConcernController constructor.
      * @param Concern $concern
      * @param Group $group
      * @param Student $student
+     * @param Image $image
      */
-    public function __construct(Concern $concern, Group $group, Student $student)
+    public function __construct(Concern $concern, Group $group, Student $student, Image $image)
     {
         $this->concern = $concern;
         $this->group = $group;
         $this->student = $student;
+        $this->image = $image;
     }
 
     /**
@@ -73,6 +74,16 @@ class ConcernController extends Controller
             'concern_date' => $request->concern_date,
         ]);
 
+        if($request->image){
+            $location = $this->image->location('concerns/'.$concern->id);
+            $name = date('Y-m-d_His').'_bodymap.png';
+            $this->image->save($request->image, $location, $name);
+            $concern->attachments()->create([
+                'concern_id' => $concern->id,
+                'file_name' => $location.'/'.$name,
+            ]);
+        }
+
         $concern->students()->attach(
             $this->student->find($request->student)
         );
@@ -91,6 +102,7 @@ class ConcernController extends Controller
         $concern = $this->concern->with([
             'user:id,name',
             'students:student_id,forename,surname,year_group',
+            'attachments',
             'comments' => function($query) {
                 $query->orderBy('created_at', 'desc');
             }

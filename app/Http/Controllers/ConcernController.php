@@ -76,7 +76,7 @@ class ConcernController extends Controller
             'concern_date' => $request->concern_date,
         ]);
 
-        $location = $this->image->setLocation('concerns/'.$concern->id);
+        $location = $this->image->location('concerns/'.$concern->id);
         $this->image->save($request->image, $location, date('Y-m-d_his').'_bodymap.png');
 
         $concern->students()->attach(

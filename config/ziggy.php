@@ -11,5 +11,5 @@
 |
 */
 return [
-    'whitelist' => ['policies.show', 'policies.destroy', 'settings'],
+    'whitelist' => ['policies.show', 'policies.destroy', 'settings', 'students.show'],
 ];

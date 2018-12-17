@@ -1,15 +1,15 @@
 require('./bootstrap');
 
 import Vue from 'vue';
-
-import Datetime from 'vue-datetime'
-// You need a specific loader for CSS files
-import 'vue-datetime/dist/vue-datetime.css'
+import InstantSearch from 'vue-instantsearch';
+import Datetime from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css'; // You need a specific loader for CSS files
 
 Vue.use(Datetime)
-
+Vue.use(InstantSearch);
 Vue.component('group-select', require('./components/GroupSelect.vue'));
 Vue.component('policy-table', require('./components/PolicyTable.vue'));
+Vue.component('student-search', require('./components/StudentSearch.vue'));
 
 $(document).ready( function(){
     const app = new Vue({

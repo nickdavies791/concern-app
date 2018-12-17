@@ -4,6 +4,6 @@
         <div class="">
             <a class="h4 mb-0 text-white text-uppercase" href="{{ route('home') }}">Dashboard</a>
         </div>
-        @include('partials.search')
+        <student-search></student-search>
     </div>
 </nav>

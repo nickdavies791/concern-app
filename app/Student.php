@@ -2,13 +2,14 @@
 
 namespace App;
 
+use Laravel\Scout\Searchable;
 use App\Repositories\Assembly;
 use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
 
 class Student extends Model
 {
-    use EncryptableTrait;
+    use EncryptableTrait, Searchable;
 
     /**
 	 * Encrypted fields
@@ -26,6 +27,19 @@ class Student extends Model
     * @var array
     */
     protected $guarded = [];
+
+    /**
+     * Get the indexable data array for the model.
+     * @return array
+     */
+    public function toSearchableArray(){
+        return [
+            'id' => $this->id,
+            'forename' => $this->forename,
+            'surname' => $this->surname,
+            'year_group' => $this->year_group
+        ];
+    }
 
     /**
     * Retrieves the concerns about a particular student.

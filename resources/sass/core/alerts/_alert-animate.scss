@@ -1,6 +1,6 @@
 .alert-animate {
   top: -500px;
-  position: absolute;
+  position: fixed;
   z-index: 9999;
   animation-name: slideIn;
   animation-duration: 8s;
@@ -15,7 +15,6 @@
   12%  {top: 7px;}
   50%  {top: 7px; }
   75%  {top: 7px; }
-  76% {top: 9px; }
   77% {top:11px;}
   100% {top:-550px;}
 }
@@ -27,7 +26,6 @@
   12%  {top: 7px;}
   50%  {top: 7px; }
   75%  {top: 7px; }
-  76% {top: 9px; }
   77% {top:11px;}
   100% {top:-550px;}
 }

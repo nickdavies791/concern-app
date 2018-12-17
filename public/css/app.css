@@ -15879,7 +15879,7 @@ a.text-lighter:focus {
 
 .alert-animate {
   top: -500px;
-  position: absolute;
+  position: fixed;
   z-index: 9999;
   animation-name: slideIn;
   animation-duration: 8s;
@@ -15910,10 +15910,6 @@ a.text-lighter:focus {
 
   75% {
     top: 7px;
-  }
-
-  76% {
-    top: 9px;
   }
 
   77% {
@@ -15948,10 +15944,6 @@ a.text-lighter:focus {
 
   75% {
     top: 7px;
-  }
-
-  76% {
-    top: 9px;
   }
 
   77% {

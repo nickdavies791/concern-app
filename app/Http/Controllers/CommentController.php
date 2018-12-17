@@ -54,8 +54,10 @@ class CommentController extends Controller
             'body' => $request->body,
             'action_taken' => $request->action_taken
         ]);
-        $location = $this->image->location('concerns/'.$comment->concern_id);
-        $this->image->save($request->image, $location, date('Y-m-d_his').'_bodymap.png');
+        if($request->image){
+            $location = $this->image->location('concerns/'.$comment->concern_id);
+            $this->image->save($request->image, $location, date('Y-m-d_his').'_bodymap.png');
+        }
         return redirect()->route('concerns.show', ['id' => $request->concern])->with('alert.success', 'Your comment has been saved.');
     }
 

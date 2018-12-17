@@ -1,0 +1,31 @@
+.alert-animate {
+  top: -500px;
+  position: fixed;
+  z-index: 9999;
+  animation-name: slideIn;
+  animation-duration: 8s;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 8s;
+}
+
+@-webkit-keyframes slideIn {
+  0%   {top:-550px;}
+  10%  {top: 7px; }
+  11%  {top: 10px; }
+  12%  {top: 7px;}
+  50%  {top: 7px; }
+  75%  {top: 7px; }
+  77% {top:11px;}
+  100% {top:-550px;}
+}
+
+@keyframes slideIn {
+  0%   {top:-550px;}
+  10%  {top: 7px; }
+  11%  {top: 9px; }
+  12%  {top: 7px;}
+  50%  {top: 7px; }
+  75%  {top: 7px; }
+  77% {top:11px;}
+  100% {top:-550px;}
+}

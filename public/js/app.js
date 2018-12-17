@@ -1902,7 +1902,11 @@
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
+<<<<<<< HEAD
                 __webpack_require__(513)("./" + name);
+=======
+                __webpack_require__(182)("./" + name);
+>>>>>>> master
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -28198,6 +28202,7 @@ module.exports = SearchResults;
 /* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 var baseOrderBy = __webpack_require__(455),
     isArray = __webpack_require__(1);
 
@@ -28250,6 +28255,25 @@ module.exports = orderBy;
 /***/ }),
 /* 147 */
 /***/ (function(module, exports, __webpack_require__) {
+=======
+__webpack_require__(139);
+module.exports = __webpack_require__(184);
+
+
+/***/ }),
+/* 139 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_datetime__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_datetime___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_datetime__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_datetime_dist_vue_datetime_css__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_datetime_dist_vue_datetime_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_datetime_dist_vue_datetime_css__);
+__webpack_require__(140);
+>>>>>>> master
 
 var identity = __webpack_require__(14),
     metaMap = __webpack_require__(148);
@@ -28276,8 +28300,13 @@ module.exports = baseSetData;
 
 var WeakMap = __webpack_require__(123);
 
+<<<<<<< HEAD
 /** Used to store function metadata. */
 var metaMap = WeakMap && new WeakMap;
+=======
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('group-select', __webpack_require__(176));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('policy-table', __webpack_require__(180));
+>>>>>>> master
 
 module.exports = metaMap;
 
@@ -86449,6 +86478,7 @@ var requestBuilder = {
     forEach(state.hierarchicalFacetsRefinements, function(facetValues, facetName) {
       var facetValue = facetValues[0];
 
+<<<<<<< HEAD
       if (facetValue === undefined) {
         return;
       }
@@ -86551,15 +86581,179 @@ var requestBuilder = {
 };
 
 module.exports = requestBuilder;
+=======
+/*!
+ * vue-datetime v1.0.0-beta.8
+ * (c) 2018 Mario Juárez
+ * Released under the MIT License.
+ */
 
+(function (global, factory) {
+	 true ? factory(exports, __webpack_require__(166)) :
+	typeof define === 'function' && define.amd ? define(['exports', 'luxon'], factory) :
+	(factory((global.VueDatetime = global.VueDatetime || {}),global.luxon));
+}(this, (function (exports,luxon) { 'use strict';
 
+var FlowManager = function FlowManager (flow, endStatus) {
+  if ( flow === void 0 ) flow = [];
+  if ( endStatus === void 0 ) endStatus = null;
+
+  this.flow = flow;
+  this.endStatus = endStatus;
+  this.diversionNext = null;
+};
+
+FlowManager.prototype.step = function step (index) {
+  return this.flow.length > index ? this.flow[index] : this.endStatus
+};
+
+FlowManager.prototype.first = function first () {
+  return this.step(0)
+};
+
+FlowManager.prototype.next = function next (current) {
+  if (this.diversionNext) {
+    var next = this.diversionNext;
+    this.diversionNext = null;
+
+    return next
+  }
+
+  return this.step(this.flow.indexOf(current) + 1)
+};
+
+FlowManager.prototype.diversion = function diversion (next) {
+  this.diversionNext = next;
+};
+
+function capitalize (string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+function datetimeFromISO (string) {
+  var datetime = luxon.DateTime.fromISO(string).toUTC();
+
+  return datetime.isValid ? datetime : null
+}
+
+function monthDays (year, month, weekStart) {
+  var monthDate = luxon.DateTime.local(year, month, 1);
+  var firstDay = monthDate.weekday - weekStart;
+
+  if (firstDay < 0) {
+    firstDay += 7;
+  }
+  var lastDay = (weekStart - monthDate.weekday - monthDate.daysInMonth) % 7;
+  if (lastDay < 0) {
+    lastDay += 7;
+  }
+
+  return new Array(monthDate.daysInMonth + firstDay + lastDay)
+    .fill(null)
+    .map(function (value, index) { return (index + 1 <= firstDay || index >= firstDay + monthDate.daysInMonth) ? null : (index + 1 - firstDay); }
+    )
+}
+
+function monthDayIsDisabled (minDate, maxDate, year, month, day) {
+  var date = luxon.DateTime.fromObject({ year: year, month: month, day: day, zone: 'UTC' });
+
+  minDate = minDate ? startOfDay(minDate) : null;
+  maxDate = maxDate ? startOfDay(maxDate) : null;
+
+  return (minDate && date < minDate) ||
+         (maxDate && date > maxDate)
+}
+
+function yearIsDisabled (minDate, maxDate, year) {
+  var minYear = minDate ? minDate.year : null;
+  var maxYear = maxDate ? maxDate.year : null;
+
+  return (minYear && year < minYear) ||
+         (maxYear && year > maxYear)
+}
+
+function timeComponentIsDisabled (min, max, component) {
+  return (min && component < min) ||
+         (max && component > max)
+}
+
+function weekdays (weekStart) {
+  if (--weekStart < 0) {
+    weekStart = 6;
+  }
+
+  var weekDays = luxon.Info.weekdays('short').map(function (weekday) { return capitalize(weekday); });
+
+  weekDays = weekDays.concat(weekDays.splice(0, weekStart));
+
+  return weekDays
+}
+
+function months () {
+  return luxon.Info.months().map(function (month) { return capitalize(month); })
+}
+
+function hours (step) {
+  return new Array(Math.ceil(24 / step)).fill(null).map(function (item, index) { return index * step; })
+}
+
+function minutes (step) {
+  return new Array(Math.ceil(60 / step)).fill(null).map(function (item, index) { return index * step; })
+}
+
+function years (current) {
+  return new Array(201).fill(null).map(function (item, index) { return current - 100 + index; })
+}
+
+function pad (number) {
+  return number < 10 ? '0' + number : number
+}
+
+function startOfDay (datetime) {
+  return datetime.startOf('day')
+}
+
+function createFlowManagerFromType (type) {
+  var flow = [];
+
+  switch (type) {
+    case 'datetime':
+      flow = ['date', 'time'];
+      break
+    case 'time':
+      flow = ['time'];
+      break
+    default:
+      flow = ['date'];
+  }
+
+  return new FlowManager(flow, 'end')
+}
+>>>>>>> master
+
+function weekStart () {
+  var weekstart;
+
+<<<<<<< HEAD
 /***/ }),
 /* 485 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+=======
+  try {
+    weekstart = __webpack_require__(167);
+  } catch (e) {
+    weekstart = window.weekstart;
+  }
 
+  var firstDay = weekstart ? weekstart.getWeekStartByLocale(luxon.Settings.defaultLocale) : 1;
+>>>>>>> master
 
+  return firstDay === 0 ? 7 : firstDay
+}
+
+<<<<<<< HEAD
 var invert = __webpack_require__(162);
 var keys = __webpack_require__(8);
 
@@ -87632,6 +87826,68 @@ var DatetimeCalendar = {render: function(){var _vm=this;var _h=_vm.$createElemen
     }
   },
 
+=======
+var DatetimeCalendar = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vdatetime-calendar"},[_c('div',{staticClass:"vdatetime-calendar__navigation"},[_c('div',{staticClass:"vdatetime-calendar__navigation--previous",on:{"click":_vm.previousMonth}},[_c('svg',{attrs:{"xmlns":"http://www.w3.org/2000/svg","viewBox":"0 0 61.3 102.8"}},[_c('path',{attrs:{"fill":"none","stroke":"#444","stroke-width":"14","stroke-miterlimit":"10","d":"M56.3 97.8L9.9 51.4 56.3 5"}})])]),_vm._v(" "),_c('div',{staticClass:"vdatetime-calendar__current--month"},[_vm._v(_vm._s(_vm.monthName)+" "+_vm._s(_vm.newYear))]),_vm._v(" "),_c('div',{staticClass:"vdatetime-calendar__navigation--next",on:{"click":_vm.nextMonth}},[_c('svg',{attrs:{"xmlns":"http://www.w3.org/2000/svg","viewBox":"0 0 61.3 102.8"}},[_c('path',{attrs:{"fill":"none","stroke":"#444","stroke-width":"14","stroke-miterlimit":"10","d":"M56.3 97.8L9.9 51.4 56.3 5"}})])])]),_vm._v(" "),_c('div',{staticClass:"vdatetime-calendar__month"},[_vm._l((_vm.weekdays),function(weekday){return _c('div',{staticClass:"vdatetime-calendar__month__weekday"},[_vm._v(_vm._s(weekday))])}),_vm._v(" "),_vm._l((_vm.days),function(day){return _c('div',{staticClass:"vdatetime-calendar__month__day",class:{'vdatetime-calendar__month__day--selected': day.selected, 'vdatetime-calendar__month__day--disabled': day.disabled},on:{"click":function($event){_vm.selectDay(day);}}},[_c('span',[_c('span',[_vm._v(_vm._s(day.number))])])])})],2)])},staticRenderFns: [],
+  props: {
+    year: {
+      type: Number,
+      required: true
+    },
+    month: {
+      type: Number,
+      required: true
+    },
+    day: {
+      type: Number,
+      default: null
+    },
+    disabled: {
+      type: Array
+    },
+    minDate: {
+      type: luxon.DateTime,
+      default: null
+    },
+    maxDate: {
+      type: luxon.DateTime,
+      default: null
+    },
+    weekStart: {
+      type: Number,
+      default: 1
+    }
+  },
+
+  data: function data () {
+    return {
+      newDate: luxon.DateTime.fromObject({ year: this.year, month: this.month, zone: 'UTC' }),
+      weekdays: weekdays(this.weekStart),
+      months: months()
+    }
+  },
+
+  computed: {
+    newYear: function newYear () {
+      return this.newDate.year
+    },
+    newMonth: function newMonth () {
+      return this.newDate.month
+    },
+    monthName: function monthName () {
+      return this.months[this.newMonth - 1]
+    },
+    days: function days () {
+      var this$1 = this;
+
+      return monthDays(this.newYear, this.newMonth, this.weekStart).map(function (day) { return ({
+        number: day,
+        selected: day && this$1.year === this$1.newYear && this$1.month === this$1.newMonth && this$1.day === day,
+        disabled: !day || monthDayIsDisabled(this$1.minDate, this$1.maxDate, this$1.newYear, this$1.newMonth, day)
+      }); })
+    }
+  },
+
+>>>>>>> master
   methods: {
     selectDay: function selectDay (day) {
       if (day.disabled) {
@@ -88234,7 +88490,11 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 
 /***/ }),
+<<<<<<< HEAD
 /* 498 */
+=======
+/* 166 */
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94280,6 +94540,1981 @@ function () {
    */
 
 
+<<<<<<< HEAD
+  /**
+   * Returns the resolved Intl options for this DateTime.
+   * This is useful in understanding the behavior of formatting methods
+   * @param {Object} opts - the same options as toLocaleString
+   * @return {Object}
+   */
+  _proto.resolvedLocaleOpts = function resolvedLocaleOpts(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    var _Formatter$create$res = Formatter.create(this.loc.clone(opts), opts).resolvedOptions(this),
+        locale = _Formatter$create$res.locale,
+        numberingSystem = _Formatter$create$res.numberingSystem,
+        calendar = _Formatter$create$res.calendar;
+
+    return {
+      locale: locale,
+      numberingSystem: numberingSystem,
+      outputCalendar: calendar
+    };
+  }; // TRANSFORM
+
+  /**
+   * "Set" the DateTime's zone to UTC. Returns a newly-constructed DateTime.
+   *
+   * Equivalent to {@link setZone}('utc')
+   * @param {number} [offset=0] - optionally, an offset from UTC in minutes
+   * @param {Object} [opts={}] - options to pass to `setZone()`
+   * @return {DateTime}
+   */
+
+
+  _proto.toUTC = function toUTC(offset, opts) {
+    if (offset === void 0) {
+      offset = 0;
+=======
+      case "W":
+        return "weekNumber";
+
+      case "k":
+        return "weekYear";
+
+      default:
+        return null;
+    }
+  };
+
+  var zone;
+
+  if (!isUndefined(matches.Z)) {
+    zone = new FixedOffsetZone(matches.Z);
+  } else if (!isUndefined(matches.z)) {
+    zone = new IANAZone(matches.z);
+  } else {
+    zone = null;
+  }
+
+  if (!isUndefined(matches.h)) {
+    if (matches.h < 12 && matches.a === 1) {
+      matches.h += 12;
+    } else if (matches.h === 12 && matches.a === 0) {
+      matches.h = 0;
+    }
+  }
+
+  if (matches.G === 0 && matches.y) {
+    matches.y = -matches.y;
+  }
+
+  if (!isUndefined(matches.u)) {
+    matches.S = parseMillis(matches.u);
+  }
+
+  var vals = Object.keys(matches).reduce(function (r, k) {
+    var f = toField(k);
+
+    if (f) {
+      r[f] = matches[k];
+    }
+
+    return r;
+  }, {});
+  return [vals, zone];
+}
+/**
+ * @private
+ */
+
+
+function explainFromTokens(locale, input, format) {
+  var tokens = Formatter.parseFormat(format),
+      units = tokens.map(function (t) {
+    return unitForToken(t, locale);
+  }),
+      disqualifyingUnit = units.find(function (t) {
+    return t.invalidReason;
+  });
+
+  if (disqualifyingUnit) {
+    return {
+      input: input,
+      tokens: tokens,
+      invalidReason: disqualifyingUnit.invalidReason
+    };
+  } else {
+    var _buildRegex = buildRegex(units),
+        regexString = _buildRegex[0],
+        handlers = _buildRegex[1],
+        regex = RegExp(regexString, "i"),
+        _match = match(input, regex, handlers),
+        rawMatches = _match[0],
+        matches = _match[1],
+        _ref6 = matches ? dateTimeFromMatches(matches) : [null, null],
+        result = _ref6[0],
+        zone = _ref6[1];
+
+    return {
+      input: input,
+      tokens: tokens,
+      regex: regex,
+      rawMatches: rawMatches,
+      matches: matches,
+      result: result,
+      zone: zone
+    };
+  }
+}
+function parseFromTokens(locale, input, format) {
+  var _explainFromTokens = explainFromTokens(locale, input, format),
+      result = _explainFromTokens.result,
+      zone = _explainFromTokens.zone,
+      invalidReason = _explainFromTokens.invalidReason;
+
+  return [result, zone, invalidReason];
+}
+
+var nonLeapLadder = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334],
+    leapLadder = [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335];
+
+function unitOutOfRange(unit, value) {
+  return new Invalid("unit out of range", "you specified " + value + " (of type " + typeof value + ") as a " + unit + ", which is invalid");
+}
+
+function dayOfWeek(year, month, day) {
+  var js = new Date(Date.UTC(year, month - 1, day)).getUTCDay();
+  return js === 0 ? 7 : js;
+}
+
+function computeOrdinal(year, month, day) {
+  return day + (isLeapYear(year) ? leapLadder : nonLeapLadder)[month - 1];
+}
+
+function uncomputeOrdinal(year, ordinal) {
+  var table = isLeapYear(year) ? leapLadder : nonLeapLadder,
+      month0 = table.findIndex(function (i) {
+    return i < ordinal;
+  }),
+      day = ordinal - table[month0];
+  return {
+    month: month0 + 1,
+    day: day
+  };
+}
+/**
+ * @private
+ */
+
+
+function gregorianToWeek(gregObj) {
+  var year = gregObj.year,
+      month = gregObj.month,
+      day = gregObj.day,
+      ordinal = computeOrdinal(year, month, day),
+      weekday = dayOfWeek(year, month, day);
+  var weekNumber = Math.floor((ordinal - weekday + 10) / 7),
+      weekYear;
+
+  if (weekNumber < 1) {
+    weekYear = year - 1;
+    weekNumber = weeksInWeekYear(weekYear);
+  } else if (weekNumber > weeksInWeekYear(year)) {
+    weekYear = year + 1;
+    weekNumber = 1;
+  } else {
+    weekYear = year;
+  }
+
+  return Object.assign({
+    weekYear: weekYear,
+    weekNumber: weekNumber,
+    weekday: weekday
+  }, timeObject(gregObj));
+}
+function weekToGregorian(weekData) {
+  var weekYear = weekData.weekYear,
+      weekNumber = weekData.weekNumber,
+      weekday = weekData.weekday,
+      weekdayOfJan4 = dayOfWeek(weekYear, 1, 4),
+      yearInDays = daysInYear(weekYear);
+  var ordinal = weekNumber * 7 + weekday - weekdayOfJan4 - 3,
+      year;
+
+  if (ordinal < 1) {
+    year = weekYear - 1;
+    ordinal += daysInYear(year);
+  } else if (ordinal > yearInDays) {
+    year = weekYear + 1;
+    ordinal -= daysInYear(weekYear);
+  } else {
+    year = weekYear;
+  }
+
+  var _uncomputeOrdinal = uncomputeOrdinal(year, ordinal),
+      month = _uncomputeOrdinal.month,
+      day = _uncomputeOrdinal.day;
+
+  return Object.assign({
+    year: year,
+    month: month,
+    day: day
+  }, timeObject(weekData));
+}
+function gregorianToOrdinal(gregData) {
+  var year = gregData.year,
+      month = gregData.month,
+      day = gregData.day,
+      ordinal = computeOrdinal(year, month, day);
+  return Object.assign({
+    year: year,
+    ordinal: ordinal
+  }, timeObject(gregData));
+}
+function ordinalToGregorian(ordinalData) {
+  var year = ordinalData.year,
+      ordinal = ordinalData.ordinal,
+      _uncomputeOrdinal2 = uncomputeOrdinal(year, ordinal),
+      month = _uncomputeOrdinal2.month,
+      day = _uncomputeOrdinal2.day;
+
+  return Object.assign({
+    year: year,
+    month: month,
+    day: day
+  }, timeObject(ordinalData));
+}
+function hasInvalidWeekData(obj) {
+  var validYear = isNumber(obj.weekYear),
+      validWeek = numberBetween(obj.weekNumber, 1, weeksInWeekYear(obj.weekYear)),
+      validWeekday = numberBetween(obj.weekday, 1, 7);
+
+  if (!validYear) {
+    return unitOutOfRange("weekYear", obj.weekYear);
+  } else if (!validWeek) {
+    return unitOutOfRange("week", obj.week);
+  } else if (!validWeekday) {
+    return unitOutOfRange("weekday", obj.weekday);
+  } else return false;
+}
+function hasInvalidOrdinalData(obj) {
+  var validYear = isNumber(obj.year),
+      validOrdinal = numberBetween(obj.ordinal, 1, daysInYear(obj.year));
+
+  if (!validYear) {
+    return unitOutOfRange("year", obj.year);
+  } else if (!validOrdinal) {
+    return unitOutOfRange("ordinal", obj.ordinal);
+  } else return false;
+}
+function hasInvalidGregorianData(obj) {
+  var validYear = isNumber(obj.year),
+      validMonth = numberBetween(obj.month, 1, 12),
+      validDay = numberBetween(obj.day, 1, daysInMonth(obj.year, obj.month));
+
+  if (!validYear) {
+    return unitOutOfRange("year", obj.year);
+  } else if (!validMonth) {
+    return unitOutOfRange("month", obj.month);
+  } else if (!validDay) {
+    return unitOutOfRange("day", obj.day);
+  } else return false;
+}
+function hasInvalidTimeData(obj) {
+  var validHour = numberBetween(obj.hour, 0, 23),
+      validMinute = numberBetween(obj.minute, 0, 59),
+      validSecond = numberBetween(obj.second, 0, 59),
+      validMillisecond = numberBetween(obj.millisecond, 0, 999);
+
+  if (!validHour) {
+    return unitOutOfRange("hour", obj.hour);
+  } else if (!validMinute) {
+    return unitOutOfRange("minute", obj.minute);
+  } else if (!validSecond) {
+    return unitOutOfRange("second", obj.secon);
+  } else if (!validMillisecond) {
+    return unitOutOfRange("millisecond", obj.millisecond);
+  } else return false;
+}
+
+var INVALID$2 = "Invalid DateTime";
+
+function unsupportedZone(zone) {
+  return new Invalid("unsupported zone", "the zone \"" + zone.name + "\" is not supported");
+} // we cache week data on the DT object and this intermediates the cache
+
+
+function possiblyCachedWeekData(dt) {
+  if (dt.weekData === null) {
+    dt.weekData = gregorianToWeek(dt.c);
+  }
+
+  return dt.weekData;
+} // clone really means, "make a new object with these modifications". all "setters" really use this
+// to create a new object while only changing some of the properties
+
+
+function clone$1(inst, alts) {
+  var current = {
+    ts: inst.ts,
+    zone: inst.zone,
+    c: inst.c,
+    o: inst.o,
+    loc: inst.loc,
+    invalid: inst.invalid
+  };
+  return new DateTime(Object.assign({}, current, alts, {
+    old: current
+  }));
+} // find the right offset a given local time. The o input is our guess, which determines which
+// offset we'll pick in ambiguous cases (e.g. there are two 3 AMs b/c Fallback DST)
+
+
+function fixOffset(localTS, o, tz) {
+  // Our UTC time is just a guess because our offset is just a guess
+  var utcGuess = localTS - o * 60 * 1000; // Test whether the zone matches the offset for this ts
+
+  var o2 = tz.offset(utcGuess); // If so, offset didn't change and we're done
+
+  if (o === o2) {
+    return [utcGuess, o];
+  } // If not, change the ts by the difference in the offset
+
+
+  utcGuess -= (o2 - o) * 60 * 1000; // If that gives us the local time we want, we're done
+
+  var o3 = tz.offset(utcGuess);
+
+  if (o2 === o3) {
+    return [utcGuess, o2];
+  } // If it's different, we're in a hole time. The offset has changed, but the we don't adjust the time
+
+
+  return [localTS - Math.min(o2, o3) * 60 * 1000, Math.max(o2, o3)];
+} // convert an epoch timestamp into a calendar object with the given offset
+
+
+function tsToObj(ts, offset) {
+  ts += offset * 60 * 1000;
+  var d = new Date(ts);
+  return {
+    year: d.getUTCFullYear(),
+    month: d.getUTCMonth() + 1,
+    day: d.getUTCDate(),
+    hour: d.getUTCHours(),
+    minute: d.getUTCMinutes(),
+    second: d.getUTCSeconds(),
+    millisecond: d.getUTCMilliseconds()
+  };
+} // covert a calendar object to a local timestamp (epoch, but with the offset baked in)
+
+
+function objToLocalTS(obj) {
+  var d = Date.UTC(obj.year, obj.month - 1, obj.day, obj.hour, obj.minute, obj.second, obj.millisecond); // for legacy reasons, years between 0 and 99 are interpreted as 19XX; revert that
+
+  if (obj.year < 100 && obj.year >= 0) {
+    d = new Date(d);
+    d.setUTCFullYear(obj.year);
+  }
+
+  return +d;
+} // convert a calendar object to a epoch timestamp
+
+
+function objToTS(obj, offset, zone) {
+  return fixOffset(objToLocalTS(obj), offset, zone);
+} // create a new DT instance by adding a duration, adjusting for DSTs
+
+
+function adjustTime(inst, dur) {
+  var oPre = inst.o,
+      year = inst.c.year + dur.years,
+      month = inst.c.month + dur.months + dur.quarters * 3,
+      c = Object.assign({}, inst.c, {
+    year: year,
+    month: month,
+    day: Math.min(inst.c.day, daysInMonth(year, month)) + dur.days + dur.weeks * 7
+  }),
+      millisToAdd = Duration.fromObject({
+    hours: dur.hours,
+    minutes: dur.minutes,
+    seconds: dur.seconds,
+    milliseconds: dur.milliseconds
+  }).as("milliseconds"),
+      localTS = objToLocalTS(c);
+
+  var _fixOffset = fixOffset(localTS, oPre, inst.zone),
+      ts = _fixOffset[0],
+      o = _fixOffset[1];
+
+  if (millisToAdd !== 0) {
+    ts += millisToAdd; // that could have changed the offset by going over a DST, but we want to keep the ts the same
+
+    o = inst.zone.offset(ts);
+  }
+
+  return {
+    ts: ts,
+    o: o
+  };
+} // helper useful in turning the results of parsing into real dates
+// by handling the zone options
+
+
+function parseDataToDateTime(parsed, parsedZone, opts, format, text) {
+  var setZone = opts.setZone,
+      zone = opts.zone;
+
+  if (parsed && Object.keys(parsed).length !== 0) {
+    var interpretationZone = parsedZone || zone,
+        inst = DateTime.fromObject(Object.assign(parsed, opts, {
+      zone: interpretationZone
+    }));
+    return setZone ? inst : inst.setZone(zone);
+  } else {
+    return DateTime.invalid(new Invalid("unparsable", "the input \"" + text + "\" can't be parsed as " + format));
+  }
+} // if you want to output a technical format (e.g. RFC 2822), this helper
+// helps handle the details
+
+
+function toTechFormat(dt, format) {
+  return dt.isValid ? Formatter.create(Locale.create("en-US"), {
+    allowZ: true,
+    forceSimple: true
+  }).formatDateTimeFromString(dt, format) : null;
+} // technical time formats (e.g. the time part of ISO 8601), take some options
+// and this commonizes their handling
+
+
+function toTechTimeFormat(dt, _ref) {
+  var _ref$suppressSeconds = _ref.suppressSeconds,
+      suppressSeconds = _ref$suppressSeconds === void 0 ? false : _ref$suppressSeconds,
+      _ref$suppressMillisec = _ref.suppressMilliseconds,
+      suppressMilliseconds = _ref$suppressMillisec === void 0 ? false : _ref$suppressMillisec,
+      _ref$includeOffset = _ref.includeOffset,
+      includeOffset = _ref$includeOffset === void 0 ? true : _ref$includeOffset,
+      _ref$includeZone = _ref.includeZone,
+      includeZone = _ref$includeZone === void 0 ? false : _ref$includeZone,
+      _ref$spaceZone = _ref.spaceZone,
+      spaceZone = _ref$spaceZone === void 0 ? false : _ref$spaceZone;
+  var fmt = "HH:mm";
+
+  if (!suppressSeconds || dt.second !== 0 || dt.millisecond !== 0) {
+    fmt += ":ss";
+
+    if (!suppressMilliseconds || dt.millisecond !== 0) {
+      fmt += ".SSS";
+    }
+  }
+
+  if ((includeZone || includeOffset) && spaceZone) {
+    fmt += " ";
+  }
+
+  if (includeZone) {
+    fmt += "z";
+  } else if (includeOffset) {
+    fmt += "ZZ";
+  }
+
+  return toTechFormat(dt, fmt);
+} // defaults for unspecified units in the supported calendars
+
+
+var defaultUnitValues = {
+  month: 1,
+  day: 1,
+  hour: 0,
+  minute: 0,
+  second: 0,
+  millisecond: 0
+},
+    defaultWeekUnitValues = {
+  weekNumber: 1,
+  weekday: 1,
+  hour: 0,
+  minute: 0,
+  second: 0,
+  millisecond: 0
+},
+    defaultOrdinalUnitValues = {
+  ordinal: 1,
+  hour: 0,
+  minute: 0,
+  second: 0,
+  millisecond: 0
+}; // Units in the supported calendars, sorted by bigness
+
+var orderedUnits$1 = ["year", "month", "day", "hour", "minute", "second", "millisecond"],
+    orderedWeekUnits = ["weekYear", "weekNumber", "weekday", "hour", "minute", "second", "millisecond"],
+    orderedOrdinalUnits = ["year", "ordinal", "hour", "minute", "second", "millisecond"]; // standardize case and plurality in units
+
+function normalizeUnit(unit, ignoreUnknown) {
+  if (ignoreUnknown === void 0) {
+    ignoreUnknown = false;
+  }
+
+  var normalized = {
+    year: "year",
+    years: "year",
+    month: "month",
+    months: "month",
+    day: "day",
+    days: "day",
+    hour: "hour",
+    hours: "hour",
+    minute: "minute",
+    minutes: "minute",
+    second: "second",
+    seconds: "second",
+    millisecond: "millisecond",
+    milliseconds: "millisecond",
+    weekday: "weekday",
+    weekdays: "weekday",
+    weeknumber: "weekNumber",
+    weeksnumber: "weekNumber",
+    weeknumbers: "weekNumber",
+    weekyear: "weekYear",
+    weekyears: "weekYear",
+    ordinal: "ordinal"
+  }[unit ? unit.toLowerCase() : unit];
+  if (!ignoreUnknown && !normalized) throw new InvalidUnitError(unit);
+  return normalized;
+} // this is a dumbed down version of fromObject() that runs about 60% faster
+// but doesn't do any validation, makes a bunch of assumptions about what units
+// are present, and so on.
+
+
+function quickDT(obj, zone) {
+  // assume we have the higher-order units
+  for (var _i = 0; _i < orderedUnits$1.length; _i++) {
+    var u = orderedUnits$1[_i];
+
+    if (isUndefined(obj[u])) {
+      obj[u] = defaultUnitValues[u];
+>>>>>>> master
+    }
+
+<<<<<<< HEAD
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    return this.setZone(FixedOffsetZone.instance(offset), opts);
+  };
+  /**
+   * "Set" the DateTime's zone to the host's local zone. Returns a newly-constructed DateTime.
+   *
+   * Equivalent to `setZone('local')`
+   * @return {DateTime}
+   */
+
+
+  _proto.toLocal = function toLocal() {
+    return this.setZone(new LocalZone());
+  };
+  /**
+   * "Set" the DateTime's zone to specified zone. Returns a newly-constructed DateTime.
+   *
+   * By default, the setter keeps the underlying time the same (as in, the same UTC timestamp), but the new instance will report different local times and consider DSTs when making computations, as with {@link plus}. You may wish to use {@link toLocal} and {@link toUTC} which provide simple convenience wrappers for commonly used zones.
+   * @param {string|Zone} [zone='local'] - a zone identifier. As a string, that can be any IANA zone supported by the host environment, or a fixed-offset name of the form 'utc+3', or the strings 'local' or 'utc'. You may also supply an instance of a {@link Zone} class.
+   * @param {Object} opts - options
+   * @param {boolean} [opts.keepLocalTime=false] - If true, adjust the underlying time so that the local time stays the same, but in the target zone. You should rarely need this.
+   * @return {DateTime}
+   */
+
+=======
+  var invalid = hasInvalidGregorianData(obj) || hasInvalidTimeData(obj);
+
+  if (invalid) {
+    return DateTime.invalid(invalid);
+  }
+
+  var tsNow = Settings.now(),
+      offsetProvis = zone.offset(tsNow),
+      _objToTS = objToTS(obj, offsetProvis, zone),
+      ts = _objToTS[0],
+      o = _objToTS[1];
+
+  return new DateTime({
+    ts: ts,
+    zone: zone,
+    o: o
+  });
+}
+/**
+ * A DateTime is an immutable data structure representing a specific date and time and accompanying methods. It contains class and instance methods for creating, parsing, interrogating, transforming, and formatting them.
+ *
+ * A DateTime comprises of:
+ * * A timestamp. Each DateTime instance refers to a specific millisecond of the Unix epoch.
+ * * A time zone. Each instance is considered in the context of a specific zone (by default the local system's zone).
+ * * Configuration properties that effect how output strings are formatted, such as `locale`, `numberingSystem`, and `outputCalendar`.
+ *
+ * Here is a brief overview of the most commonly used functionality it provides:
+ *
+ * * **Creation**: To create a DateTime from its components, use one of its factory class methods: {@link local}, {@link utc}, and (most flexibly) {@link fromObject}. To create one from a standard string format, use {@link fromISO}, {@link fromHTTP}, and {@link fromRFC2822}. To create one from a custom string format, use {@link fromFormat}. To create one from a native JS date, use {@link fromJSDate}.
+ * * **Gregorian calendar and time**: To examine the Gregorian properties of a DateTime individually (i.e as opposed to collectively through {@link toObject}), use the {@link year}, {@link month},
+ * {@link day}, {@link hour}, {@link minute}, {@link second}, {@link millisecond} accessors.
+ * * **Week calendar**: For ISO week calendar attributes, see the {@link weekYear}, {@link weekNumber}, and {@link weekday} accessors.
+ * * **Configuration** See the {@link locale} and {@link numberingSystem} accessors.
+ * * **Transformation**: To transform the DateTime into other DateTimes, use {@link set}, {@link reconfigure}, {@link setZone}, {@link setLocale}, {@link plus}, {@link minus}, {@link endOf}, {@link startOf}, {@link toUTC}, and {@link toLocal}.
+ * * **Output**: To convert the DateTime to other representations, use the {@link toJSON}, {@link toISO}, {@link toHTTP}, {@link toObject}, {@link toRFC2822}, {@link toString}, {@link toLocaleString}, {@link toFormat}, {@link toMillis} and {@link toJSDate}.
+ *
+ * There's plenty others documented below. In addition, for more information on subtler topics like internationalization, time zones, alternative calendars, validity, and so on, see the external documentation.
+ */
+>>>>>>> master
+
+  _proto.setZone = function setZone(zone, _temp) {
+    var _ref3 = _temp === void 0 ? {} : _temp,
+        _ref3$keepLocalTime = _ref3.keepLocalTime,
+        keepLocalTime = _ref3$keepLocalTime === void 0 ? false : _ref3$keepLocalTime,
+        _ref3$keepCalendarTim = _ref3.keepCalendarTime,
+        keepCalendarTime = _ref3$keepCalendarTim === void 0 ? false : _ref3$keepCalendarTim;
+
+<<<<<<< HEAD
+    zone = normalizeZone(zone, Settings.defaultZone);
+
+    if (zone.equals(this.zone)) {
+      return this;
+    } else if (!zone.isValid) {
+      return DateTime.invalid(unsupportedZone(zone));
+    } else {
+      var newTS = keepLocalTime || keepCalendarTime // keepCalendarTime is the deprecated name for keepLocalTime
+      ? this.ts + (this.o - zone.offset(this.ts)) * 60 * 1000 : this.ts;
+      return clone$1(this, {
+        ts: newTS,
+        zone: zone
+      });
+    }
+  };
+  /**
+   * "Set" the locale, numberingSystem, or outputCalendar. Returns a newly-constructed DateTime.
+   * @param {Object} properties - the properties to set
+   * @example DateTime.local(2017, 5, 25).reconfigure({ locale: 'en-GB' })
+   * @return {DateTime}
+   */
+
+
+  _proto.reconfigure = function reconfigure(_temp2) {
+    var _ref4 = _temp2 === void 0 ? {} : _temp2,
+        locale = _ref4.locale,
+        numberingSystem = _ref4.numberingSystem,
+        outputCalendar = _ref4.outputCalendar;
+
+    var loc = this.loc.clone({
+      locale: locale,
+      numberingSystem: numberingSystem,
+      outputCalendar: outputCalendar
+    });
+    return clone$1(this, {
+      loc: loc
+    });
+  };
+  /**
+   * "Set" the locale. Returns a newly-constructed DateTime.
+   * Just a convenient alias for reconfigure({ locale })
+   * @example DateTime.local(2017, 5, 25).setLocale('en-GB')
+   * @return {DateTime}
+   */
+
+
+  _proto.setLocale = function setLocale(locale) {
+    return this.reconfigure({
+      locale: locale
+    });
+  };
+  /**
+   * "Set" the values of specified units. Returns a newly-constructed DateTime.
+   * You can only set units with this method; for "setting" metadata, see {@link reconfigure} and {@link setZone}.
+   * @param {Object} values - a mapping of units to numbers
+   * @example dt.set({ year: 2017 })
+   * @example dt.set({ hour: 8, minute: 30 })
+   * @example dt.set({ weekday: 5 })
+   * @example dt.set({ year: 2005, ordinal: 234 })
+   * @return {DateTime}
+   */
+
+
+  _proto.set = function set(values) {
+    if (!this.isValid) return this;
+    var normalized = normalizeObject(values, normalizeUnit),
+        settingWeekStuff = !isUndefined(normalized.weekYear) || !isUndefined(normalized.weekNumber) || !isUndefined(normalized.weekday);
+    var mixed;
+
+    if (settingWeekStuff) {
+      mixed = weekToGregorian(Object.assign(gregorianToWeek(this.c), normalized));
+    } else if (!isUndefined(normalized.ordinal)) {
+      mixed = ordinalToGregorian(Object.assign(gregorianToOrdinal(this.c), normalized));
+    } else {
+      mixed = Object.assign(this.toObject(), normalized); // if we didn't set the day but we ended up on an overflow date,
+      // use the last day of the right month
+
+      if (isUndefined(normalized.day)) {
+        mixed.day = Math.min(daysInMonth(mixed.year, mixed.month), mixed.day);
+      }
+    }
+
+    var _objToTS3 = objToTS(mixed, this.o, this.zone),
+        ts = _objToTS3[0],
+        o = _objToTS3[1];
+
+    return clone$1(this, {
+      ts: ts,
+      o: o
+    });
+  };
+  /**
+   * Add a period of time to this DateTime and return the resulting DateTime
+   *
+   * Adding hours, minutes, seconds, or milliseconds increases the timestamp by the right number of milliseconds. Adding days, months, or years shifts the calendar, accounting for DSTs and leap years along the way. Thus, `dt.plus({ hours: 24 })` may result in a different time than `dt.plus({ days: 1 })` if there's a DST shift in between.
+   * @param {Duration|Object|number} duration - The amount to add. Either a Luxon Duration, a number of milliseconds, the object argument to Duration.fromObject()
+   * @example DateTime.local().plus(123) //~> in 123 milliseconds
+   * @example DateTime.local().plus({ minutes: 15 }) //~> in 15 minutes
+   * @example DateTime.local().plus({ days: 1 }) //~> this time tomorrow
+   * @example DateTime.local().plus({ days: -1 }) //~> this time yesterday
+   * @example DateTime.local().plus({ hours: 3, minutes: 13 }) //~> in 1 hr, 13 min
+   * @example DateTime.local().plus(Duration.fromObject({ hours: 3, minutes: 13 })) //~> in 1 hr, 13 min
+   * @return {DateTime}
+   */
+
+
+  _proto.plus = function plus(duration) {
+    if (!this.isValid) return this;
+    var dur = friendlyDuration(duration);
+    return clone$1(this, adjustTime(this, dur));
+  };
+  /**
+   * Subtract a period of time to this DateTime and return the resulting DateTime
+   * See {@link plus}
+   * @param {Duration|Object|number} duration - The amount to subtract. Either a Luxon Duration, a number of milliseconds, the object argument to Duration.fromObject()
+   @return {DateTime}
+  */
+
+
+  _proto.minus = function minus(duration) {
+    if (!this.isValid) return this;
+    var dur = friendlyDuration(duration).negate();
+    return clone$1(this, adjustTime(this, dur));
+  };
+  /**
+   * "Set" this DateTime to the beginning of a unit of time.
+   * @param {string} unit - The unit to go to the beginning of. Can be 'year', 'month', 'day', 'hour', 'minute', 'second', or 'millisecond'.
+   * @example DateTime.local(2014, 3, 3).startOf('month').toISODate(); //=> '2014-03-01'
+   * @example DateTime.local(2014, 3, 3).startOf('year').toISODate(); //=> '2014-01-01'
+   * @example DateTime.local(2014, 3, 3, 5, 30).startOf('day').toISOTime(); //=> '00:00.000-05:00'
+   * @example DateTime.local(2014, 3, 3, 5, 30).startOf('hour').toISOTime(); //=> '05:00:00.000-05:00'
+   * @return {DateTime}
+   */
+
+
+  _proto.startOf = function startOf(unit) {
+    if (!this.isValid) return this;
+    var o = {},
+        normalizedUnit = Duration.normalizeUnit(unit);
+
+    switch (normalizedUnit) {
+      case "years":
+        o.month = 1;
+      // falls through
+
+      case "quarters":
+      case "months":
+        o.day = 1;
+      // falls through
+
+      case "weeks":
+      case "days":
+        o.hour = 0;
+      // falls through
+
+      case "hours":
+        o.minute = 0;
+      // falls through
+
+      case "minutes":
+        o.second = 0;
+      // falls through
+
+      case "seconds":
+        o.millisecond = 0;
+        break;
+
+      case "milliseconds":
+        break;
+
+      default:
+        throw new InvalidUnitError(unit);
+    }
+
+    if (normalizedUnit === "weeks") {
+      o.weekday = 1;
+    }
+
+    if (normalizedUnit === "quarters") {
+      var q = Math.ceil(this.month / 3);
+      o.month = (q - 1) * 3 + 1;
+    }
+
+    return this.set(o);
+  };
+  /**
+   * "Set" this DateTime to the end (i.e. the last millisecond) of a unit of time
+   * @param {string} unit - The unit to go to the end of. Can be 'year', 'month', 'day', 'hour', 'minute', 'second', or 'millisecond'.
+   * @example DateTime.local(2014, 3, 3).endOf('month').toISO(); //=> '2014-03-31T23:59:59.999-05:00'
+   * @example DateTime.local(2014, 3, 3).endOf('year').toISO(); //=> '2014-12-31T23:59:59.999-05:00'
+   * @example DateTime.local(2014, 3, 3, 5, 30).endOf('day').toISO(); //=> '2014-03-03T23:59:59.999-05:00'
+   * @example DateTime.local(2014, 3, 3, 5, 30).endOf('hour').toISO(); //=> '2014-03-03T05:59:59.999-05:00'
+   * @return {DateTime}
+   */
+=======
+var DateTime =
+/*#__PURE__*/
+function () {
+  /**
+   * @access private
+   */
+  function DateTime(config) {
+    var zone = config.zone || Settings.defaultZone,
+        invalid = config.invalid || (Number.isNaN(config.ts) ? new Invalid("invalid input") : null) || (!zone.isValid ? unsupportedZone(zone) : null);
+    /**
+     * @access private
+     */
+
+    this.ts = isUndefined(config.ts) ? Settings.now() : config.ts;
+    var c = null,
+        o = null;
+
+    if (!invalid) {
+      var unchanged = config.old && config.old.ts === this.ts && config.old.zone.equals(zone);
+      c = unchanged ? config.old.c : tsToObj(this.ts, zone.offset(this.ts));
+      o = unchanged ? config.old.o : zone.offset(this.ts);
+    }
+    /**
+     * @access private
+     */
+
+
+    this.zone = zone;
+    /**
+     * @access private
+     */
+
+    this.loc = config.loc || Locale.create();
+    /**
+     * @access private
+     */
+
+    this.invalid = invalid;
+    /**
+     * @access private
+     */
+
+    this.weekData = null;
+    /**
+     * @access private
+     */
+
+    this.c = c;
+    /**
+     * @access private
+     */
+
+    this.o = o;
+    /**
+     * @access private
+     */
+
+    this.isLuxonDateTime = true;
+  } // CONSTRUCT
+
+  /**
+   * Create a local DateTime
+   * @param {number} year - The calendar year. If omitted (as in, call `local()` with no arguments), the current time will be used
+   * @param {number} [month=1] - The month, 1-indexed
+   * @param {number} [day=1] - The day of the month
+   * @param {number} [hour=0] - The hour of the day, in 24-hour time
+   * @param {number} [minute=0] - The minute of the hour, i.e. a number between 0 and 59
+   * @param {number} [second=0] - The second of the minute, i.e. a number between 0 and 59
+   * @param {number} [millisecond=0] - The millisecond of the second, i.e. a number between 0 and 999
+   * @example DateTime.local()                            //~> now
+   * @example DateTime.local(2017)                        //~> 2017-01-01T00:00:00
+   * @example DateTime.local(2017, 3)                     //~> 2017-03-01T00:00:00
+   * @example DateTime.local(2017, 3, 12)                 //~> 2017-03-12T00:00:00
+   * @example DateTime.local(2017, 3, 12, 5)              //~> 2017-03-12T05:00:00
+   * @example DateTime.local(2017, 3, 12, 5, 45)          //~> 2017-03-12T05:45:00
+   * @example DateTime.local(2017, 3, 12, 5, 45, 10)      //~> 2017-03-12T05:45:10
+   * @example DateTime.local(2017, 3, 12, 5, 45, 10, 765) //~> 2017-03-12T05:45:10.765
+   * @return {DateTime}
+   */
+
+
+  DateTime.local = function local(year, month, day, hour, minute, second, millisecond) {
+    if (isUndefined(year)) {
+      return new DateTime({
+        ts: Settings.now()
+      });
+    } else {
+      return quickDT({
+        year: year,
+        month: month,
+        day: day,
+        hour: hour,
+        minute: minute,
+        second: second,
+        millisecond: millisecond
+      }, Settings.defaultZone);
+    }
+  };
+  /**
+   * Create a DateTime in UTC
+   * @param {number} year - The calendar year. If omitted (as in, call `utc()` with no arguments), the current time will be used
+   * @param {number} [month=1] - The month, 1-indexed
+   * @param {number} [day=1] - The day of the month
+   * @param {number} [hour=0] - The hour of the day, in 24-hour time
+   * @param {number} [minute=0] - The minute of the hour, i.e. a number between 0 and 59
+   * @param {number} [second=0] - The second of the minute, i.e. a number between 0 and 59
+   * @param {number} [millisecond=0] - The millisecond of the second, i.e. a number between 0 and 999
+   * @example DateTime.utc()                            //~> now
+   * @example DateTime.utc(2017)                        //~> 2017-01-01T00:00:00Z
+   * @example DateTime.utc(2017, 3)                     //~> 2017-03-01T00:00:00Z
+   * @example DateTime.utc(2017, 3, 12)                 //~> 2017-03-12T00:00:00Z
+   * @example DateTime.utc(2017, 3, 12, 5)              //~> 2017-03-12T05:00:00Z
+   * @example DateTime.utc(2017, 3, 12, 5, 45)          //~> 2017-03-12T05:45:00Z
+   * @example DateTime.utc(2017, 3, 12, 5, 45, 10)      //~> 2017-03-12T05:45:10Z
+   * @example DateTime.utc(2017, 3, 12, 5, 45, 10, 765) //~> 2017-03-12T05:45:10.765Z
+   * @return {DateTime}
+   */
+
+
+  DateTime.utc = function utc(year, month, day, hour, minute, second, millisecond) {
+    if (isUndefined(year)) {
+      return new DateTime({
+        ts: Settings.now(),
+        zone: FixedOffsetZone.utcInstance
+      });
+    } else {
+      return quickDT({
+        year: year,
+        month: month,
+        day: day,
+        hour: hour,
+        minute: minute,
+        second: second,
+        millisecond: millisecond
+      }, FixedOffsetZone.utcInstance);
+    }
+  };
+  /**
+   * Create a DateTime from a Javascript Date object. Uses the default zone.
+   * @param {Date} date - a Javascript Date object
+   * @param {Object} options - configuration options for the DateTime
+   * @param {string|Zone} [options.zone='local'] - the zone to place the DateTime into
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromJSDate = function fromJSDate(date, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    return new DateTime({
+      ts: isDate(date) ? date.valueOf() : NaN,
+      zone: normalizeZone(options.zone, Settings.defaultZone),
+      loc: Locale.fromObject(options)
+    });
+  };
+  /**
+   * Create a DateTime from a number of milliseconds since the epoch (i.e. since 1 January 1970 00:00:00 UTC). Uses the default zone.
+   * @param {number} milliseconds - a number of milliseconds since 1970 UTC
+   * @param {Object} options - configuration options for the DateTime
+   * @param {string|Zone} [options.zone='local'] - the zone to place the DateTime into
+   * @param {string} [options.locale] - a locale to set on the resulting DateTime instance
+   * @param {string} options.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @param {string} options.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromMillis = function fromMillis(milliseconds, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    if (!isNumber(milliseconds)) {
+      throw new InvalidArgumentError("fromMillis requires a numerical input");
+    } else {
+      return new DateTime({
+        ts: milliseconds,
+        zone: normalizeZone(options.zone, Settings.defaultZone),
+        loc: Locale.fromObject(options)
+      });
+    }
+  };
+  /**
+   * Create a DateTime from a number of seconds since the epoch (i.e. since 1 January 1970 00:00:00 UTC). Uses the default zone.
+   * @param {number} seconds - a number of seconds since 1970 UTC
+   * @param {Object} options - configuration options for the DateTime
+   * @param {string|Zone} [options.zone='local'] - the zone to place the DateTime into
+   * @param {string} [options.locale] - a locale to set on the resulting DateTime instance
+   * @param {string} options.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @param {string} options.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromSeconds = function fromSeconds(seconds, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    if (!isNumber(seconds)) {
+      throw new InvalidArgumentError("fromSeconds requires a numerical input");
+    } else {
+      return new DateTime({
+        ts: seconds * 1000,
+        zone: normalizeZone(options.zone, Settings.defaultZone),
+        loc: Locale.fromObject(options)
+      });
+    }
+  };
+  /**
+   * Create a DateTime from a Javascript object with keys like 'year' and 'hour' with reasonable defaults.
+   * @param {Object} obj - the object to create the DateTime from
+   * @param {number} obj.year - a year, such as 1987
+   * @param {number} obj.month - a month, 1-12
+   * @param {number} obj.day - a day of the month, 1-31, depending on the month
+   * @param {number} obj.ordinal - day of the year, 1-365 or 366
+   * @param {number} obj.weekYear - an ISO week year
+   * @param {number} obj.weekNumber - an ISO week number, between 1 and 52 or 53, depending on the year
+   * @param {number} obj.weekday - an ISO weekday, 1-7, where 1 is Monday and 7 is Sunday
+   * @param {number} obj.hour - hour of the day, 0-23
+   * @param {number} obj.minute - minute of the hour, 0-59
+   * @param {number} obj.second - second of the minute, 0-59
+   * @param {number} obj.millisecond - millisecond of the second, 0-999
+   * @param {string|Zone} [obj.zone='local'] - interpret the numbers in the context of a particular zone. Can take any value taken as the first argument to setZone()
+   * @param {string} [obj.locale='en-US'] - a locale to set on the resulting DateTime instance
+   * @param {string} obj.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @param {string} obj.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @example DateTime.fromObject({ year: 1982, month: 5, day: 25}).toISODate() //=> '1982-05-25'
+   * @example DateTime.fromObject({ year: 1982 }).toISODate() //=> '1982-01-01T00'
+   * @example DateTime.fromObject({ hour: 10, minute: 26, second: 6 }) //~> today at 10:26:06
+   * @example DateTime.fromObject({ hour: 10, minute: 26, second: 6, zone: 'utc' }),
+   * @example DateTime.fromObject({ hour: 10, minute: 26, second: 6, zone: 'local' })
+   * @example DateTime.fromObject({ hour: 10, minute: 26, second: 6, zone: 'America/New_York' })
+   * @example DateTime.fromObject({ weekYear: 2016, weekNumber: 2, weekday: 3 }).toISODate() //=> '2016-01-13'
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromObject = function fromObject(obj) {
+    var zoneToUse = normalizeZone(obj.zone, Settings.defaultZone);
+
+    if (!zoneToUse.isValid) {
+      return DateTime.invalid(unsupportedZone(zoneToUse));
+    }
+
+    var tsNow = Settings.now(),
+        offsetProvis = zoneToUse.offset(tsNow),
+        normalized = normalizeObject(obj, normalizeUnit, true),
+        containsOrdinal = !isUndefined(normalized.ordinal),
+        containsGregorYear = !isUndefined(normalized.year),
+        containsGregorMD = !isUndefined(normalized.month) || !isUndefined(normalized.day),
+        containsGregor = containsGregorYear || containsGregorMD,
+        definiteWeekDef = normalized.weekYear || normalized.weekNumber,
+        loc = Locale.fromObject(obj); // cases:
+    // just a weekday -> this week's instance of that weekday, no worries
+    // (gregorian data or ordinal) + (weekYear or weekNumber) -> error
+    // (gregorian month or day) + ordinal -> error
+    // otherwise just use weeks or ordinals or gregorian, depending on what's specified
+
+    if ((containsGregor || containsOrdinal) && definiteWeekDef) {
+      throw new ConflictingSpecificationError("Can't mix weekYear/weekNumber units with year/month/day or ordinals");
+    }
+
+    if (containsGregorMD && containsOrdinal) {
+      throw new ConflictingSpecificationError("Can't mix ordinal dates with month/day");
+    }
+
+    var useWeekData = definiteWeekDef || normalized.weekday && !containsGregor; // configure ourselves to deal with gregorian dates or week stuff
+>>>>>>> master
+
+    var units,
+        defaultValues,
+        objNow = tsToObj(tsNow, offsetProvis);
+
+<<<<<<< HEAD
+  _proto.endOf = function endOf(unit) {
+    var _this$startOf$plus;
+
+    return this.isValid ? this.startOf(unit).plus((_this$startOf$plus = {}, _this$startOf$plus[unit] = 1, _this$startOf$plus)).minus(1) : this;
+  }; // OUTPUT
+
+  /**
+   * Returns a string representation of this DateTime formatted according to the specified format string.
+   * **You may not want this.** See {@link toLocaleString} for a more flexible formatting tool. For a table of tokens and their interpretations, see [here](https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens).
+   * Defaults to en-US if no locale has been specified, regardless of the system's locale.
+   * @see https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens
+   * @param {string} fmt - the format string
+   * @param {Object} opts - opts to override the configuration options
+   * @example DateTime.local().toFormat('yyyy LLL dd') //=> '2017 Apr 22'
+   * @example DateTime.local().setLocale('fr').toFormat('yyyy LLL dd') //=> '2017 avr. 22'
+   * @example DateTime.local().toFormat('yyyy LLL dd', { locale: "fr" }) //=> '2017 avr. 22'
+   * @example DateTime.local().toFormat("HH 'hours and' mm 'minutes'") //=> '20 hours and 55 minutes'
+   * @return {string}
+   */
+=======
+    if (useWeekData) {
+      units = orderedWeekUnits;
+      defaultValues = defaultWeekUnitValues;
+      objNow = gregorianToWeek(objNow);
+    } else if (containsOrdinal) {
+      units = orderedOrdinalUnits;
+      defaultValues = defaultOrdinalUnitValues;
+      objNow = gregorianToOrdinal(objNow);
+    } else {
+      units = orderedUnits$1;
+      defaultValues = defaultUnitValues;
+    } // set default values for missing stuff
+
+
+    var foundFirst = false;
+>>>>>>> master
+
+    for (var _iterator = units, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+      var _ref2;
+
+<<<<<<< HEAD
+  _proto.toFormat = function toFormat(fmt, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    return this.isValid ? Formatter.create(this.loc.redefaultToEN(opts)).formatDateTimeFromString(this, fmt) : INVALID$2;
+  };
+  /**
+   * Returns a localized string representing this date. Accepts the same options as the Intl.DateTimeFormat constructor and any presets defined by Luxon, such as `DateTime.DATE_FULL` or `DateTime.TIME_SIMPLE`.
+   * The exact behavior of this method is browser-specific, but in general it will return an appropriate representation.
+   * of the DateTime in the assigned locale.
+   * Defaults to the system's locale if no locale has been specified
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
+   * @param opts {Object} - Intl.DateTimeFormat constructor options and configuration options
+   * @example DateTime.local().toLocaleString(); //=> 4/20/2017
+   * @example DateTime.local().setLocale('en-gb').toLocaleString(); //=> '20/04/2017'
+   * @example DateTime.local().toLocaleString({ locale: "en-gb" }); //=> '20/04/2017'
+   * @example DateTime.local().toLocaleString(DateTime.DATE_FULL); //=> 'April 20, 2017'
+   * @example DateTime.local().toLocaleString(DateTime.TIME_SIMPLE); //=> '11:32 AM'
+   * @example DateTime.local().toLocaleString(DateTime.DATETIME_SHORT); //=> '4/20/2017, 11:32 AM'
+   * @example DateTime.local().toLocaleString({weekday: 'long', month: 'long', day: '2-digit'}); //=> 'Thu, Apr 20'
+   * @example DateTime.local().toLocaleString({weekday: 'long', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit'}); //=> 'Thu, Apr 20, 11:27'
+   * @example DateTime.local().toLocaleString({hour: '2-digit', minute: '2-digit'}); //=> '11:32'
+   * @return {string}
+   */
+
+=======
+      if (_isArray) {
+        if (_i2 >= _iterator.length) break;
+        _ref2 = _iterator[_i2++];
+      } else {
+        _i2 = _iterator.next();
+        if (_i2.done) break;
+        _ref2 = _i2.value;
+      }
+
+      var u = _ref2;
+      var v = normalized[u];
+
+      if (!isUndefined(v)) {
+        foundFirst = true;
+      } else if (foundFirst) {
+        normalized[u] = defaultValues[u];
+      } else {
+        normalized[u] = objNow[u];
+      }
+    } // make sure the values we have are in range
+>>>>>>> master
+
+  _proto.toLocaleString = function toLocaleString(opts) {
+    if (opts === void 0) {
+      opts = DATE_SHORT;
+    }
+
+<<<<<<< HEAD
+    return this.isValid ? Formatter.create(this.loc.clone(opts), opts).formatDateTime(this) : INVALID$2;
+  };
+  /**
+   * Returns an array of format "parts", i.e. individual tokens along with metadata. This is allows callers to post-process individual sections of the formatted output.
+   * Defaults to the system's locale if no locale has been specified
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat/formatToParts
+   * @param opts {Object} - Intl.DateTimeFormat constructor options, same as `toLocaleString`.
+   * @example DateTime.local().toLocaleString(); //=> [
+   *                                    //=>   { type: 'day', value: '25' },
+   *                                    //=>   { type: 'literal', value: '/' },
+   *                                    //=>   { type: 'month', value: '05' },
+   *                                    //=>   { type: 'literal', value: '/' },
+   *                                    //=>   { type: 'year', value: '1982' }
+   *                                    //=> ]
+   */
+=======
+    var higherOrderInvalid = useWeekData ? hasInvalidWeekData(normalized) : containsOrdinal ? hasInvalidOrdinalData(normalized) : hasInvalidGregorianData(normalized),
+        invalid = higherOrderInvalid || hasInvalidTimeData(normalized);
+>>>>>>> master
+
+    if (invalid) {
+      return DateTime.invalid(invalid);
+    } // compute the actual time
+
+<<<<<<< HEAD
+  _proto.toLocaleParts = function toLocaleParts(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    return this.isValid ? Formatter.create(this.loc.clone(opts), opts).formatDateTimeParts(this) : [];
+  };
+  /**
+   * Returns an ISO 8601-compliant string representation of this DateTime
+   * @param {Object} opts - options
+   * @param {boolean} [opts.suppressMilliseconds=false] - exclude milliseconds from the format if they're 0
+   * @param {boolean} [opts.suppressSeconds=false] - exclude seconds from the format if they're 0
+   * @param {boolean} [opts.includeOffset=true] - include the offset, such as 'Z' or '-04:00'
+   * @example DateTime.utc(1982, 5, 25).toISO() //=> '1982-05-25T00:00:00.000Z'
+   * @example DateTime.local().toISO() //=> '2017-04-22T20:47:05.335-04:00'
+   * @example DateTime.local().toISO({ includeOffset: false }) //=> '2017-04-22T20:47:05.335'
+   * @return {string}
+   */
+=======
+>>>>>>> master
+
+    var gregorian = useWeekData ? weekToGregorian(normalized) : containsOrdinal ? ordinalToGregorian(normalized) : normalized,
+        _objToTS2 = objToTS(gregorian, offsetProvis, zoneToUse),
+        tsFinal = _objToTS2[0],
+        offsetFinal = _objToTS2[1],
+        inst = new DateTime({
+      ts: tsFinal,
+      zone: zoneToUse,
+      o: offsetFinal,
+      loc: loc
+    }); // gregorian data + weekday serves only to validate
+
+<<<<<<< HEAD
+  _proto.toISO = function toISO(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    if (!this.isValid) {
+      return null;
+    }
+
+    return this.toISODate() + "T" + this.toISOTime(opts);
+  };
+  /**
+   * Returns an ISO 8601-compliant string representation of this DateTime's date component
+   * @example DateTime.utc(1982, 5, 25).toISODate() //=> '1982-05-25'
+   * @return {string}
+   */
+
+
+  _proto.toISODate = function toISODate() {
+    return toTechFormat(this, "yyyy-MM-dd");
+  };
+  /**
+   * Returns an ISO 8601-compliant string representation of this DateTime's week date
+   * @example DateTime.utc(1982, 5, 25).toISOWeekDate() //=> '1982-W21-2'
+   * @return {string}
+   */
+=======
+
+    if (normalized.weekday && containsGregor && obj.weekday !== inst.weekday) {
+      return DateTime.invalid("mismatched weekday", "you can't specify both a weekday of " + normalized.weekday + " and a date of " + inst.toISO());
+    }
+
+    return inst;
+  };
+  /**
+   * Create a DateTime from an ISO 8601 string
+   * @param {string} text - the ISO string
+   * @param {Object} opts - options to affect the creation
+   * @param {string|Zone} [opts.zone='local'] - use this zone if no offset is specified in the input string itself. Will also convert the time to this zone
+   * @param {boolean} [opts.setZone=false] - override the zone with a fixed-offset zone specified in the string itself, if it specifies one
+   * @param {string} [opts.locale='en-US'] - a locale to set on the resulting DateTime instance
+   * @param {string} opts.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @param {string} opts.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @example DateTime.fromISO('2016-05-25T09:08:34.123')
+   * @example DateTime.fromISO('2016-05-25T09:08:34.123+06:00')
+   * @example DateTime.fromISO('2016-05-25T09:08:34.123+06:00', {setZone: true})
+   * @example DateTime.fromISO('2016-05-25T09:08:34.123', {zone: 'utc'})
+   * @example DateTime.fromISO('2016-W05-4')
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromISO = function fromISO(text, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+>>>>>>> master
+
+    var _parseISODate = parseISODate(text),
+        vals = _parseISODate[0],
+        parsedZone = _parseISODate[1];
+
+<<<<<<< HEAD
+  _proto.toISOWeekDate = function toISOWeekDate() {
+    return toTechFormat(this, "kkkk-'W'WW-c");
+  };
+  /**
+   * Returns an ISO 8601-compliant string representation of this DateTime's time component
+   * @param {Object} opts - options
+   * @param {boolean} [opts.suppressMilliseconds=false] - exclude milliseconds from the format if they're 0
+   * @param {boolean} [opts.suppressSeconds=false] - exclude seconds from the format if they're 0
+   * @param {boolean} [opts.includeOffset=true] - include the offset, such as 'Z' or '-04:00'
+   * @example DateTime.utc().hour(7).minute(34).toISOTime() //=> '07:34:19.361Z'
+   * @example DateTime.utc().hour(7).minute(34).toISOTime({ suppressSeconds: true }) //=> '07:34Z'
+   * @return {string}
+   */
+
+
+  _proto.toISOTime = function toISOTime(_temp3) {
+    var _ref5 = _temp3 === void 0 ? {} : _temp3,
+        _ref5$suppressMillise = _ref5.suppressMilliseconds,
+        suppressMilliseconds = _ref5$suppressMillise === void 0 ? false : _ref5$suppressMillise,
+        _ref5$suppressSeconds = _ref5.suppressSeconds,
+        suppressSeconds = _ref5$suppressSeconds === void 0 ? false : _ref5$suppressSeconds,
+        _ref5$includeOffset = _ref5.includeOffset,
+        includeOffset = _ref5$includeOffset === void 0 ? true : _ref5$includeOffset;
+
+    return toTechTimeFormat(this, {
+      suppressSeconds: suppressSeconds,
+      suppressMilliseconds: suppressMilliseconds,
+      includeOffset: includeOffset
+    });
+  };
+  /**
+   * Returns an RFC 2822-compatible string representation of this DateTime, always in UTC
+   * @example DateTime.utc(2014, 7, 13).toRFC2822() //=> 'Sun, 13 Jul 2014 00:00:00 +0000'
+   * @example DateTime.local(2014, 7, 13).toRFC2822() //=> 'Sun, 13 Jul 2014 00:00:00 -0400'
+   * @return {string}
+   */
+
+
+  _proto.toRFC2822 = function toRFC2822() {
+    return toTechFormat(this, "EEE, dd LLL yyyy HH:mm:ss ZZZ");
+  };
+  /**
+   * Returns a string representation of this DateTime appropriate for use in HTTP headers.
+   * Specifically, the string conforms to RFC 1123.
+   * @see https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1
+   * @example DateTime.utc(2014, 7, 13).toHTTP() //=> 'Sun, 13 Jul 2014 00:00:00 GMT'
+   * @example DateTime.utc(2014, 7, 13, 19).toHTTP() //=> 'Sun, 13 Jul 2014 19:00:00 GMT'
+   * @return {string}
+   */
+
+
+  _proto.toHTTP = function toHTTP() {
+    return toTechFormat(this.toUTC(), "EEE, dd LLL yyyy HH:mm:ss 'GMT'");
+  };
+  /**
+   * Returns a string representation of this DateTime appropriate for use in SQL Date
+   * @example DateTime.utc(2014, 7, 13).toSQLDate() //=> '2014-07-13'
+   * @return {string}
+   */
+
+
+  _proto.toSQLDate = function toSQLDate() {
+    return toTechFormat(this, "yyyy-MM-dd");
+  };
+  /**
+   * Returns a string representation of this DateTime appropriate for use in SQL Time
+   * @param {Object} opts - options
+   * @param {boolean} [opts.includeZone=false] - include the zone, such as 'America/New_York'. Overides includeOffset.
+   * @param {boolean} [opts.includeOffset=true] - include the offset, such as 'Z' or '-04:00'
+   * @example DateTime.utc().toSQL() //=> '05:15:16.345'
+   * @example DateTime.local().toSQL() //=> '05:15:16.345 -04:00'
+   * @example DateTime.local().toSQL({ includeOffset: false }) //=> '05:15:16.345'
+   * @example DateTime.local().toSQL({ includeZone: false }) //=> '05:15:16.345 America/New_York'
+   * @return {string}
+   */
+
+
+  _proto.toSQLTime = function toSQLTime(_temp4) {
+    var _ref6 = _temp4 === void 0 ? {} : _temp4,
+        _ref6$includeOffset = _ref6.includeOffset,
+        includeOffset = _ref6$includeOffset === void 0 ? true : _ref6$includeOffset,
+        _ref6$includeZone = _ref6.includeZone,
+        includeZone = _ref6$includeZone === void 0 ? false : _ref6$includeZone;
+
+    return toTechTimeFormat(this, {
+      includeOffset: includeOffset,
+      includeZone: includeZone,
+      spaceZone: true
+    });
+  };
+  /**
+   * Returns a string representation of this DateTime appropriate for use in SQL DateTime
+   * @param {Object} opts - options
+   * @param {boolean} [opts.includeZone=false] - include the zone, such as 'America/New_York'. Overrides includeOffset.
+   * @param {boolean} [opts.includeOffset=true] - include the offset, such as 'Z' or '-04:00'
+   * @example DateTime.utc(2014, 7, 13).toSQL() //=> '2014-07-13 00:00:00.000 Z'
+   * @example DateTime.local(2014, 7, 13).toSQL() //=> '2014-07-13 00:00:00.000 -04:00'
+   * @example DateTime.local(2014, 7, 13).toSQL({ includeOffset: false }) //=> '2014-07-13 00:00:00.000'
+   * @example DateTime.local(2014, 7, 13).toSQL({ includeZone: true }) //=> '2014-07-13 00:00:00.000 America/New_York'
+   * @return {string}
+   */
+
+
+  _proto.toSQL = function toSQL(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    if (!this.isValid) {
+      return null;
+    }
+
+    return this.toSQLDate() + " " + this.toSQLTime(opts);
+  };
+  /**
+   * Returns a string representation of this DateTime appropriate for debugging
+   * @return {string}
+   */
+
+
+  _proto.toString = function toString() {
+    return this.isValid ? this.toISO() : INVALID$2;
+  };
+  /**
+   * Returns the epoch milliseconds of this DateTime. Alias of {@link toMillis}
+   * @return {number}
+   */
+
+
+  _proto.valueOf = function valueOf() {
+    return this.toMillis();
+  };
+  /**
+   * Returns the epoch milliseconds of this DateTime.
+   * @return {number}
+   */
+
+
+  _proto.toMillis = function toMillis() {
+    return this.isValid ? this.ts : NaN;
+  };
+  /**
+   * Returns the epoch seconds of this DateTime.
+   * @return {number}
+   */
+
+
+  _proto.toSeconds = function toSeconds() {
+    return this.isValid ? this.ts / 1000 : NaN;
+  };
+  /**
+   * Returns an ISO 8601 representation of this DateTime appropriate for use in JSON.
+   * @return {string}
+   */
+
+
+  _proto.toJSON = function toJSON() {
+    return this.toISO();
+  };
+  /**
+   * Returns a BSON serializable equivalent to this DateTime.
+   * @return {Date}
+   */
+
+
+  _proto.toBSON = function toBSON() {
+    return this.toJSDate();
+  };
+  /**
+   * Returns a Javascript object with this DateTime's year, month, day, and so on.
+   * @param opts - options for generating the object
+   * @param {boolean} [opts.includeConfig=false] - include configuration attributes in the output
+   * @example DateTime.local().toObject() //=> { year: 2017, month: 4, day: 22, hour: 20, minute: 49, second: 42, millisecond: 268 }
+   * @return {Object}
+   */
+
+
+  _proto.toObject = function toObject(opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    if (!this.isValid) return {};
+    var base = Object.assign({}, this.c);
+
+    if (opts.includeConfig) {
+      base.outputCalendar = this.outputCalendar;
+      base.numberingSystem = this.loc.numberingSystem;
+      base.locale = this.loc.locale;
+    }
+
+    return base;
+  };
+  /**
+   * Returns a Javascript Date equivalent to this DateTime.
+   * @return {Date}
+   */
+
+=======
+    return parseDataToDateTime(vals, parsedZone, opts, "ISO 8601", text);
+  };
+  /**
+   * Create a DateTime from an RFC 2822 string
+   * @param {string} text - the RFC 2822 string
+   * @param {Object} opts - options to affect the creation
+   * @param {string|Zone} [opts.zone='local'] - convert the time to this zone. Since the offset is always specified in the string itself, this has no effect on the interpretation of string, merely the zone the resulting DateTime is expressed in.
+   * @param {boolean} [opts.setZone=false] - override the zone with a fixed-offset zone specified in the string itself, if it specifies one
+   * @param {string} [opts.locale='en-US'] - a locale to set on the resulting DateTime instance
+   * @param {string} opts.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @param {string} opts.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @example DateTime.fromRFC2822('25 Nov 2016 13:23:12 GMT')
+   * @example DateTime.fromRFC2822('Tue, 25 Nov 2016 13:23:12 +0600')
+   * @example DateTime.fromRFC2822('25 Nov 2016 13:23 Z')
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromRFC2822 = function fromRFC2822(text, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    var _parseRFC2822Date = parseRFC2822Date(text),
+        vals = _parseRFC2822Date[0],
+        parsedZone = _parseRFC2822Date[1];
+
+    return parseDataToDateTime(vals, parsedZone, opts, "RFC 2822", text);
+  };
+  /**
+   * Create a DateTime from an HTTP header date
+   * @see https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1
+   * @param {string} text - the HTTP header date
+   * @param {Object} opts - options to affect the creation
+   * @param {string|Zone} [opts.zone='local'] - convert the time to this zone. Since HTTP dates are always in UTC, this has no effect on the interpretation of string, merely the zone the resulting DateTime is expressed in.
+   * @param {boolean} [opts.setZone=false] - override the zone with the fixed-offset zone specified in the string. For HTTP dates, this is always UTC, so this option is equivalent to setting the `zone` option to 'utc', but this option is included for consistency with similar methods.
+   * @param {string} [opts.locale='en-US'] - a locale to set on the resulting DateTime instance
+   * @param {string} opts.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @param {string} opts.numberingSystem - the numbering system to set on the resulting DateTime instance
+   * @example DateTime.fromHTTP('Sun, 06 Nov 1994 08:49:37 GMT')
+   * @example DateTime.fromHTTP('Sunday, 06-Nov-94 08:49:37 GMT')
+   * @example DateTime.fromHTTP('Sun Nov  6 08:49:37 1994')
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromHTTP = function fromHTTP(text, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    var _parseHTTPDate = parseHTTPDate(text),
+        vals = _parseHTTPDate[0],
+        parsedZone = _parseHTTPDate[1];
+
+    return parseDataToDateTime(vals, parsedZone, opts, "HTTP", opts);
+  };
+  /**
+   * Create a DateTime from an input string and format string
+   * Defaults to en-US if no locale has been specified, regardless of the system's locale
+   * @param {string} text - the string to parse
+   * @param {string} fmt - the format the string is expected to be in (see description)
+   * @param {Object} opts - options to affect the creation
+   * @param {string|Zone} [opts.zone='local'] - use this zone if no offset is specified in the input string itself. Will also convert the DateTime to this zone
+   * @param {boolean} [opts.setZone=false] - override the zone with a zone specified in the string itself, if it specifies one
+   * @param {string} [opts.locale='en-US'] - a locale string to use when parsing. Will also set the DateTime to this locale
+   * @param {string} opts.numberingSystem - the numbering system to use when parsing. Will also set the resulting DateTime to this numbering system
+   * @param {string} opts.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromFormat = function fromFormat(text, fmt, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    if (isUndefined(text) || isUndefined(fmt)) {
+      throw new InvalidArgumentError("fromFormat requires an input string and a format");
+    }
+
+    var _opts = opts,
+        _opts$locale = _opts.locale,
+        locale = _opts$locale === void 0 ? null : _opts$locale,
+        _opts$numberingSystem = _opts.numberingSystem,
+        numberingSystem = _opts$numberingSystem === void 0 ? null : _opts$numberingSystem,
+        localeToUse = Locale.fromOpts({
+      locale: locale,
+      numberingSystem: numberingSystem,
+      defaultToEN: true
+    }),
+        _parseFromTokens = parseFromTokens(localeToUse, text, fmt),
+        vals = _parseFromTokens[0],
+        parsedZone = _parseFromTokens[1],
+        invalid = _parseFromTokens[2];
+
+    if (invalid) {
+      return DateTime.invalid(invalid);
+    } else {
+      return parseDataToDateTime(vals, parsedZone, opts, "format " + fmt, text);
+    }
+  };
+  /**
+   * @deprecated use fromFormat instead
+   */
+
+
+  DateTime.fromString = function fromString(text, fmt, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    return DateTime.fromFormat(text, fmt, opts);
+  };
+  /**
+   * Create a DateTime from a SQL date, time, or datetime
+   * Defaults to en-US if no locale has been specified, regardless of the system's locale
+   * @param {string} text - the string to parse
+   * @param {Object} opts - options to affect the creation
+   * @param {string|Zone} [opts.zone='local'] - use this zone if no offset is specified in the input string itself. Will also convert the DateTime to this zone
+   * @param {boolean} [opts.setZone=false] - override the zone with a zone specified in the string itself, if it specifies one
+   * @param {string} [opts.locale='en-US'] - a locale string to use when parsing. Will also set the DateTime to this locale
+   * @param {string} opts.numberingSystem - the numbering system to use when parsing. Will also set the resulting DateTime to this numbering system
+   * @param {string} opts.outputCalendar - the output calendar to set on the resulting DateTime instance
+   * @example DateTime.fromSQL('2017-05-15')
+   * @example DateTime.fromSQL('2017-05-15 09:12:34')
+   * @example DateTime.fromSQL('2017-05-15 09:12:34.342')
+   * @example DateTime.fromSQL('2017-05-15 09:12:34.342+06:00')
+   * @example DateTime.fromSQL('2017-05-15 09:12:34.342 America/Los_Angeles')
+   * @example DateTime.fromSQL('2017-05-15 09:12:34.342 America/Los_Angeles', { setZone: true })
+   * @example DateTime.fromSQL('2017-05-15 09:12:34.342', { zone: 'America/Los_Angeles' })
+   * @example DateTime.fromSQL('09:12:34.342')
+   * @return {DateTime}
+   */
+
+
+  DateTime.fromSQL = function fromSQL(text, opts) {
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    var _parseSQL = parseSQL(text),
+        vals = _parseSQL[0],
+        parsedZone = _parseSQL[1];
+
+    return parseDataToDateTime(vals, parsedZone, opts, "SQL", text);
+  };
+  /**
+   * Create an invalid DateTime.
+   * @param {string} reason - simple string of why this DateTime is invalid. Should not contain parameters or anything else data-dependent
+   * @param {string} [explanation=null] - longer explanation, may include parameters and other useful debugging information
+   * @return {DateTime}
+   */
+
+
+  DateTime.invalid = function invalid(reason, explanation) {
+    if (explanation === void 0) {
+      explanation = null;
+    }
+
+    if (!reason) {
+      throw new InvalidArgumentError("need to specify a reason the DateTime is invalid");
+    }
+
+    var invalid = reason instanceof Invalid ? reason : new Invalid(reason, explanation);
+
+    if (Settings.throwOnInvalid) {
+      throw new InvalidDateTimeError(invalid);
+    } else {
+      return new DateTime({
+        invalid: invalid
+      });
+    }
+  };
+  /**
+   * Check if an object is a DateTime. Works across context boundaries
+   * @param {object} o
+   * @return {boolean}
+   */
+
+
+  DateTime.isDateTime = function isDateTime(o) {
+    return o.isLuxonDateTime;
+  }; // INFO
+
+  /**
+   * Get the value of unit.
+   * @param {string} unit - a unit such as 'minute' or 'day'
+   * @example DateTime.local(2017, 7, 4).get('month'); //=> 7
+   * @example DateTime.local(2017, 7, 4).get('day'); //=> 4
+   * @return {number}
+   */
+>>>>>>> master
+
+  _proto.toJSDate = function toJSDate() {
+    return new Date(this.isValid ? this.ts : NaN);
+  }; // COMPARE
+
+<<<<<<< HEAD
+  /**
+   * Return the difference between two DateTimes as a Duration.
+   * @param {DateTime} otherDateTime - the DateTime to compare this one to
+   * @param {string|string[]} [unit=['milliseconds']] - the unit or array of units (such as 'hours' or 'days') to include in the duration.
+   * @param {Object} opts - options that affect the creation of the Duration
+   * @param {string} [opts.conversionAccuracy='casual'] - the conversion system to use
+   * @example
+   * var i1 = DateTime.fromISO('1982-05-25T09:45'),
+   *     i2 = DateTime.fromISO('1983-10-14T10:30');
+   * i2.diff(i1).toObject() //=> { milliseconds: 43807500000 }
+   * i2.diff(i1, 'hours').toObject() //=> { hours: 12168.75 }
+   * i2.diff(i1, ['months', 'days']).toObject() //=> { months: 16, days: 19.03125 }
+   * i2.diff(i1, ['months', 'days', 'hours']).toObject() //=> { months: 16, days: 19, hours: 0.75 }
+   * @return {Duration}
+   */
+
+
+  _proto.diff = function diff(otherDateTime, unit, opts) {
+    if (unit === void 0) {
+      unit = "milliseconds";
+    }
+
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    if (!this.isValid || !otherDateTime.isValid) return Duration.invalid(this.invalid || otherDateTime.invalid);
+
+    var units = maybeArray(unit).map(Duration.normalizeUnit),
+        otherIsLater = otherDateTime.valueOf() > this.valueOf(),
+        earlier = otherIsLater ? this : otherDateTime,
+        later = otherIsLater ? otherDateTime : this,
+        diffed = _diff(earlier, later, units, opts);
+
+    return otherIsLater ? diffed.negate() : diffed;
+  };
+  /**
+   * Return the difference between this DateTime and right now.
+   * See {@link diff}
+   * @param {string|string[]} [unit=['milliseconds']] - the unit or units units (such as 'hours' or 'days') to include in the duration
+   * @param {Object} opts - options that affect the creation of the Duration
+   * @param {string} [opts.conversionAccuracy='casual'] - the conversion system to use
+   * @return {Duration}
+   */
+
+
+  _proto.diffNow = function diffNow(unit, opts) {
+    if (unit === void 0) {
+      unit = "milliseconds";
+    }
+
+    if (opts === void 0) {
+      opts = {};
+    }
+
+    return this.diff(DateTime.local(), unit, opts);
+  };
+  /**
+   * Return an Interval spanning between this DateTime and another DateTime
+   * @param {DateTime} otherDateTime - the other end point of the Interval
+   * @return {Interval}
+   */
+
+
+  _proto.until = function until(otherDateTime) {
+    return this.isValid ? Interval.fromDateTimes(this, otherDateTime) : this;
+  };
+  /**
+   * Return whether this DateTime is in the same unit of time as another DateTime
+   * @param {DateTime} otherDateTime - the other DateTime
+   * @param {string} unit - the unit of time to check sameness on
+   * @example DateTime.local().hasSame(otherDT, 'day'); //~> true if both the same calendar day
+   * @return {boolean}
+   */
+
+
+  _proto.hasSame = function hasSame(otherDateTime, unit) {
+    if (!this.isValid) return false;
+
+    if (unit === "millisecond") {
+      return this.valueOf() === otherDateTime.valueOf();
+    } else {
+      var inputMs = otherDateTime.valueOf();
+      return this.startOf(unit) <= inputMs && inputMs <= this.endOf(unit);
+    }
+  };
+  /**
+   * Equality check
+   * Two DateTimes are equal iff they represent the same millisecond, have the same zone and location, and are both valid.
+   * To compare just the millisecond values, use `+dt1 === ~dt2`.
+   * @param {DateTime} other - the other DateTime
+   * @return {boolean}
+   */
+
+
+  _proto.equals = function equals(other) {
+    return this.isValid && other.isValid && this.valueOf() === other.valueOf() && this.zone.equals(other.zone) && this.loc.equals(other.loc);
+  };
+  /**
+   * Return the min of several date times
+   * @param {...DateTime} dateTimes - the DateTimes from which to choose the minimum
+   * @return {DateTime} the min DateTime, or undefined if called with no argument
+   */
+
+
+  DateTime.min = function min() {
+    for (var _len = arguments.length, dateTimes = new Array(_len), _key = 0; _key < _len; _key++) {
+      dateTimes[_key] = arguments[_key];
+    }
+
+    return bestBy(dateTimes, function (i) {
+      return i.valueOf();
+    }, Math.min);
+  };
+  /**
+   * Return the max of several date times
+   * @param {...DateTime} dateTimes - the DateTimes from which to choose the maximum
+   * @return {DateTime} the max DateTime, or undefined if called with no argument
+   */
+
+
+  DateTime.max = function max() {
+    for (var _len2 = arguments.length, dateTimes = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      dateTimes[_key2] = arguments[_key2];
+    }
+
+    return bestBy(dateTimes, function (i) {
+      return i.valueOf();
+    }, Math.max);
+  }; // MISC
+
+  /**
+   * Explain how a string would be parsed by fromFormat()
+   * @param {string} text - the string to parse
+   * @param {string} fmt - the format the string is expected to be in (see description)
+   * @param {Object} options - options taken by fromFormat()
+   * @return {Object}
+   */
+
+
+  DateTime.fromFormatExplain = function fromFormatExplain(text, fmt, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    var _options = options,
+        _options$locale = _options.locale,
+        locale = _options$locale === void 0 ? null : _options$locale,
+        _options$numberingSys = _options.numberingSystem,
+        numberingSystem = _options$numberingSys === void 0 ? null : _options$numberingSys,
+        localeToUse = Locale.fromOpts({
+      locale: locale,
+      numberingSystem: numberingSystem,
+      defaultToEN: true
+    });
+    return explainFromTokens(localeToUse, text, fmt);
+  };
+  /**
+   * @deprecated use fromFormatExplain instead
+   */
+
+
+  DateTime.fromStringExplain = function fromStringExplain(text, fmt, options) {
+    if (options === void 0) {
+      options = {};
+    }
+
+    return DateTime.fromFormatExplain(text, fmt, options);
+  }; // FORMAT PRESETS
+
+  /**
+   * {@link toLocaleString} format like 10/14/1983
+   * @type {Object}
+   */
+
+
+  _createClass(DateTime, [{
+    key: "isValid",
+    get: function get() {
+      return this.invalid === null;
+    }
+    /**
+     * Returns an error code if this DateTime is invalid, or null if the DateTime is valid
+     * @type {string}
+     */
+
+  }, {
+    key: "invalidReason",
+    get: function get() {
+      return this.invalid ? this.invalid.reason : null;
+    }
+    /**
+     * Returns an explanation of why this DateTime became invalid, or null if the DateTime is valid
+     * @type {string}
+     */
+
+  }, {
+    key: "invalidExplanation",
+    get: function get() {
+      return this.invalid ? this.invalid.explanation : null;
+    }
+    /**
+     * Get the locale of a DateTime, such 'en-GB'. The locale is used when formatting the DateTime
+     *
+     * @type {string}
+     */
+
+  }, {
+    key: "locale",
+    get: function get() {
+      return this.isValid ? this.loc.locale : null;
+    }
+    /**
+     * Get the numbering system of a DateTime, such 'beng'. The numbering system is used when formatting the DateTime
+     *
+     * @type {string}
+     */
+
+  }, {
+    key: "numberingSystem",
+    get: function get() {
+      return this.isValid ? this.loc.numberingSystem : null;
+    }
+    /**
+     * Get the output calendar of a DateTime, such 'islamic'. The output calendar is used when formatting the DateTime
+     *
+     * @type {string}
+     */
+
+  }, {
+    key: "outputCalendar",
+    get: function get() {
+      return this.isValid ? this.loc.outputCalendar : null;
+    }
+    /**
+     * Get the name of the time zone.
+     * @type {string}
+     */
+=======
+  var _proto = DateTime.prototype;
+
+  _proto.get = function get(unit) {
+    return this[unit];
+  };
+  /**
+   * Returns whether the DateTime is valid. Invalid DateTimes occur when:
+   * * The DateTime was created from invalid calendar information, such as the 13th month or February 30
+   * * The DateTime was created by an operation on another invalid date
+   * @type {boolean}
+   */
+
+
   /**
    * Returns the resolved Intl options for this DateTime.
    * This is useful in understanding the behavior of formatting methods
@@ -94726,8 +96961,31 @@ function () {
    * @example DateTime.utc(2014, 7, 13).toSQLDate() //=> '2014-07-13'
    * @return {string}
    */
+>>>>>>> master
 
+  }, {
+    key: "zoneName",
+    get: function get() {
+      return this.isValid ? this.zone.name : null;
+    }
+    /**
+     * Get the year
+     * @example DateTime.local(2017, 5, 25).year //=> 2017
+     * @type {number}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "year",
+    get: function get() {
+      return this.isValid ? this.c.year : NaN;
+    }
+    /**
+     * Get the quarter
+     * @example DateTime.local(2017, 5, 25).quarter //=> 2
+     * @type {number}
+     */
+=======
   _proto.toSQLDate = function toSQLDate() {
     return toTechFormat(this, "yyyy-MM-dd");
   };
@@ -94742,8 +97000,42 @@ function () {
    * @example DateTime.local().toSQL({ includeZone: false }) //=> '05:15:16.345 America/New_York'
    * @return {string}
    */
+>>>>>>> master
 
+  }, {
+    key: "quarter",
+    get: function get() {
+      return this.isValid ? Math.ceil(this.c.month / 3) : NaN;
+    }
+    /**
+     * Get the month (1-12).
+     * @example DateTime.local(2017, 5, 25).month //=> 5
+     * @type {number}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "month",
+    get: function get() {
+      return this.isValid ? this.c.month : NaN;
+    }
+    /**
+     * Get the day of the month (1-30ish).
+     * @example DateTime.local(2017, 5, 25).day //=> 25
+     * @type {number}
+     */
+
+  }, {
+    key: "day",
+    get: function get() {
+      return this.isValid ? this.c.day : NaN;
+    }
+    /**
+     * Get the hour of the day (0-23).
+     * @example DateTime.local(2017, 5, 25, 9).hour //=> 9
+     * @type {number}
+     */
+=======
   _proto.toSQLTime = function toSQLTime(_temp4) {
     var _ref6 = _temp4 === void 0 ? {} : _temp4,
         _ref6$includeOffset = _ref6.includeOffset,
@@ -94768,13 +97060,60 @@ function () {
    * @example DateTime.local(2014, 7, 13).toSQL({ includeZone: true }) //=> '2014-07-13 00:00:00.000 America/New_York'
    * @return {string}
    */
+>>>>>>> master
 
+  }, {
+    key: "hour",
+    get: function get() {
+      return this.isValid ? this.c.hour : NaN;
+    }
+    /**
+     * Get the minute of the hour (0-59).
+     * @example DateTime.local(2017, 5, 25, 9, 30).minute //=> 30
+     * @type {number}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "minute",
+    get: function get() {
+      return this.isValid ? this.c.minute : NaN;
+=======
   _proto.toSQL = function toSQL(opts) {
     if (opts === void 0) {
       opts = {};
+>>>>>>> master
     }
+    /**
+     * Get the second of the minute (0-59).
+     * @example DateTime.local(2017, 5, 25, 9, 30, 52).second //=> 52
+     * @type {number}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "second",
+    get: function get() {
+      return this.isValid ? this.c.second : NaN;
+    }
+    /**
+     * Get the millisecond of the second (0-999).
+     * @example DateTime.local(2017, 5, 25, 9, 30, 52, 654).millisecond //=> 654
+     * @type {number}
+     */
+
+  }, {
+    key: "millisecond",
+    get: function get() {
+      return this.isValid ? this.c.millisecond : NaN;
+    }
+    /**
+     * Get the week year
+     * @see https://en.wikipedia.org/wiki/ISO_week_date
+     * @example DateTime.local(2014, 11, 31).weekYear //=> 2015
+     * @type {number}
+     */
+=======
     if (!this.isValid) {
       return null;
     }
@@ -94785,8 +97124,57 @@ function () {
    * Returns a string representation of this DateTime appropriate for debugging
    * @return {string}
    */
+>>>>>>> master
 
+  }, {
+    key: "weekYear",
+    get: function get() {
+      return this.isValid ? possiblyCachedWeekData(this).weekYear : NaN;
+    }
+    /**
+     * Get the week number of the week year (1-52ish).
+     * @see https://en.wikipedia.org/wiki/ISO_week_date
+     * @example DateTime.local(2017, 5, 25).weekNumber //=> 21
+     * @type {number}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "weekNumber",
+    get: function get() {
+      return this.isValid ? possiblyCachedWeekData(this).weekNumber : NaN;
+    }
+    /**
+     * Get the day of the week.
+     * 1 is Monday and 7 is Sunday
+     * @see https://en.wikipedia.org/wiki/ISO_week_date
+     * @example DateTime.local(2014, 11, 31).weekday //=> 4
+     * @type {number}
+     */
+
+  }, {
+    key: "weekday",
+    get: function get() {
+      return this.isValid ? possiblyCachedWeekData(this).weekday : NaN;
+    }
+    /**
+     * Get the ordinal (i.e. the day of the year)
+     * @example DateTime.local(2017, 5, 25).ordinal //=> 145
+     * @type {number|DateTime}
+     */
+
+  }, {
+    key: "ordinal",
+    get: function get() {
+      return this.isValid ? gregorianToOrdinal(this.c).ordinal : NaN;
+    }
+    /**
+     * Get the human readable short month name, such as 'Oct'.
+     * Defaults to the system's locale if no locale has been specified
+     * @example DateTime.local(2017, 10, 30).monthShort //=> Oct
+     * @type {string}
+     */
+=======
   _proto.toString = function toString() {
     return this.isValid ? this.toISO() : INVALID$2;
   };
@@ -94803,8 +97191,65 @@ function () {
    * Returns the epoch milliseconds of this DateTime.
    * @return {number}
    */
+>>>>>>> master
 
+  }, {
+    key: "monthShort",
+    get: function get() {
+      return this.isValid ? Info.months("short", {
+        locale: this.locale
+      })[this.month - 1] : null;
+    }
+    /**
+     * Get the human readable long month name, such as 'October'.
+     * Defaults to the system's locale if no locale has been specified
+     * @example DateTime.local(2017, 10, 30).monthLong //=> October
+     * @type {string}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "monthLong",
+    get: function get() {
+      return this.isValid ? Info.months("long", {
+        locale: this.locale
+      })[this.month - 1] : null;
+    }
+    /**
+     * Get the human readable short weekday, such as 'Mon'.
+     * Defaults to the system's locale if no locale has been specified
+     * @example DateTime.local(2017, 10, 30).weekdayShort //=> Mon
+     * @type {string}
+     */
+
+  }, {
+    key: "weekdayShort",
+    get: function get() {
+      return this.isValid ? Info.weekdays("short", {
+        locale: this.locale
+      })[this.weekday - 1] : null;
+    }
+    /**
+     * Get the human readable long weekday, such as 'Monday'.
+     * Defaults to the system's locale if no locale has been specified
+     * @example DateTime.local(2017, 10, 30).weekdayLong //=> Monday
+     * @type {string}
+     */
+
+  }, {
+    key: "weekdayLong",
+    get: function get() {
+      return this.isValid ? Info.weekdays("long", {
+        locale: this.locale
+      })[this.weekday - 1] : null;
+    }
+    /**
+     * Get the UTC offset of this DateTime in minutes
+     * @example DateTime.local().offset //=> -240
+     * @example DateTime.utc().offset //=> 0
+     * @type {number}
+     */
+=======
   _proto.toMillis = function toMillis() {
     return this.isValid ? this.ts : NaN;
   };
@@ -94821,8 +97266,32 @@ function () {
    * Returns an ISO 8601 representation of this DateTime appropriate for use in JSON.
    * @return {string}
    */
+>>>>>>> master
 
+  }, {
+    key: "offset",
+    get: function get() {
+      return this.isValid ? this.zone.offset(this.ts) : NaN;
+    }
+    /**
+     * Get the short human name for the zone's current offset, for example "EST" or "EDT".
+     * Defaults to the system's locale if no locale has been specified
+     * @type {string}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "offsetNameShort",
+    get: function get() {
+      if (this.isValid) {
+        return this.zone.offsetName(this.ts, {
+          format: "short",
+          locale: this.locale
+        });
+      } else {
+        return null;
+      }
+=======
   _proto.toJSON = function toJSON() {
     return this.toISO();
   };
@@ -94847,8 +97316,74 @@ function () {
   _proto.toObject = function toObject(opts) {
     if (opts === void 0) {
       opts = {};
+>>>>>>> master
     }
+    /**
+     * Get the long human name for the zone's current offset, for example "Eastern Standard Time" or "Eastern Daylight Time".
+     * Defaults to the system's locale if no locale has been specified
+     * @type {string}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "offsetNameLong",
+    get: function get() {
+      if (this.isValid) {
+        return this.zone.offsetName(this.ts, {
+          format: "long",
+          locale: this.locale
+        });
+      } else {
+        return null;
+      }
+    }
+    /**
+     * Get whether this zone's offset ever changes, as in a DST.
+     * @type {boolean}
+     */
+
+  }, {
+    key: "isOffsetFixed",
+    get: function get() {
+      return this.isValid ? this.zone.universal : null;
+    }
+    /**
+     * Get whether the DateTime is in a DST.
+     * @type {boolean}
+     */
+
+  }, {
+    key: "isInDST",
+    get: function get() {
+      if (this.isOffsetFixed) {
+        return false;
+      } else {
+        return this.offset > this.set({
+          month: 1
+        }).offset || this.offset > this.set({
+          month: 5
+        }).offset;
+      }
+    }
+    /**
+     * Returns true if this DateTime is in a leap year, false otherwise
+     * @example DateTime.local(2016).isInLeapYear //=> true
+     * @example DateTime.local(2013).isInLeapYear //=> false
+     * @type {boolean}
+     */
+
+  }, {
+    key: "isInLeapYear",
+    get: function get() {
+      return isLeapYear(this.year);
+    }
+    /**
+     * Returns the number of days in this DateTime's month
+     * @example DateTime.local(2016, 2).daysInMonth //=> 29
+     * @example DateTime.local(2016, 3).daysInMonth //=> 31
+     * @type {number}
+     */
+=======
     if (!this.isValid) return {};
     var base = Object.assign({}, this.c);
 
@@ -94864,8 +97399,26 @@ function () {
    * Returns a Javascript Date equivalent to this DateTime.
    * @return {Date}
    */
+>>>>>>> master
 
+  }, {
+    key: "daysInMonth",
+    get: function get() {
+      return daysInMonth(this.year, this.month);
+    }
+    /**
+     * Returns the number of days in this DateTime's year
+     * @example DateTime.local(2016).daysInYear //=> 366
+     * @example DateTime.local(2013).daysInYear //=> 365
+     * @type {number}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "daysInYear",
+    get: function get() {
+      return this.isValid ? daysInYear(this.year) : NaN;
+=======
   _proto.toJSDate = function toJSDate() {
     return new Date(this.isValid ? this.ts : NaN);
   }; // COMPARE
@@ -94894,8 +97447,32 @@ function () {
 
     if (opts === void 0) {
       opts = {};
+>>>>>>> master
     }
+    /**
+     * Returns the number of weeks in this DateTime's year
+     * @see https://en.wikipedia.org/wiki/ISO_week_date
+     * @example DateTime.local(2004).weeksInWeekYear //=> 53
+     * @example DateTime.local(2013).weeksInWeekYear //=> 52
+     * @type {number}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "weeksInWeekYear",
+    get: function get() {
+      return this.isValid ? weeksInWeekYear(this.weekYear) : NaN;
+    }
+  }], [{
+    key: "DATE_SHORT",
+    get: function get() {
+      return DATE_SHORT;
+    }
+    /**
+     * {@link toLocaleString} format like 'Oct 14, 1983'
+     * @type {Object}
+     */
+=======
     if (!this.isValid || !otherDateTime.isValid) return Duration.invalid(this.invalid || otherDateTime.invalid);
 
     var units = maybeArray(unit).map(Duration.normalizeUnit),
@@ -94914,8 +97491,24 @@ function () {
    * @param {string} [opts.conversionAccuracy='casual'] - the conversion system to use
    * @return {Duration}
    */
+>>>>>>> master
 
+  }, {
+    key: "DATE_MED",
+    get: function get() {
+      return DATE_MED;
+    }
+    /**
+     * {@link toLocaleString} format like 'October 14, 1983'
+     * @type {Object}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "DATE_FULL",
+    get: function get() {
+      return DATE_FULL;
+=======
   _proto.diffNow = function diffNow(unit, opts) {
     if (unit === void 0) {
       unit = "milliseconds";
@@ -94923,8 +97516,34 @@ function () {
 
     if (opts === void 0) {
       opts = {};
+>>>>>>> master
     }
+    /**
+     * {@link toLocaleString} format like 'Tuesday, October 14, 1983'
+     * @type {Object}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "DATE_HUGE",
+    get: function get() {
+      return DATE_HUGE;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_SIMPLE",
+    get: function get() {
+      return TIME_SIMPLE;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+=======
     return this.diff(DateTime.local(), unit, opts);
   };
   /**
@@ -94932,8 +97551,49 @@ function () {
    * @param {DateTime} otherDateTime - the other end point of the Interval
    * @return {Interval}
    */
+>>>>>>> master
 
+  }, {
+    key: "TIME_WITH_SECONDS",
+    get: function get() {
+      return TIME_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 AM EDT'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "TIME_WITH_SHORT_OFFSET",
+    get: function get() {
+      return TIME_WITH_SHORT_OFFSET;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 AM Eastern Daylight Time'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_WITH_LONG_OFFSET",
+    get: function get() {
+      return TIME_WITH_LONG_OFFSET;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30', always 24-hour.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_24_SIMPLE",
+    get: function get() {
+      return TIME_24_SIMPLE;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23', always 24-hour.
+     * @type {Object}
+     */
+=======
   _proto.until = function until(otherDateTime) {
     return this.isValid ? Interval.fromDateTimes(this, otherDateTime) : this;
   };
@@ -94989,8 +97649,39 @@ function () {
    * @param {...DateTime} dateTimes - the DateTimes from which to choose the maximum
    * @return {DateTime} the max DateTime, or undefined if called with no argument
    */
+>>>>>>> master
 
+  }, {
+    key: "TIME_24_WITH_SECONDS",
+    get: function get() {
+      return TIME_24_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 EDT', always 24-hour.
+     * @type {Object}
+     */
 
+<<<<<<< HEAD
+  }, {
+    key: "TIME_24_WITH_SHORT_OFFSET",
+    get: function get() {
+      return TIME_24_WITH_SHORT_OFFSET;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 Eastern Daylight Time', always 24-hour.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_24_WITH_LONG_OFFSET",
+    get: function get() {
+      return TIME_24_WITH_LONG_OFFSET;
+    }
+    /**
+     * {@link toLocaleString} format like '10/14/1983, 9:30 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+=======
   DateTime.max = function max() {
     for (var _len2 = arguments.length, dateTimes = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
       dateTimes[_key2] = arguments[_key2];
@@ -95030,8 +97721,126 @@ function () {
   /**
    * @deprecated use fromFormatExplain instead
    */
+>>>>>>> master
+
+  }, {
+    key: "DATETIME_SHORT",
+    get: function get() {
+      return DATETIME_SHORT;
+    }
+    /**
+     * {@link toLocaleString} format like '10/14/1983, 9:30:33 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+<<<<<<< HEAD
+  }, {
+    key: "DATETIME_SHORT_WITH_SECONDS",
+    get: function get() {
+      return DATETIME_SHORT_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like 'Oct 14, 1983, 9:30 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_MED",
+    get: function get() {
+      return DATETIME_MED;
+    }
+    /**
+     * {@link toLocaleString} format like 'Oct 14, 1983, 9:30:33 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_MED_WITH_SECONDS",
+    get: function get() {
+      return DATETIME_MED_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like 'October 14, 1983, 9:30 AM EDT'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_FULL",
+    get: function get() {
+      return DATETIME_FULL;
+    }
+    /**
+     * {@link toLocaleString} format like 'October 14, 1983, 9:30:33 AM EDT'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_FULL_WITH_SECONDS",
+    get: function get() {
+      return DATETIME_FULL_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like 'Friday, October 14, 1983, 9:30 AM Eastern Daylight Time'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_HUGE",
+    get: function get() {
+      return DATETIME_HUGE;
+    }
+    /**
+     * {@link toLocaleString} format like 'Friday, October 14, 1983, 9:30:33 AM Eastern Daylight Time'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_HUGE_WITH_SECONDS",
+    get: function get() {
+      return DATETIME_HUGE_WITH_SECONDS;
+    }
+  }]);
+
+  return DateTime;
+}();
+function friendlyDateTime(dateTimeish) {
+  if (DateTime.isDateTime(dateTimeish)) {
+    return dateTimeish;
+  } else if (dateTimeish && dateTimeish.valueOf && isNumber(dateTimeish.valueOf())) {
+    return DateTime.fromJSDate(dateTimeish);
+  } else if (dateTimeish && typeof dateTimeish === "object") {
+    return DateTime.fromObject(dateTimeish);
+  } else {
+    throw new InvalidArgumentError("Unknown datetime argument: " + dateTimeish + ", of type " + typeof dateTimeish);
+  }
+}
+
+exports.DateTime = DateTime;
+exports.Duration = Duration;
+exports.Interval = Interval;
+exports.Info = Info;
+exports.Zone = Zone;
+exports.FixedOffsetZone = FixedOffsetZone;
+exports.IANAZone = IANAZone;
+exports.LocalZone = LocalZone;
+exports.Settings = Settings;
+//# sourceMappingURL=luxon.js.map
 
 
+/***/ }),
+/* 499 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekStartByRegion", function() { return getWeekStartByRegion$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekStartByLocale", function() { return getWeekStartByLocale$1; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api_js__ = __webpack_require__(500);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__langRegionMap_js__ = __webpack_require__(501);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__regionDayMap_js__ = __webpack_require__(502);
+
+
+=======
   DateTime.fromStringExplain = function fromStringExplain(text, fmt, options) {
     if (options === void 0) {
       options = {};
@@ -95196,6 +98005,7 @@ function () {
      * @example DateTime.local(2017, 5, 25, 9, 30, 52, 654).millisecond //=> 654
      * @type {number}
      */
+>>>>>>> master
 
   }, {
     key: "millisecond",
@@ -95209,6 +98019,15 @@ function () {
      * @type {number}
      */
 
+<<<<<<< HEAD
+function getWeekStartByRegion$1(regionCode) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__api_js__["b" /* getWeekStartByRegion */])(regionCode, __WEBPACK_IMPORTED_MODULE_2__regionDayMap_js__["a" /* default */]);
+}
+
+function getWeekStartByLocale$1(locale) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__api_js__["a" /* getWeekStartByLocale */])(locale, __WEBPACK_IMPORTED_MODULE_1__langRegionMap_js__["a" /* default */], __WEBPACK_IMPORTED_MODULE_2__regionDayMap_js__["a" /* default */]);
+}
+=======
   }, {
     key: "weekYear",
     get: function get() {
@@ -95233,6 +98052,7 @@ function () {
      * @example DateTime.local(2014, 11, 31).weekday //=> 4
      * @type {number}
      */
+>>>>>>> master
 
   }, {
     key: "weekday",
@@ -95245,6 +98065,9 @@ function () {
      * @type {number|DateTime}
      */
 
+<<<<<<< HEAD
+//# sourceMappingURL=main.js.map
+=======
   }, {
     key: "ordinal",
     get: function get() {
@@ -95256,6 +98079,7 @@ function () {
      * @example DateTime.local(2017, 10, 30).monthShort //=> Oct
      * @type {string}
      */
+>>>>>>> master
 
   }, {
     key: "monthShort",
@@ -95271,416 +98095,7 @@ function () {
      * @type {string}
      */
 
-  }, {
-    key: "monthLong",
-    get: function get() {
-      return this.isValid ? Info.months("long", {
-        locale: this.locale
-      })[this.month - 1] : null;
-    }
-    /**
-     * Get the human readable short weekday, such as 'Mon'.
-     * Defaults to the system's locale if no locale has been specified
-     * @example DateTime.local(2017, 10, 30).weekdayShort //=> Mon
-     * @type {string}
-     */
-
-  }, {
-    key: "weekdayShort",
-    get: function get() {
-      return this.isValid ? Info.weekdays("short", {
-        locale: this.locale
-      })[this.weekday - 1] : null;
-    }
-    /**
-     * Get the human readable long weekday, such as 'Monday'.
-     * Defaults to the system's locale if no locale has been specified
-     * @example DateTime.local(2017, 10, 30).weekdayLong //=> Monday
-     * @type {string}
-     */
-
-  }, {
-    key: "weekdayLong",
-    get: function get() {
-      return this.isValid ? Info.weekdays("long", {
-        locale: this.locale
-      })[this.weekday - 1] : null;
-    }
-    /**
-     * Get the UTC offset of this DateTime in minutes
-     * @example DateTime.local().offset //=> -240
-     * @example DateTime.utc().offset //=> 0
-     * @type {number}
-     */
-
-  }, {
-    key: "offset",
-    get: function get() {
-      return this.isValid ? this.zone.offset(this.ts) : NaN;
-    }
-    /**
-     * Get the short human name for the zone's current offset, for example "EST" or "EDT".
-     * Defaults to the system's locale if no locale has been specified
-     * @type {string}
-     */
-
-  }, {
-    key: "offsetNameShort",
-    get: function get() {
-      if (this.isValid) {
-        return this.zone.offsetName(this.ts, {
-          format: "short",
-          locale: this.locale
-        });
-      } else {
-        return null;
-      }
-    }
-    /**
-     * Get the long human name for the zone's current offset, for example "Eastern Standard Time" or "Eastern Daylight Time".
-     * Defaults to the system's locale if no locale has been specified
-     * @type {string}
-     */
-
-  }, {
-    key: "offsetNameLong",
-    get: function get() {
-      if (this.isValid) {
-        return this.zone.offsetName(this.ts, {
-          format: "long",
-          locale: this.locale
-        });
-      } else {
-        return null;
-      }
-    }
-    /**
-     * Get whether this zone's offset ever changes, as in a DST.
-     * @type {boolean}
-     */
-
-  }, {
-    key: "isOffsetFixed",
-    get: function get() {
-      return this.isValid ? this.zone.universal : null;
-    }
-    /**
-     * Get whether the DateTime is in a DST.
-     * @type {boolean}
-     */
-
-  }, {
-    key: "isInDST",
-    get: function get() {
-      if (this.isOffsetFixed) {
-        return false;
-      } else {
-        return this.offset > this.set({
-          month: 1
-        }).offset || this.offset > this.set({
-          month: 5
-        }).offset;
-      }
-    }
-    /**
-     * Returns true if this DateTime is in a leap year, false otherwise
-     * @example DateTime.local(2016).isInLeapYear //=> true
-     * @example DateTime.local(2013).isInLeapYear //=> false
-     * @type {boolean}
-     */
-
-  }, {
-    key: "isInLeapYear",
-    get: function get() {
-      return isLeapYear(this.year);
-    }
-    /**
-     * Returns the number of days in this DateTime's month
-     * @example DateTime.local(2016, 2).daysInMonth //=> 29
-     * @example DateTime.local(2016, 3).daysInMonth //=> 31
-     * @type {number}
-     */
-
-  }, {
-    key: "daysInMonth",
-    get: function get() {
-      return daysInMonth(this.year, this.month);
-    }
-    /**
-     * Returns the number of days in this DateTime's year
-     * @example DateTime.local(2016).daysInYear //=> 366
-     * @example DateTime.local(2013).daysInYear //=> 365
-     * @type {number}
-     */
-
-  }, {
-    key: "daysInYear",
-    get: function get() {
-      return this.isValid ? daysInYear(this.year) : NaN;
-    }
-    /**
-     * Returns the number of weeks in this DateTime's year
-     * @see https://en.wikipedia.org/wiki/ISO_week_date
-     * @example DateTime.local(2004).weeksInWeekYear //=> 53
-     * @example DateTime.local(2013).weeksInWeekYear //=> 52
-     * @type {number}
-     */
-
-  }, {
-    key: "weeksInWeekYear",
-    get: function get() {
-      return this.isValid ? weeksInWeekYear(this.weekYear) : NaN;
-    }
-  }], [{
-    key: "DATE_SHORT",
-    get: function get() {
-      return DATE_SHORT;
-    }
-    /**
-     * {@link toLocaleString} format like 'Oct 14, 1983'
-     * @type {Object}
-     */
-
-  }, {
-    key: "DATE_MED",
-    get: function get() {
-      return DATE_MED;
-    }
-    /**
-     * {@link toLocaleString} format like 'October 14, 1983'
-     * @type {Object}
-     */
-
-  }, {
-    key: "DATE_FULL",
-    get: function get() {
-      return DATE_FULL;
-    }
-    /**
-     * {@link toLocaleString} format like 'Tuesday, October 14, 1983'
-     * @type {Object}
-     */
-
-  }, {
-    key: "DATE_HUGE",
-    get: function get() {
-      return DATE_HUGE;
-    }
-    /**
-     * {@link toLocaleString} format like '09:30 AM'. Only 12-hour if the locale is.
-     * @type {Object}
-     */
-
-  }, {
-    key: "TIME_SIMPLE",
-    get: function get() {
-      return TIME_SIMPLE;
-    }
-    /**
-     * {@link toLocaleString} format like '09:30:23 AM'. Only 12-hour if the locale is.
-     * @type {Object}
-     */
-
-  }, {
-    key: "TIME_WITH_SECONDS",
-    get: function get() {
-      return TIME_WITH_SECONDS;
-    }
-    /**
-     * {@link toLocaleString} format like '09:30:23 AM EDT'. Only 12-hour if the locale is.
-     * @type {Object}
-     */
-
-  }, {
-    key: "TIME_WITH_SHORT_OFFSET",
-    get: function get() {
-      return TIME_WITH_SHORT_OFFSET;
-    }
-    /**
-     * {@link toLocaleString} format like '09:30:23 AM Eastern Daylight Time'. Only 12-hour if the locale is.
-     * @type {Object}
-     */
-
-  }, {
-    key: "TIME_WITH_LONG_OFFSET",
-    get: function get() {
-      return TIME_WITH_LONG_OFFSET;
-    }
-    /**
-     * {@link toLocaleString} format like '09:30', always 24-hour.
-     * @type {Object}
-     */
-
-  }, {
-    key: "TIME_24_SIMPLE",
-    get: function get() {
-      return TIME_24_SIMPLE;
-    }
-    /**
-     * {@link toLocaleString} format like '09:30:23', always 24-hour.
-     * @type {Object}
-     */
-
-  }, {
-    key: "TIME_24_WITH_SECONDS",
-    get: function get() {
-      return TIME_24_WITH_SECONDS;
-    }
-    /**
-     * {@link toLocaleString} format like '09:30:23 EDT', always 24-hour.
-     * @type {Object}
-     */
-
-  }, {
-    key: "TIME_24_WITH_SHORT_OFFSET",
-    get: function get() {
-      return TIME_24_WITH_SHORT_OFFSET;
-    }
-    /**
-     * {@link toLocaleString} format like '09:30:23 Eastern Daylight Time', always 24-hour.
-     * @type {Object}
-     */
-
-  }, {
-    key: "TIME_24_WITH_LONG_OFFSET",
-    get: function get() {
-      return TIME_24_WITH_LONG_OFFSET;
-    }
-    /**
-     * {@link toLocaleString} format like '10/14/1983, 9:30 AM'. Only 12-hour if the locale is.
-     * @type {Object}
-     */
-
-  }, {
-    key: "DATETIME_SHORT",
-    get: function get() {
-      return DATETIME_SHORT;
-    }
-    /**
-     * {@link toLocaleString} format like '10/14/1983, 9:30:33 AM'. Only 12-hour if the locale is.
-     * @type {Object}
-     */
-
-  }, {
-    key: "DATETIME_SHORT_WITH_SECONDS",
-    get: function get() {
-      return DATETIME_SHORT_WITH_SECONDS;
-    }
-    /**
-     * {@link toLocaleString} format like 'Oct 14, 1983, 9:30 AM'. Only 12-hour if the locale is.
-     * @type {Object}
-     */
-
-  }, {
-    key: "DATETIME_MED",
-    get: function get() {
-      return DATETIME_MED;
-    }
-    /**
-     * {@link toLocaleString} format like 'Oct 14, 1983, 9:30:33 AM'. Only 12-hour if the locale is.
-     * @type {Object}
-     */
-
-  }, {
-    key: "DATETIME_MED_WITH_SECONDS",
-    get: function get() {
-      return DATETIME_MED_WITH_SECONDS;
-    }
-    /**
-     * {@link toLocaleString} format like 'October 14, 1983, 9:30 AM EDT'. Only 12-hour if the locale is.
-     * @type {Object}
-     */
-
-  }, {
-    key: "DATETIME_FULL",
-    get: function get() {
-      return DATETIME_FULL;
-    }
-    /**
-     * {@link toLocaleString} format like 'October 14, 1983, 9:30:33 AM EDT'. Only 12-hour if the locale is.
-     * @type {Object}
-     */
-
-  }, {
-    key: "DATETIME_FULL_WITH_SECONDS",
-    get: function get() {
-      return DATETIME_FULL_WITH_SECONDS;
-    }
-    /**
-     * {@link toLocaleString} format like 'Friday, October 14, 1983, 9:30 AM Eastern Daylight Time'. Only 12-hour if the locale is.
-     * @type {Object}
-     */
-
-  }, {
-    key: "DATETIME_HUGE",
-    get: function get() {
-      return DATETIME_HUGE;
-    }
-    /**
-     * {@link toLocaleString} format like 'Friday, October 14, 1983, 9:30:33 AM Eastern Daylight Time'. Only 12-hour if the locale is.
-     * @type {Object}
-     */
-
-  }, {
-    key: "DATETIME_HUGE_WITH_SECONDS",
-    get: function get() {
-      return DATETIME_HUGE_WITH_SECONDS;
-    }
-  }]);
-
-  return DateTime;
-}();
-function friendlyDateTime(dateTimeish) {
-  if (DateTime.isDateTime(dateTimeish)) {
-    return dateTimeish;
-  } else if (dateTimeish && dateTimeish.valueOf && isNumber(dateTimeish.valueOf())) {
-    return DateTime.fromJSDate(dateTimeish);
-  } else if (dateTimeish && typeof dateTimeish === "object") {
-    return DateTime.fromObject(dateTimeish);
-  } else {
-    throw new InvalidArgumentError("Unknown datetime argument: " + dateTimeish + ", of type " + typeof dateTimeish);
-  }
-}
-
-exports.DateTime = DateTime;
-exports.Duration = Duration;
-exports.Interval = Interval;
-exports.Info = Info;
-exports.Zone = Zone;
-exports.FixedOffsetZone = FixedOffsetZone;
-exports.IANAZone = IANAZone;
-exports.LocalZone = LocalZone;
-exports.Settings = Settings;
-//# sourceMappingURL=luxon.js.map
-
-
-/***/ }),
-/* 499 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekStartByRegion", function() { return getWeekStartByRegion$1; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekStartByLocale", function() { return getWeekStartByLocale$1; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api_js__ = __webpack_require__(500);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__langRegionMap_js__ = __webpack_require__(501);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__regionDayMap_js__ = __webpack_require__(502);
-
-
-
-
-function getWeekStartByRegion$1(regionCode) {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__api_js__["b" /* getWeekStartByRegion */])(regionCode, __WEBPACK_IMPORTED_MODULE_2__regionDayMap_js__["a" /* default */]);
-}
-
-function getWeekStartByLocale$1(locale) {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__api_js__["a" /* getWeekStartByLocale */])(locale, __WEBPACK_IMPORTED_MODULE_1__langRegionMap_js__["a" /* default */], __WEBPACK_IMPORTED_MODULE_2__regionDayMap_js__["a" /* default */]);
-}
-
-
-//# sourceMappingURL=main.js.map
-
-
+<<<<<<< HEAD
 /***/ }),
 /* 500 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -96149,15 +98564,427 @@ module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
 		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
 	}
+=======
+  }, {
+    key: "monthLong",
+    get: function get() {
+      return this.isValid ? Info.months("long", {
+        locale: this.locale
+      })[this.month - 1] : null;
+    }
+    /**
+     * Get the human readable short weekday, such as 'Mon'.
+     * Defaults to the system's locale if no locale has been specified
+     * @example DateTime.local(2017, 10, 30).weekdayShort //=> Mon
+     * @type {string}
+     */
+
+  }, {
+    key: "weekdayShort",
+    get: function get() {
+      return this.isValid ? Info.weekdays("short", {
+        locale: this.locale
+      })[this.weekday - 1] : null;
+    }
+    /**
+     * Get the human readable long weekday, such as 'Monday'.
+     * Defaults to the system's locale if no locale has been specified
+     * @example DateTime.local(2017, 10, 30).weekdayLong //=> Monday
+     * @type {string}
+     */
+
+  }, {
+    key: "weekdayLong",
+    get: function get() {
+      return this.isValid ? Info.weekdays("long", {
+        locale: this.locale
+      })[this.weekday - 1] : null;
+    }
+    /**
+     * Get the UTC offset of this DateTime in minutes
+     * @example DateTime.local().offset //=> -240
+     * @example DateTime.utc().offset //=> 0
+     * @type {number}
+     */
+
+  }, {
+    key: "offset",
+    get: function get() {
+      return this.isValid ? this.zone.offset(this.ts) : NaN;
+    }
+    /**
+     * Get the short human name for the zone's current offset, for example "EST" or "EDT".
+     * Defaults to the system's locale if no locale has been specified
+     * @type {string}
+     */
+
+  }, {
+    key: "offsetNameShort",
+    get: function get() {
+      if (this.isValid) {
+        return this.zone.offsetName(this.ts, {
+          format: "short",
+          locale: this.locale
+        });
+      } else {
+        return null;
+      }
+    }
+    /**
+     * Get the long human name for the zone's current offset, for example "Eastern Standard Time" or "Eastern Daylight Time".
+     * Defaults to the system's locale if no locale has been specified
+     * @type {string}
+     */
+
+  }, {
+    key: "offsetNameLong",
+    get: function get() {
+      if (this.isValid) {
+        return this.zone.offsetName(this.ts, {
+          format: "long",
+          locale: this.locale
+        });
+      } else {
+        return null;
+      }
+    }
+    /**
+     * Get whether this zone's offset ever changes, as in a DST.
+     * @type {boolean}
+     */
+
+  }, {
+    key: "isOffsetFixed",
+    get: function get() {
+      return this.isValid ? this.zone.universal : null;
+    }
+    /**
+     * Get whether the DateTime is in a DST.
+     * @type {boolean}
+     */
+
+  }, {
+    key: "isInDST",
+    get: function get() {
+      if (this.isOffsetFixed) {
+        return false;
+      } else {
+        return this.offset > this.set({
+          month: 1
+        }).offset || this.offset > this.set({
+          month: 5
+        }).offset;
+      }
+    }
+    /**
+     * Returns true if this DateTime is in a leap year, false otherwise
+     * @example DateTime.local(2016).isInLeapYear //=> true
+     * @example DateTime.local(2013).isInLeapYear //=> false
+     * @type {boolean}
+     */
+
+  }, {
+    key: "isInLeapYear",
+    get: function get() {
+      return isLeapYear(this.year);
+    }
+    /**
+     * Returns the number of days in this DateTime's month
+     * @example DateTime.local(2016, 2).daysInMonth //=> 29
+     * @example DateTime.local(2016, 3).daysInMonth //=> 31
+     * @type {number}
+     */
+
+  }, {
+    key: "daysInMonth",
+    get: function get() {
+      return daysInMonth(this.year, this.month);
+    }
+    /**
+     * Returns the number of days in this DateTime's year
+     * @example DateTime.local(2016).daysInYear //=> 366
+     * @example DateTime.local(2013).daysInYear //=> 365
+     * @type {number}
+     */
+
+  }, {
+    key: "daysInYear",
+    get: function get() {
+      return this.isValid ? daysInYear(this.year) : NaN;
+    }
+    /**
+     * Returns the number of weeks in this DateTime's year
+     * @see https://en.wikipedia.org/wiki/ISO_week_date
+     * @example DateTime.local(2004).weeksInWeekYear //=> 53
+     * @example DateTime.local(2013).weeksInWeekYear //=> 52
+     * @type {number}
+     */
+
+  }, {
+    key: "weeksInWeekYear",
+    get: function get() {
+      return this.isValid ? weeksInWeekYear(this.weekYear) : NaN;
+    }
+  }], [{
+    key: "DATE_SHORT",
+    get: function get() {
+      return DATE_SHORT;
+    }
+    /**
+     * {@link toLocaleString} format like 'Oct 14, 1983'
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATE_MED",
+    get: function get() {
+      return DATE_MED;
+    }
+    /**
+     * {@link toLocaleString} format like 'October 14, 1983'
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATE_FULL",
+    get: function get() {
+      return DATE_FULL;
+    }
+    /**
+     * {@link toLocaleString} format like 'Tuesday, October 14, 1983'
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATE_HUGE",
+    get: function get() {
+      return DATE_HUGE;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_SIMPLE",
+    get: function get() {
+      return TIME_SIMPLE;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_WITH_SECONDS",
+    get: function get() {
+      return TIME_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 AM EDT'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_WITH_SHORT_OFFSET",
+    get: function get() {
+      return TIME_WITH_SHORT_OFFSET;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 AM Eastern Daylight Time'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_WITH_LONG_OFFSET",
+    get: function get() {
+      return TIME_WITH_LONG_OFFSET;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30', always 24-hour.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_24_SIMPLE",
+    get: function get() {
+      return TIME_24_SIMPLE;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23', always 24-hour.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_24_WITH_SECONDS",
+    get: function get() {
+      return TIME_24_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 EDT', always 24-hour.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_24_WITH_SHORT_OFFSET",
+    get: function get() {
+      return TIME_24_WITH_SHORT_OFFSET;
+    }
+    /**
+     * {@link toLocaleString} format like '09:30:23 Eastern Daylight Time', always 24-hour.
+     * @type {Object}
+     */
+
+  }, {
+    key: "TIME_24_WITH_LONG_OFFSET",
+    get: function get() {
+      return TIME_24_WITH_LONG_OFFSET;
+    }
+    /**
+     * {@link toLocaleString} format like '10/14/1983, 9:30 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_SHORT",
+    get: function get() {
+      return DATETIME_SHORT;
+    }
+    /**
+     * {@link toLocaleString} format like '10/14/1983, 9:30:33 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_SHORT_WITH_SECONDS",
+    get: function get() {
+      return DATETIME_SHORT_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like 'Oct 14, 1983, 9:30 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_MED",
+    get: function get() {
+      return DATETIME_MED;
+    }
+    /**
+     * {@link toLocaleString} format like 'Oct 14, 1983, 9:30:33 AM'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_MED_WITH_SECONDS",
+    get: function get() {
+      return DATETIME_MED_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like 'October 14, 1983, 9:30 AM EDT'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_FULL",
+    get: function get() {
+      return DATETIME_FULL;
+    }
+    /**
+     * {@link toLocaleString} format like 'October 14, 1983, 9:30:33 AM EDT'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_FULL_WITH_SECONDS",
+    get: function get() {
+      return DATETIME_FULL_WITH_SECONDS;
+    }
+    /**
+     * {@link toLocaleString} format like 'Friday, October 14, 1983, 9:30 AM Eastern Daylight Time'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_HUGE",
+    get: function get() {
+      return DATETIME_HUGE;
+    }
+    /**
+     * {@link toLocaleString} format like 'Friday, October 14, 1983, 9:30:33 AM Eastern Daylight Time'. Only 12-hour if the locale is.
+     * @type {Object}
+     */
+
+  }, {
+    key: "DATETIME_HUGE_WITH_SECONDS",
+    get: function get() {
+      return DATETIME_HUGE_WITH_SECONDS;
+    }
+  }]);
+
+  return DateTime;
+}();
+function friendlyDateTime(dateTimeish) {
+  if (DateTime.isDateTime(dateTimeish)) {
+    return dateTimeish;
+  } else if (dateTimeish && dateTimeish.valueOf && isNumber(dateTimeish.valueOf())) {
+    return DateTime.fromJSDate(dateTimeish);
+  } else if (dateTimeish && typeof dateTimeish === "object") {
+    return DateTime.fromObject(dateTimeish);
+  } else {
+    throw new InvalidArgumentError("Unknown datetime argument: " + dateTimeish + ", of type " + typeof dateTimeish);
+  }
+}
+
+exports.DateTime = DateTime;
+exports.Duration = Duration;
+exports.Interval = Interval;
+exports.Info = Info;
+exports.Zone = Zone;
+exports.FixedOffsetZone = FixedOffsetZone;
+exports.IANAZone = IANAZone;
+exports.LocalZone = LocalZone;
+exports.Settings = Settings;
+//# sourceMappingURL=luxon.js.map
+
+
+/***/ }),
+/* 167 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekStartByRegion", function() { return getWeekStartByRegion$1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekStartByLocale", function() { return getWeekStartByLocale$1; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api_js__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__langRegionMap_js__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__regionDayMap_js__ = __webpack_require__(170);
+
+
+
+
+function getWeekStartByRegion$1(regionCode) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__api_js__["b" /* getWeekStartByRegion */])(regionCode, __WEBPACK_IMPORTED_MODULE_2__regionDayMap_js__["a" /* default */]);
+}
+
+function getWeekStartByLocale$1(locale) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__api_js__["a" /* getWeekStartByLocale */])(locale, __WEBPACK_IMPORTED_MODULE_1__langRegionMap_js__["a" /* default */], __WEBPACK_IMPORTED_MODULE_2__regionDayMap_js__["a" /* default */]);
+}
+>>>>>>> master
 
 	options = options || {};
 
+<<<<<<< HEAD
 	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+=======
+//# sourceMappingURL=main.js.map
+>>>>>>> master
 
 	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
 	// tags it will allow on a page
 	if (!options.singleton) options.singleton = isOldIE();
 
+<<<<<<< HEAD
 	// By default, add <style> tags to the <head> element
 	if (!options.insertInto) options.insertInto = "head";
 
@@ -96195,12 +99022,383 @@ module.exports = function(list, options) {
 		}
 	};
 };
+=======
+/***/ }),
+/* 168 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getWeekStartByRegion; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getWeekStartByLocale; });
+function getWeekStartByRegion(regionCode, regionDayMap) {
+    var code = regionDayMap[typeof regionCode === 'string' ? regionCode.toUpperCase() : regionCode];
+    return typeof code === 'number' ? code : 1;
+}
+
+function getWeekStartByLocale(locale, langRegionMap, regionDayMap) {
+    if (locale) {
+        var data = locale.toLowerCase().split(/[-_]/);
+        var language = data[0];
+        var country;
+        if (data[1] && data[1].length === 4) {
+            language += "_" + (data[1]);
+            country = data[2];
+        } else {
+            country = data[1];
+        }
+        if (!country) {
+            country = langRegionMap[language];
+        }
+        if (country) {
+            return getWeekStartByRegion(country.match(/^\d+$/) ? Number(country) : country, regionDayMap);
+        }
+    }
+    return 1;
+}
+
+
+//# sourceMappingURL=api.js.map
+
+
+/***/ }),
+/* 169 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var langRegionMap = {
+    en: 'US',
+    zh: 'CN',
+    zh_hans: 'CN',
+    hans: 'CN',
+    wuu: 'CN',
+    hsn: 'CN',
+    hak: 'CN',
+    nan: 'CN',
+    gan: 'CN',
+    hi: 'IN',
+    te: 'IN',
+    mr: 'IN',
+    ta: 'IN',
+    gu: 'IN',
+    kn: 'IN',
+    or: 'IN',
+    ml: 'IN',
+    pa_guru: 'IN',
+    bho: 'IN',
+    awa: 'IN',
+    as: 'IN',
+    mwr: 'IN',
+    mai: 'IN',
+    mag: 'IN',
+    bgc: 'IN',
+    hne: 'IN',
+    dcc: 'IN',
+    dz: 'BT',
+    tn: 'BW',
+    am: 'ET',
+    om: 'ET',
+    quc: 'GT',
+    id: 'ID',
+    jv: 'ID',
+    su: 'ID',
+    mad: 'ID',
+    ms_arab: 'ID',
+    ga: 'IE',
+    he: 'IL',
+    jam: 'JM',
+    ja: 'JP',
+    km: 'KH',
+    ko: 'KR',
+    lo: 'LA',
+    mh: 'MH',
+    my: 'MM',
+    mt: 'MT',
+    ne: 'NP',
+    fil: 'PH',
+    ceb: 'PH',
+    ilo: 'PH',
+    ur: 'PK',
+    pa: 'PK',
+    pa_arab: 'PK',
+    arab: 'PK',
+    lah: 'PK',
+    ps: 'PK',
+    sd: 'PK',
+    sd_arab: 'PK',
+    skr: 'PK',
+    gn: 'PY',
+    th: 'TH',
+    tts: 'TH',
+    aeb: 'TN',
+    zh_hant: 'TW',
+    hant: 'TW',
+    sm: 'WS',
+    zu: 'ZA',
+    sn: 'ZW',
+    arq: 'DZ',
+    ar: 'EG',
+    arz: 'EG',
+    fa: 'IR',
+    az_arab: 'IR',
+    ary: 'MA',
+    bn: 'BD',
+    rkt: 'BD',
+    dv: 'MV'
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (langRegionMap);
+//# sourceMappingURL=langRegionMap.js.map
+
+
+/***/ }),
+/* 170 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var regionDayMap = {
+    AG: 0,
+    ATG: 0,
+    28: 0,
+    AR: 0,
+    ARG: 0,
+    32: 0,
+    AS: 0,
+    ASM: 0,
+    16: 0,
+    AU: 0,
+    AUS: 0,
+    36: 0,
+    BR: 0,
+    BRA: 0,
+    76: 0,
+    BS: 0,
+    BHS: 0,
+    44: 0,
+    BT: 0,
+    BTN: 0,
+    64: 0,
+    BW: 0,
+    BWA: 0,
+    72: 0,
+    BZ: 0,
+    BLZ: 0,
+    84: 0,
+    CA: 0,
+    CAN: 0,
+    124: 0,
+    CN: 0,
+    CHN: 0,
+    156: 0,
+    CO: 0,
+    COL: 0,
+    170: 0,
+    DM: 0,
+    DMA: 0,
+    212: 0,
+    DO: 0,
+    DOM: 0,
+    214: 0,
+    ET: 0,
+    ETH: 0,
+    231: 0,
+    GT: 0,
+    GTM: 0,
+    320: 0,
+    GU: 0,
+    GUM: 0,
+    316: 0,
+    HK: 0,
+    HKG: 0,
+    344: 0,
+    HN: 0,
+    HND: 0,
+    340: 0,
+    ID: 0,
+    IDN: 0,
+    360: 0,
+    IE: 0,
+    IRL: 0,
+    372: 0,
+    IL: 0,
+    ISR: 0,
+    376: 0,
+    IN: 0,
+    IND: 0,
+    356: 0,
+    JM: 0,
+    JAM: 0,
+    388: 0,
+    JP: 0,
+    JPN: 0,
+    392: 0,
+    KE: 0,
+    KEN: 0,
+    404: 0,
+    KH: 0,
+    KHM: 0,
+    116: 0,
+    KR: 0,
+    KOR: 0,
+    410: 0,
+    LA: 0,
+    LA0: 0,
+    418: 0,
+    MH: 0,
+    MHL: 0,
+    584: 0,
+    MM: 0,
+    MMR: 0,
+    104: 0,
+    MO: 0,
+    MAC: 0,
+    446: 0,
+    MT: 0,
+    MLT: 0,
+    470: 0,
+    MX: 0,
+    MEX: 0,
+    484: 0,
+    MZ: 0,
+    MOZ: 0,
+    508: 0,
+    NI: 0,
+    NIC: 0,
+    558: 0,
+    NP: 0,
+    NPL: 0,
+    524: 0,
+    NZ: 0,
+    NZL: 0,
+    554: 0,
+    PA: 0,
+    PAN: 0,
+    591: 0,
+    PE: 0,
+    PER: 0,
+    604: 0,
+    PH: 0,
+    PHL: 0,
+    608: 0,
+    PK: 0,
+    PAK: 0,
+    586: 0,
+    PR: 0,
+    PRI: 0,
+    630: 0,
+    PY: 0,
+    PRY: 0,
+    600: 0,
+    SA: 0,
+    SAU: 0,
+    682: 0,
+    SG: 0,
+    SGP: 0,
+    702: 0,
+    SV: 0,
+    SLV: 0,
+    222: 0,
+    TH: 0,
+    THA: 0,
+    764: 0,
+    TN: 0,
+    TUN: 0,
+    788: 0,
+    TT: 0,
+    TTO: 0,
+    780: 0,
+    TW: 0,
+    TWN: 0,
+    158: 0,
+    UM: 0,
+    UMI: 0,
+    581: 0,
+    US: 0,
+    USA: 0,
+    840: 0,
+    VE: 0,
+    VEN: 0,
+    862: 0,
+    VI: 0,
+    VIR: 0,
+    850: 0,
+    WS: 0,
+    WSM: 0,
+    882: 0,
+    YE: 0,
+    YEM: 0,
+    887: 0,
+    ZA: 0,
+    ZAF: 0,
+    710: 0,
+    ZW: 0,
+    ZWE: 0,
+    716: 0,
+    AE: 6,
+    ARE: 6,
+    784: 6,
+    AF: 6,
+    AFG: 6,
+    4: 6,
+    BH: 6,
+    BHR: 6,
+    48: 6,
+    DJ: 6,
+    DJI: 6,
+    262: 6,
+    DZ: 6,
+    DZA: 6,
+    12: 6,
+    EG: 6,
+    EGY: 6,
+    818: 6,
+    IQ: 6,
+    IRQ: 6,
+    368: 6,
+    IR: 6,
+    IRN: 6,
+    364: 6,
+    JO: 6,
+    JOR: 6,
+    400: 6,
+    KW: 6,
+    KWT: 6,
+    414: 6,
+    LY: 6,
+    LBY: 6,
+    434: 6,
+    MA: 6,
+    MAR: 6,
+    504: 6,
+    OM: 6,
+    OMN: 6,
+    512: 6,
+    QA: 6,
+    QAT: 6,
+    634: 6,
+    SD: 6,
+    SDN: 6,
+    729: 6,
+    SY: 6,
+    SYR: 6,
+    760: 6,
+    BD: 5,
+    BGD: 5,
+    50: 5,
+    MV: 5,
+    MDV: 5,
+    462: 5
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (regionDayMap);
+//# sourceMappingURL=regionDayMap.js.map
+>>>>>>> master
 
 function addStylesToDom (styles, options) {
 	for (var i = 0; i < styles.length; i++) {
 		var item = styles[i];
 		var domStyle = stylesInDom[item.id];
 
+<<<<<<< HEAD
 		if(domStyle) {
 			domStyle.refs++;
 
@@ -96241,10 +99439,56 @@ function listToStyles (list, options) {
 
 	return styles;
 }
+=======
+/***/ }),
+/* 171 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(172);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(174)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../css-loader/index.js!./vue-datetime.css", function() {
+			var newContent = require("!!../../css-loader/index.js!./vue-datetime.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 172 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(173)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.vdatetime-fade-enter-active,\n.vdatetime-fade-leave-active {\n  transition: opacity .4s;\n}\n\n.vdatetime-fade-enter,\n.vdatetime-fade-leave-to {\n  opacity: 0;\n}\n\n.vdatetime-overlay {\n  z-index: 999;\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background: rgba(0, 0, 0, .5);\n  transition: opacity .5s;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.vdatetime-popup {\n  box-sizing: border-box;\n  z-index: 1000;\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  width: 340px;\n  max-width: calc(100% - 30px);\n  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .3);\n  color: #444;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\", \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif;\n  background: #fff;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)\n}\n\n.vdatetime-popup * {\n    box-sizing: border-box\n}\n\n.vdatetime-popup__header {\n  padding: 15px 30px;\n  background: #3f51b5;\n  color: #fff;\n  font-size: 32px;\n}\n\n.vdatetime-popup__year {\n  display: block;\n  font-weight: 300;\n  font-size: 14px;\n  opacity: 0.7;\n  cursor: pointer;\n  transition: opacity .3s\n}\n\n.vdatetime-popup__year:hover {\n    opacity: 1\n}\n\n.vdatetime-popup__actions {\n  padding: 0 20px 10px 30px;\n  text-align: right;\n}\n\n.vdatetime-popup__actions__button {\n  display: inline-block;\n  border: none;\n  padding: 10px 20px;\n  background: transparent;\n  font-size: 16px;\n  color: #3f51b5;\n  cursor: pointer;\n  transition: color .3s\n}\n\n.vdatetime-popup__actions__button:hover {\n    color: #444\n}\n.vdatetime-calendar__navigation--previous:hover svg path, .vdatetime-calendar__navigation--next:hover svg path {\n    stroke: #888;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.vdatetime-calendar__navigation,\n.vdatetime-calendar__navigation * {\n  box-sizing: border-box;\n}\n\n.vdatetime-calendar__navigation {\n  position: relative;\n  margin: 15px 0;\n  padding: 0 30px;\n  width: 100%;\n}\n\n.vdatetime-calendar__navigation--previous,\n.vdatetime-calendar__navigation--next {\n  position: absolute;\n  top: 0;\n  padding: 0 5px;\n  width: 18px;\n  cursor: pointer\n}\n\n.vdatetime-calendar__navigation--previous svg, .vdatetime-calendar__navigation--next svg {\n    width: 8px;\n}\n\n.vdatetime-calendar__navigation--previous svg path, .vdatetime-calendar__navigation--next svg path {\n      transition: stroke .3s;\n}\n\n.vdatetime-calendar__navigation--previous {\n  left: 25px;\n}\n\n.vdatetime-calendar__navigation--next {\n  right: 25px;\n  -webkit-transform: scaleX(-1);\n          transform: scaleX(-1);\n}\n\n.vdatetime-calendar__current--month {\n  text-align: center;\n  text-transform: capitalize;\n}\n\n.vdatetime-calendar__month {\n  padding: 0 20px;\n  transition: height .2s;\n}\n\n.vdatetime-calendar__month__weekday,\n.vdatetime-calendar__month__day {\n  display: inline-block;\n  width: 14.28571%;\n  line-height: 36px;\n  text-align: center;\n  font-size: 15px;\n  font-weight: 300;\n  cursor: pointer\n}\n\n.vdatetime-calendar__month__weekday > span, .vdatetime-calendar__month__day > span {\n    display: block;\n    width: 100%;\n    position: relative;\n    height: 0;\n    padding: 0 0 100%;\n    overflow: hidden;\n}\n\n.vdatetime-calendar__month__weekday > span > span, .vdatetime-calendar__month__day > span > span {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      position: absolute;\n      top: 0;\n      right: 0;\n      bottom: 0;\n      left: 0;\n      border: 0;\n      border-radius: 50%;\n      transition: background-color .3s, color .3s;\n}\n\n.vdatetime-calendar__month__weekday {\n  font-weight: bold;\n}\n\n.vdatetime-calendar__month__day:hover > span > span {\n  background: #eee;\n}\n\n.vdatetime-calendar__month__day--selected {\n}\n\n.vdatetime-calendar__month__day--selected > span > span,\n  .vdatetime-calendar__month__day--selected:hover > span > span {\n    color: #fff;\n    background: #3f51b5;\n}\n\n.vdatetime-calendar__month__day--disabled {\n  opacity: 0.4;\n  cursor: default\n}\n\n.vdatetime-calendar__month__day--disabled:hover > span > span {\n    color: inherit;\n    background: transparent;\n}\n.vdatetime-time-picker__list::-webkit-scrollbar-thumb {\n    background: #ccc\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.vdatetime-time-picker__list::-webkit-scrollbar-track {\n    background: #efefef\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.vdatetime-time-picker * {\n    box-sizing: border-box\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.vdatetime-time-picker {\n  box-sizing: border-box\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.vdatetime-time-picker::after {\n    content: '';\n    display: table;\n    clear: both\n}\n\n.vdatetime-time-picker__list {\n  float: left;\n  width: 50%;\n  height: 305px;\n  overflow-y: scroll\n}\n\n.vdatetime-time-picker__list::-webkit-scrollbar {\n    width: 3px\n}\n\n.vdatetime-time-picker__with-suffix .vdatetime-time-picker__list {\n  width: 33.3%;\n}\n\n.vdatetime-time-picker__item {\n  padding: 10px 0;\n  font-size: 20px;\n  text-align: center;\n  cursor: pointer;\n  transition: font-size .3s;\n}\n\n.vdatetime-time-picker__item:hover {\n  font-size: 32px;\n}\n\n.vdatetime-time-picker__item--selected {\n  color: #3f51b5;\n  font-size: 32px;\n}\n\n.vdatetime-time-picker__item--disabled {\n  opacity: 0.4;\n  cursor: default;\n  font-size: 20px !important;\n}\n.vdatetime-year-picker__list::-webkit-scrollbar-thumb {\n    background: #ccc\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.vdatetime-year-picker__list::-webkit-scrollbar-track {\n    background: #efefef\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.vdatetime-year-picker * {\n    box-sizing: border-box\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.vdatetime-year-picker {\n  box-sizing: border-box\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.vdatetime-year-picker::after {\n    content: '';\n    display: table;\n    clear: both\n}\n\n.vdatetime-year-picker__list {\n  float: left;\n  width: 100%;\n  height: 305px;\n  overflow-y: scroll\n}\n\n.vdatetime-year-picker__list::-webkit-scrollbar {\n    width: 3px\n}\n\n.vdatetime-year-picker__item {\n  padding: 10px 0;\n  font-size: 20px;\n  text-align: center;\n  cursor: pointer;\n  transition: font-size .3s;\n}\n\n.vdatetime-year-picker__item:hover {\n  font-size: 32px;\n}\n\n.vdatetime-year-picker__item--selected {\n  color: #3f51b5;\n  font-size: 32px;\n}\n\n.vdatetime-year-picker__item--disabled {\n  opacity: 0.4;\n  cursor: default\n}\n\n.vdatetime-year-picker__item--disabled:hover {\n    color: inherit;\n    background: transparent\n}\n", ""]);
+
+// exports
+>>>>>>> master
 
 function insertStyleElement (options, style) {
 	var target = getElement(options.insertInto)
 
+<<<<<<< HEAD
 	if (!target) {
 		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
 	}
@@ -96290,10 +99534,93 @@ function createStyleElement (options) {
 
 function createLinkElement (options) {
 	var link = document.createElement("link");
+=======
+/***/ }),
+/* 173 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+>>>>>>> master
 
 	options.attrs.type = "text/css";
 	options.attrs.rel = "stylesheet";
 
+<<<<<<< HEAD
 	addAttrs(link, options.attrs);
 	insertStyleElement(options, link);
 
@@ -96458,8 +99785,148 @@ function updateLink (link, options, obj) {
 /***/ }),
 /* 506 */
 /***/ (function(module, exports) {
+=======
+/***/ }),
+/* 174 */
+/***/ (function(module, exports, __webpack_require__) {
 
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
 
+var stylesInDom = {};
+
+var	memoize = function (fn) {
+	var memo;
+
+	return function () {
+		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+		return memo;
+	};
+};
+
+var isOldIE = memoize(function () {
+	// Test for IE <= 9 as proposed by Browserhacks
+	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+	// Tests for existence of standard globals is to allow style-loader
+	// to operate correctly into non-standard environments
+	// @see https://github.com/webpack-contrib/style-loader/issues/177
+	return window && document && document.all && !window.atob;
+});
+
+var getElement = (function (fn) {
+	var memo = {};
+
+	return function(selector) {
+		if (typeof memo[selector] === "undefined") {
+			memo[selector] = fn.call(this, selector);
+		}
+
+		return memo[selector]
+	};
+})(function (target) {
+	return document.querySelector(target)
+});
+
+var singleton = null;
+var	singletonCounter = 0;
+var	stylesInsertedAtTop = [];
+
+var	fixUrls = __webpack_require__(175);
+
+module.exports = function(list, options) {
+	if (typeof DEBUG !== "undefined" && DEBUG) {
+		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (!options.singleton) options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+	if (!options.insertInto) options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (!options.insertAt) options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+
+	addStylesToDom(styles, options);
+
+	return function update (newList) {
+		var mayRemove = [];
+
+		for (var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+
+		for (var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+
+			if(domStyle.refs === 0) {
+				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom (styles, options) {
+	for (var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+
+		if(domStyle) {
+			domStyle.refs++;
+
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles (list, options) {
+	var styles = [];
+	var newStyles = {};
+>>>>>>> master
+
+	for (var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+
+<<<<<<< HEAD
 /**
  * When source maps are enabled, `style-loader` uses a link element with a data-uri to
  * embed the css on the page. This breaks all relative urls because now they are relative to a
@@ -97312,8 +100779,263 @@ exports = module.exports = __webpack_require__(165)(false);
 exports.push([module.i, "\n.navbar-search{\n    position: relative;\n}\n.search-icon{\n    height: 50px;\n    width: 50px;\n}\n.ais-powered-by > a > svg {\n    width: 100px;\n}\n", ""]);
 
 // exports
+=======
+		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+		else newStyles[id].parts.push(part);
+	}
+
+	return styles;
+}
+
+function insertStyleElement (options, style) {
+	var target = getElement(options.insertInto)
+
+	if (!target) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+
+	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+
+	if (options.insertAt === "top") {
+		if (!lastStyleElementInsertedAtTop) {
+			target.insertBefore(style, target.firstChild);
+		} else if (lastStyleElementInsertedAtTop.nextSibling) {
+			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			target.appendChild(style);
+		}
+		stylesInsertedAtTop.push(style);
+	} else if (options.insertAt === "bottom") {
+		target.appendChild(style);
+	} else {
+		throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+	}
+}
+
+function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
+	style.parentNode.removeChild(style);
+
+	var idx = stylesInsertedAtTop.indexOf(style);
+	if(idx >= 0) {
+		stylesInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement (options) {
+	var style = document.createElement("style");
+
+	options.attrs.type = "text/css";
+
+	addAttrs(style, options.attrs);
+	insertStyleElement(options, style);
+
+	return style;
+}
+
+function createLinkElement (options) {
+	var link = document.createElement("link");
+
+	options.attrs.type = "text/css";
+	options.attrs.rel = "stylesheet";
+
+	addAttrs(link, options.attrs);
+	insertStyleElement(options, link);
+
+	return link;
+}
+
+function addAttrs (el, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		el.setAttribute(key, attrs[key]);
+	});
+}
+
+function addStyle (obj, options) {
+	var style, update, remove, result;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    result = options.transform(obj.css);
+
+	    if (result) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = result;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css.
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+
+		style = singleton || (singleton = createStyleElement(options));
+
+		update = applyToSingletonTag.bind(null, style, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+
+	} else if (
+		obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function"
+	) {
+		style = createLinkElement(options);
+		update = updateLink.bind(null, style, options);
+		remove = function () {
+			removeStyleElement(style);
+
+			if(style.href) URL.revokeObjectURL(style.href);
+		};
+	} else {
+		style = createStyleElement(options);
+		update = applyToTag.bind(null, style);
+		remove = function () {
+			removeStyleElement(style);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle (newObj) {
+		if (newObj) {
+			if (
+				newObj.css === obj.css &&
+				newObj.media === obj.media &&
+				newObj.sourceMap === obj.sourceMap
+			) {
+				return;
+			}
+
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag (style, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = style.childNodes;
+
+		if (childNodes[index]) style.removeChild(childNodes[index]);
+
+		if (childNodes.length) {
+			style.insertBefore(cssNode, childNodes[index]);
+		} else {
+			style.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag (style, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		style.setAttribute("media", media)
+	}
+
+	if(style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		while(style.firstChild) {
+			style.removeChild(style.firstChild);
+		}
+
+		style.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink (link, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/*
+		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls) {
+		css = fixUrls(css);
+	}
+
+	if (sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = link.href;
+
+	link.href = URL.createObjectURL(blob);
+
+	if(oldSrc) URL.revokeObjectURL(oldSrc);
+}
 
 
+/***/ }),
+/* 175 */
+/***/ (function(module, exports) {
+
+
+/**
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
+ *
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
+ */
+
+module.exports = function (css) {
+  // get current location
+  var location = typeof window !== "undefined" && window.location;
+
+  if (!location) {
+    throw new Error("fixUrls requires window.location");
+  }
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+	  return css;
+  }
+>>>>>>> master
+
+  var baseUrl = location.protocol + "//" + location.host;
+  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+<<<<<<< HEAD
 /***/ }),
 /* 518 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -97348,6 +101070,67 @@ type StyleObjectPart = {
   sourceMap: ?string
 }
 */
+=======
+	// convert each url(...)
+	/*
+	This regular expression is just a way to recursively match brackets within
+	a string.
+
+	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+	   (  = Start a capturing group
+	     (?:  = Start a non-capturing group
+	         [^)(]  = Match anything that isn't a parentheses
+	         |  = OR
+	         \(  = Match a start parentheses
+	             (?:  = Start another non-capturing groups
+	                 [^)(]+  = Match anything that isn't a parentheses
+	                 |  = OR
+	                 \(  = Match a start parentheses
+	                     [^)(]*  = Match anything that isn't a parentheses
+	                 \)  = Match a end parentheses
+	             )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+	 \)  = Match a close parens
+
+	 /gi  = Get all matches, not the first.  Be case insensitive.
+	 */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl
+			.trim()
+			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(unquotedOrigUrl)) {
+		  return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+		  	//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+>>>>>>> master
 
 var stylesInDom = {/*
   [id: number]: {
@@ -97403,6 +101186,7 @@ module.exports = function (parentId, list, _isProduction, _options) {
   }
 }
 
+<<<<<<< HEAD
 function addStylesToDom (styles /* Array<StyleObject> */) {
   for (var i = 0; i < styles.length; i++) {
     var item = styles[i]
@@ -97453,6 +101237,53 @@ function addStyle (obj /* StyleObjectPart */) {
       styleElement.parentNode.removeChild(styleElement)
     }
   }
+=======
+/***/ }),
+/* 176 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(13)
+/* script */
+var __vue_script__ = __webpack_require__(177)
+/* template */
+var __vue_template__ = __webpack_require__(179)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/GroupSelect.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-64595c80", Component.options)
+  } else {
+    hotAPI.reload("data-v-64595c80", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+>>>>>>> master
 
   if (isOldIE) {
     // use singleton mode for IE9.
@@ -97469,6 +101300,7 @@ function addStyle (obj /* StyleObjectPart */) {
     }
   }
 
+<<<<<<< HEAD
   update(obj)
 
   return function updateStyle (newObj /* StyleObjectPart */) {
@@ -97510,12 +101342,36 @@ function applyToSingletonTag (styleElement, index, remove, obj) {
     }
   }
 }
+=======
+/***/ }),
+/* 177 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_multiselect__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_multiselect__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+>>>>>>> master
 
 function applyToTag (styleElement, obj) {
   var css = obj.css
   var media = obj.media
   var sourceMap = obj.sourceMap
 
+<<<<<<< HEAD
   if (media) {
     styleElement.setAttribute('media', media)
   }
@@ -97573,9 +101429,100 @@ module.exports = function listToStyles (parentId, list) {
   }
   return styles
 }
+=======
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        Multiselect: __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default.a
+    },
+    methods: {
+        getGroups: function getGroups() {
+            var _this = this;
 
+            axios.get('/groups').then(function (response) {
+                response.data.forEach(function (group) {
+                    _this.options.push(group);
+                });
+            });
+        }
+    },
+    data: function data() {
+        return {
+            groups: [],
+            options: []
+        };
+    },
+    created: function created() {
+        this.getGroups();
+    }
+});
 
 /***/ }),
+/* 178 */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,e){ true?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports.VueMultiselect=e():t.VueMultiselect=e()}(this,function(){return function(t){function e(i){if(n[i])return n[i].exports;var r=n[i]={i:i,l:!1,exports:{}};return t[i].call(r.exports,r,r.exports,e),r.l=!0,r.exports}var n={};return e.m=t,e.c=n,e.i=function(t){return t},e.d=function(t,n,i){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:i})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="/",e(e.s=60)}([function(t,e){var n=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=n)},function(t,e,n){var i=n(49)("wks"),r=n(30),o=n(0).Symbol,s="function"==typeof o;(t.exports=function(t){return i[t]||(i[t]=s&&o[t]||(s?o:r)("Symbol."+t))}).store=i},function(t,e,n){var i=n(5);t.exports=function(t){if(!i(t))throw TypeError(t+" is not an object!");return t}},function(t,e,n){var i=n(0),r=n(10),o=n(8),s=n(6),u=n(11),a=function(t,e,n){var l,c,f,p,h=t&a.F,d=t&a.G,v=t&a.S,g=t&a.P,m=t&a.B,y=d?i:v?i[e]||(i[e]={}):(i[e]||{}).prototype,b=d?r:r[e]||(r[e]={}),_=b.prototype||(b.prototype={});d&&(n=e);for(l in n)c=!h&&y&&void 0!==y[l],f=(c?y:n)[l],p=m&&c?u(f,i):g&&"function"==typeof f?u(Function.call,f):f,y&&s(y,l,f,t&a.U),b[l]!=f&&o(b,l,p),g&&_[l]!=f&&(_[l]=f)};i.core=r,a.F=1,a.G=2,a.S=4,a.P=8,a.B=16,a.W=32,a.U=64,a.R=128,t.exports=a},function(t,e,n){t.exports=!n(7)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,e){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,e,n){var i=n(0),r=n(8),o=n(12),s=n(30)("src"),u=Function.toString,a=(""+u).split("toString");n(10).inspectSource=function(t){return u.call(t)},(t.exports=function(t,e,n,u){var l="function"==typeof n;l&&(o(n,"name")||r(n,"name",e)),t[e]!==n&&(l&&(o(n,s)||r(n,s,t[e]?""+t[e]:a.join(String(e)))),t===i?t[e]=n:u?t[e]?t[e]=n:r(t,e,n):(delete t[e],r(t,e,n)))})(Function.prototype,"toString",function(){return"function"==typeof this&&this[s]||u.call(this)})},function(t,e){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,e,n){var i=n(13),r=n(25);t.exports=n(4)?function(t,e,n){return i.f(t,e,r(1,n))}:function(t,e,n){return t[e]=n,t}},function(t,e){var n={}.toString;t.exports=function(t){return n.call(t).slice(8,-1)}},function(t,e){var n=t.exports={version:"2.5.7"};"number"==typeof __e&&(__e=n)},function(t,e,n){var i=n(14);t.exports=function(t,e,n){if(i(t),void 0===e)return t;switch(n){case 1:return function(n){return t.call(e,n)};case 2:return function(n,i){return t.call(e,n,i)};case 3:return function(n,i,r){return t.call(e,n,i,r)}}return function(){return t.apply(e,arguments)}}},function(t,e){var n={}.hasOwnProperty;t.exports=function(t,e){return n.call(t,e)}},function(t,e,n){var i=n(2),r=n(41),o=n(29),s=Object.defineProperty;e.f=n(4)?Object.defineProperty:function(t,e,n){if(i(t),e=o(e,!0),i(n),r)try{return s(t,e,n)}catch(t){}if("get"in n||"set"in n)throw TypeError("Accessors not supported!");return"value"in n&&(t[e]=n.value),t}},function(t,e){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,e){t.exports={}},function(t,e){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,e,n){"use strict";var i=n(7);t.exports=function(t,e){return!!t&&i(function(){e?t.call(null,function(){},1):t.call(null)})}},function(t,e,n){var i=n(23),r=n(16);t.exports=function(t){return i(r(t))}},function(t,e,n){var i=n(53),r=Math.min;t.exports=function(t){return t>0?r(i(t),9007199254740991):0}},function(t,e,n){var i=n(11),r=n(23),o=n(28),s=n(19),u=n(64);t.exports=function(t,e){var n=1==t,a=2==t,l=3==t,c=4==t,f=6==t,p=5==t||f,h=e||u;return function(e,u,d){for(var v,g,m=o(e),y=r(m),b=i(u,d,3),_=s(y.length),x=0,w=n?h(e,_):a?h(e,0):void 0;_>x;x++)if((p||x in y)&&(v=y[x],g=b(v,x,m),t))if(n)w[x]=g;else if(g)switch(t){case 3:return!0;case 5:return v;case 6:return x;case 2:w.push(v)}else if(c)return!1;return f?-1:l||c?c:w}}},function(t,e,n){var i=n(5),r=n(0).document,o=i(r)&&i(r.createElement);t.exports=function(t){return o?r.createElement(t):{}}},function(t,e){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,e,n){var i=n(9);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==i(t)?t.split(""):Object(t)}},function(t,e){t.exports=!1},function(t,e){t.exports=function(t,e){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:e}}},function(t,e,n){var i=n(13).f,r=n(12),o=n(1)("toStringTag");t.exports=function(t,e,n){t&&!r(t=n?t:t.prototype,o)&&i(t,o,{configurable:!0,value:e})}},function(t,e,n){var i=n(49)("keys"),r=n(30);t.exports=function(t){return i[t]||(i[t]=r(t))}},function(t,e,n){var i=n(16);t.exports=function(t){return Object(i(t))}},function(t,e,n){var i=n(5);t.exports=function(t,e){if(!i(t))return t;var n,r;if(e&&"function"==typeof(n=t.toString)&&!i(r=n.call(t)))return r;if("function"==typeof(n=t.valueOf)&&!i(r=n.call(t)))return r;if(!e&&"function"==typeof(n=t.toString)&&!i(r=n.call(t)))return r;throw TypeError("Can't convert object to primitive value")}},function(t,e){var n=0,i=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++n+i).toString(36))}},function(t,e,n){"use strict";var i=n(0),r=n(12),o=n(9),s=n(67),u=n(29),a=n(7),l=n(77).f,c=n(45).f,f=n(13).f,p=n(51).trim,h=i.Number,d=h,v=h.prototype,g="Number"==o(n(44)(v)),m="trim"in String.prototype,y=function(t){var e=u(t,!1);if("string"==typeof e&&e.length>2){e=m?e.trim():p(e,3);var n,i,r,o=e.charCodeAt(0);if(43===o||45===o){if(88===(n=e.charCodeAt(2))||120===n)return NaN}else if(48===o){switch(e.charCodeAt(1)){case 66:case 98:i=2,r=49;break;case 79:case 111:i=8,r=55;break;default:return+e}for(var s,a=e.slice(2),l=0,c=a.length;l<c;l++)if((s=a.charCodeAt(l))<48||s>r)return NaN;return parseInt(a,i)}}return+e};if(!h(" 0o1")||!h("0b1")||h("+0x1")){h=function(t){var e=arguments.length<1?0:t,n=this;return n instanceof h&&(g?a(function(){v.valueOf.call(n)}):"Number"!=o(n))?s(new d(y(e)),n,h):y(e)};for(var b,_=n(4)?l(d):"MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger".split(","),x=0;_.length>x;x++)r(d,b=_[x])&&!r(h,b)&&f(h,b,c(d,b));h.prototype=v,v.constructor=h,n(6)(i,"Number",h)}},function(t,e,n){"use strict";function i(t){return 0!==t&&(!(!Array.isArray(t)||0!==t.length)||!t)}function r(t){return function(){return!t.apply(void 0,arguments)}}function o(t,e){return void 0===t&&(t="undefined"),null===t&&(t="null"),!1===t&&(t="false"),-1!==t.toString().toLowerCase().indexOf(e.trim())}function s(t,e,n,i){return t.filter(function(t){return o(i(t,n),e)})}function u(t){return t.filter(function(t){return!t.$isLabel})}function a(t,e){return function(n){return n.reduce(function(n,i){return i[t]&&i[t].length?(n.push({$groupLabel:i[e],$isLabel:!0}),n.concat(i[t])):n},[])}}function l(t,e,i,r,o){return function(u){return u.map(function(u){var a;if(!u[i])return console.warn("Options passed to vue-multiselect do not contain groups, despite the config."),[];var l=s(u[i],t,e,o);return l.length?(a={},n.i(d.a)(a,r,u[r]),n.i(d.a)(a,i,l),a):[]})}}var c=n(59),f=n(54),p=(n.n(f),n(95)),h=(n.n(p),n(31)),d=(n.n(h),n(58)),v=n(91),g=(n.n(v),n(98)),m=(n.n(g),n(92)),y=(n.n(m),n(88)),b=(n.n(y),n(97)),_=(n.n(b),n(89)),x=(n.n(_),n(96)),w=(n.n(x),n(93)),S=(n.n(w),n(90)),O=(n.n(S),function(){for(var t=arguments.length,e=new Array(t),n=0;n<t;n++)e[n]=arguments[n];return function(t){return e.reduce(function(t,e){return e(t)},t)}});e.a={data:function(){return{search:"",isOpen:!1,prefferedOpenDirection:"below",optimizedHeight:this.maxHeight}},props:{internalSearch:{type:Boolean,default:!0},options:{type:Array,required:!0},multiple:{type:Boolean,default:!1},value:{type:null,default:function(){return[]}},trackBy:{type:String},label:{type:String},searchable:{type:Boolean,default:!0},clearOnSelect:{type:Boolean,default:!0},hideSelected:{type:Boolean,default:!1},placeholder:{type:String,default:"Select option"},allowEmpty:{type:Boolean,default:!0},resetAfter:{type:Boolean,default:!1},closeOnSelect:{type:Boolean,default:!0},customLabel:{type:Function,default:function(t,e){return i(t)?"":e?t[e]:t}},taggable:{type:Boolean,default:!1},tagPlaceholder:{type:String,default:"Press enter to create a tag"},tagPosition:{type:String,default:"top"},max:{type:[Number,Boolean],default:!1},id:{default:null},optionsLimit:{type:Number,default:1e3},groupValues:{type:String},groupLabel:{type:String},groupSelect:{type:Boolean,default:!1},blockKeys:{type:Array,default:function(){return[]}},preserveSearch:{type:Boolean,default:!1},preselectFirst:{type:Boolean,default:!1}},mounted:function(){this.multiple||this.clearOnSelect||console.warn("[Vue-Multiselect warn]: ClearOnSelect and Multiple props can’t be both set to false."),!this.multiple&&this.max&&console.warn("[Vue-Multiselect warn]: Max prop should not be used when prop Multiple equals false."),this.preselectFirst&&!this.internalValue.length&&this.options.length&&this.select(this.filteredOptions[0])},computed:{internalValue:function(){return this.value||0===this.value?Array.isArray(this.value)?this.value:[this.value]:[]},filteredOptions:function(){var t=this.search||"",e=t.toLowerCase().trim(),n=this.options.concat();return n=this.internalSearch?this.groupValues?this.filterAndFlat(n,e,this.label):s(n,e,this.label,this.customLabel):this.groupValues?a(this.groupValues,this.groupLabel)(n):n,n=this.hideSelected?n.filter(r(this.isSelected)):n,this.taggable&&e.length&&!this.isExistingOption(e)&&("bottom"===this.tagPosition?n.push({isTag:!0,label:t}):n.unshift({isTag:!0,label:t})),n.slice(0,this.optionsLimit)},valueKeys:function(){var t=this;return this.trackBy?this.internalValue.map(function(e){return e[t.trackBy]}):this.internalValue},optionKeys:function(){var t=this;return(this.groupValues?this.flatAndStrip(this.options):this.options).map(function(e){return t.customLabel(e,t.label).toString().toLowerCase()})},currentOptionLabel:function(){return this.multiple?this.searchable?"":this.placeholder:this.internalValue.length?this.getOptionLabel(this.internalValue[0]):this.searchable?"":this.placeholder}},watch:{internalValue:function(){this.resetAfter&&this.internalValue.length&&(this.search="",this.$emit("input",this.multiple?[]:null))},search:function(){this.$emit("search-change",this.search,this.id)}},methods:{getValue:function(){return this.multiple?this.internalValue:0===this.internalValue.length?null:this.internalValue[0]},filterAndFlat:function(t,e,n){return O(l(e,n,this.groupValues,this.groupLabel,this.customLabel),a(this.groupValues,this.groupLabel))(t)},flatAndStrip:function(t){return O(a(this.groupValues,this.groupLabel),u)(t)},updateSearch:function(t){this.search=t},isExistingOption:function(t){return!!this.options&&this.optionKeys.indexOf(t)>-1},isSelected:function(t){var e=this.trackBy?t[this.trackBy]:t;return this.valueKeys.indexOf(e)>-1},getOptionLabel:function(t){if(i(t))return"";if(t.isTag)return t.label;if(t.$isLabel)return t.$groupLabel;var e=this.customLabel(t,this.label);return i(e)?"":e},select:function(t,e){if(t.$isLabel&&this.groupSelect)return void this.selectGroup(t);if(!(-1!==this.blockKeys.indexOf(e)||this.disabled||t.$isDisabled||t.$isLabel)&&(!this.max||!this.multiple||this.internalValue.length!==this.max)&&("Tab"!==e||this.pointerDirty)){if(t.isTag)this.$emit("tag",t.label,this.id),this.search="",this.closeOnSelect&&!this.multiple&&this.deactivate();else{if(this.isSelected(t))return void("Tab"!==e&&this.removeElement(t));this.$emit("select",t,this.id),this.multiple?this.$emit("input",this.internalValue.concat([t]),this.id):this.$emit("input",t,this.id),this.clearOnSelect&&(this.search="")}this.closeOnSelect&&this.deactivate()}},selectGroup:function(t){var e=this,n=this.options.find(function(n){return n[e.groupLabel]===t.$groupLabel});if(n)if(this.wholeGroupSelected(n)){this.$emit("remove",n[this.groupValues],this.id);var i=this.internalValue.filter(function(t){return-1===n[e.groupValues].indexOf(t)});this.$emit("input",i,this.id)}else{var o=n[this.groupValues].filter(r(this.isSelected));this.$emit("select",o,this.id),this.$emit("input",this.internalValue.concat(o),this.id)}},wholeGroupSelected:function(t){return t[this.groupValues].every(this.isSelected)},removeElement:function(t){var e=!(arguments.length>1&&void 0!==arguments[1])||arguments[1];if(!this.disabled){if(!this.allowEmpty&&this.internalValue.length<=1)return void this.deactivate();var i="object"===n.i(c.a)(t)?this.valueKeys.indexOf(t[this.trackBy]):this.valueKeys.indexOf(t);if(this.$emit("remove",t,this.id),this.multiple){var r=this.internalValue.slice(0,i).concat(this.internalValue.slice(i+1));this.$emit("input",r,this.id)}else this.$emit("input",null,this.id);this.closeOnSelect&&e&&this.deactivate()}},removeLastElement:function(){-1===this.blockKeys.indexOf("Delete")&&0===this.search.length&&Array.isArray(this.internalValue)&&this.removeElement(this.internalValue[this.internalValue.length-1],!1)},activate:function(){var t=this;this.isOpen||this.disabled||(this.adjustPosition(),this.groupValues&&0===this.pointer&&this.filteredOptions.length&&(this.pointer=1),this.isOpen=!0,this.searchable?(this.preserveSearch||(this.search=""),this.$nextTick(function(){return t.$refs.search.focus()})):this.$el.focus(),this.$emit("open",this.id))},deactivate:function(){this.isOpen&&(this.isOpen=!1,this.searchable?this.$refs.search.blur():this.$el.blur(),this.preserveSearch||(this.search=""),this.$emit("close",this.getValue(),this.id))},toggle:function(){this.isOpen?this.deactivate():this.activate()},adjustPosition:function(){if("undefined"!=typeof window){var t=this.$el.getBoundingClientRect().top,e=window.innerHeight-this.$el.getBoundingClientRect().bottom;e>this.maxHeight||e>t||"below"===this.openDirection||"bottom"===this.openDirection?(this.prefferedOpenDirection="below",this.optimizedHeight=Math.min(e-40,this.maxHeight)):(this.prefferedOpenDirection="above",this.optimizedHeight=Math.min(t-40,this.maxHeight))}}}}},function(t,e,n){"use strict";var i=n(54),r=(n.n(i),n(31));n.n(r);e.a={data:function(){return{pointer:0,pointerDirty:!1}},props:{showPointer:{type:Boolean,default:!0},optionHeight:{type:Number,default:40}},computed:{pointerPosition:function(){return this.pointer*this.optionHeight},visibleElements:function(){return this.optimizedHeight/this.optionHeight}},watch:{filteredOptions:function(){this.pointerAdjust()},isOpen:function(){this.pointerDirty=!1}},methods:{optionHighlight:function(t,e){return{"multiselect__option--highlight":t===this.pointer&&this.showPointer,"multiselect__option--selected":this.isSelected(e)}},groupHighlight:function(t,e){var n=this;if(!this.groupSelect)return["multiselect__option--group","multiselect__option--disabled"];var i=this.options.find(function(t){return t[n.groupLabel]===e.$groupLabel});return["multiselect__option--group",{"multiselect__option--highlight":t===this.pointer&&this.showPointer},{"multiselect__option--group-selected":this.wholeGroupSelected(i)}]},addPointerElement:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"Enter",e=t.key;this.filteredOptions.length>0&&this.select(this.filteredOptions[this.pointer],e),this.pointerReset()},pointerForward:function(){this.pointer<this.filteredOptions.length-1&&(this.pointer++,this.$refs.list.scrollTop<=this.pointerPosition-(this.visibleElements-1)*this.optionHeight&&(this.$refs.list.scrollTop=this.pointerPosition-(this.visibleElements-1)*this.optionHeight),this.filteredOptions[this.pointer]&&this.filteredOptions[this.pointer].$isLabel&&!this.groupSelect&&this.pointerForward()),this.pointerDirty=!0},pointerBackward:function(){this.pointer>0?(this.pointer--,this.$refs.list.scrollTop>=this.pointerPosition&&(this.$refs.list.scrollTop=this.pointerPosition),this.filteredOptions[this.pointer]&&this.filteredOptions[this.pointer].$isLabel&&!this.groupSelect&&this.pointerBackward()):this.filteredOptions[this.pointer]&&this.filteredOptions[0].$isLabel&&!this.groupSelect&&this.pointerForward(),this.pointerDirty=!0},pointerReset:function(){this.closeOnSelect&&(this.pointer=0,this.$refs.list&&(this.$refs.list.scrollTop=0))},pointerAdjust:function(){this.pointer>=this.filteredOptions.length-1&&(this.pointer=this.filteredOptions.length?this.filteredOptions.length-1:0),this.filteredOptions.length>0&&this.filteredOptions[this.pointer].$isLabel&&!this.groupSelect&&this.pointerForward()},pointerSet:function(t){this.pointer=t,this.pointerDirty=!0}}}},function(t,e,n){"use strict";var i=n(36),r=n(74),o=n(15),s=n(18);t.exports=n(72)(Array,"Array",function(t,e){this._t=s(t),this._i=0,this._k=e},function(){var t=this._t,e=this._k,n=this._i++;return!t||n>=t.length?(this._t=void 0,r(1)):"keys"==e?r(0,n):"values"==e?r(0,t[n]):r(0,[n,t[n]])},"values"),o.Arguments=o.Array,i("keys"),i("values"),i("entries")},function(t,e,n){"use strict";var i=n(31),r=(n.n(i),n(32)),o=n(33);e.a={name:"vue-multiselect",mixins:[r.a,o.a],props:{name:{type:String,default:""},selectLabel:{type:String,default:"Press enter to select"},selectGroupLabel:{type:String,default:"Press enter to select group"},selectedLabel:{type:String,default:"Selected"},deselectLabel:{type:String,default:"Press enter to remove"},deselectGroupLabel:{type:String,default:"Press enter to deselect group"},showLabels:{type:Boolean,default:!0},limit:{type:Number,default:99999},maxHeight:{type:Number,default:300},limitText:{type:Function,default:function(t){return"and ".concat(t," more")}},loading:{type:Boolean,default:!1},disabled:{type:Boolean,default:!1},openDirection:{type:String,default:""},showNoOptions:{type:Boolean,default:!0},showNoResults:{type:Boolean,default:!0},tabindex:{type:Number,default:0}},computed:{isSingleLabelVisible:function(){return this.singleValue&&(!this.isOpen||!this.searchable)&&!this.visibleValues.length},isPlaceholderVisible:function(){return!(this.internalValue.length||this.searchable&&this.isOpen)},visibleValues:function(){return this.multiple?this.internalValue.slice(0,this.limit):[]},singleValue:function(){return this.internalValue[0]},deselectLabelText:function(){return this.showLabels?this.deselectLabel:""},deselectGroupLabelText:function(){return this.showLabels?this.deselectGroupLabel:""},selectLabelText:function(){return this.showLabels?this.selectLabel:""},selectGroupLabelText:function(){return this.showLabels?this.selectGroupLabel:""},selectedLabelText:function(){return this.showLabels?this.selectedLabel:""},inputStyle:function(){if(this.searchable||this.multiple&&this.value&&this.value.length)return this.isOpen?{width:"auto"}:{width:"0",position:"absolute",padding:"0"}},contentStyle:function(){return this.options.length?{display:"inline-block"}:{display:"block"}},isAbove:function(){return"above"===this.openDirection||"top"===this.openDirection||"below"!==this.openDirection&&"bottom"!==this.openDirection&&"above"===this.prefferedOpenDirection},showSearchInput:function(){return this.searchable&&(!this.hasSingleSelectedSlot||!this.visibleSingleValue&&0!==this.visibleSingleValue||this.isOpen)}}}},function(t,e,n){var i=n(1)("unscopables"),r=Array.prototype;void 0==r[i]&&n(8)(r,i,{}),t.exports=function(t){r[i][t]=!0}},function(t,e,n){var i=n(18),r=n(19),o=n(85);t.exports=function(t){return function(e,n,s){var u,a=i(e),l=r(a.length),c=o(s,l);if(t&&n!=n){for(;l>c;)if((u=a[c++])!=u)return!0}else for(;l>c;c++)if((t||c in a)&&a[c]===n)return t||c||0;return!t&&-1}}},function(t,e,n){var i=n(9),r=n(1)("toStringTag"),o="Arguments"==i(function(){return arguments}()),s=function(t,e){try{return t[e]}catch(t){}};t.exports=function(t){var e,n,u;return void 0===t?"Undefined":null===t?"Null":"string"==typeof(n=s(e=Object(t),r))?n:o?i(e):"Object"==(u=i(e))&&"function"==typeof e.callee?"Arguments":u}},function(t,e,n){"use strict";var i=n(2);t.exports=function(){var t=i(this),e="";return t.global&&(e+="g"),t.ignoreCase&&(e+="i"),t.multiline&&(e+="m"),t.unicode&&(e+="u"),t.sticky&&(e+="y"),e}},function(t,e,n){var i=n(0).document;t.exports=i&&i.documentElement},function(t,e,n){t.exports=!n(4)&&!n(7)(function(){return 7!=Object.defineProperty(n(21)("div"),"a",{get:function(){return 7}}).a})},function(t,e,n){var i=n(9);t.exports=Array.isArray||function(t){return"Array"==i(t)}},function(t,e,n){"use strict";function i(t){var e,n;this.promise=new t(function(t,i){if(void 0!==e||void 0!==n)throw TypeError("Bad Promise constructor");e=t,n=i}),this.resolve=r(e),this.reject=r(n)}var r=n(14);t.exports.f=function(t){return new i(t)}},function(t,e,n){var i=n(2),r=n(76),o=n(22),s=n(27)("IE_PROTO"),u=function(){},a=function(){var t,e=n(21)("iframe"),i=o.length;for(e.style.display="none",n(40).appendChild(e),e.src="javascript:",t=e.contentWindow.document,t.open(),t.write("<script>document.F=Object<\/script>"),t.close(),a=t.F;i--;)delete a.prototype[o[i]];return a()};t.exports=Object.create||function(t,e){var n;return null!==t?(u.prototype=i(t),n=new u,u.prototype=null,n[s]=t):n=a(),void 0===e?n:r(n,e)}},function(t,e,n){var i=n(79),r=n(25),o=n(18),s=n(29),u=n(12),a=n(41),l=Object.getOwnPropertyDescriptor;e.f=n(4)?l:function(t,e){if(t=o(t),e=s(e,!0),a)try{return l(t,e)}catch(t){}if(u(t,e))return r(!i.f.call(t,e),t[e])}},function(t,e,n){var i=n(12),r=n(18),o=n(37)(!1),s=n(27)("IE_PROTO");t.exports=function(t,e){var n,u=r(t),a=0,l=[];for(n in u)n!=s&&i(u,n)&&l.push(n);for(;e.length>a;)i(u,n=e[a++])&&(~o(l,n)||l.push(n));return l}},function(t,e,n){var i=n(46),r=n(22);t.exports=Object.keys||function(t){return i(t,r)}},function(t,e,n){var i=n(2),r=n(5),o=n(43);t.exports=function(t,e){if(i(t),r(e)&&e.constructor===t)return e;var n=o.f(t);return(0,n.resolve)(e),n.promise}},function(t,e,n){var i=n(10),r=n(0),o=r["__core-js_shared__"]||(r["__core-js_shared__"]={});(t.exports=function(t,e){return o[t]||(o[t]=void 0!==e?e:{})})("versions",[]).push({version:i.version,mode:n(24)?"pure":"global",copyright:"© 2018 Denis Pushkarev (zloirock.ru)"})},function(t,e,n){var i=n(2),r=n(14),o=n(1)("species");t.exports=function(t,e){var n,s=i(t).constructor;return void 0===s||void 0==(n=i(s)[o])?e:r(n)}},function(t,e,n){var i=n(3),r=n(16),o=n(7),s=n(84),u="["+s+"]",a="​",l=RegExp("^"+u+u+"*"),c=RegExp(u+u+"*$"),f=function(t,e,n){var r={},u=o(function(){return!!s[t]()||a[t]()!=a}),l=r[t]=u?e(p):s[t];n&&(r[n]=l),i(i.P+i.F*u,"String",r)},p=f.trim=function(t,e){return t=String(r(t)),1&e&&(t=t.replace(l,"")),2&e&&(t=t.replace(c,"")),t};t.exports=f},function(t,e,n){var i,r,o,s=n(11),u=n(68),a=n(40),l=n(21),c=n(0),f=c.process,p=c.setImmediate,h=c.clearImmediate,d=c.MessageChannel,v=c.Dispatch,g=0,m={},y=function(){var t=+this;if(m.hasOwnProperty(t)){var e=m[t];delete m[t],e()}},b=function(t){y.call(t.data)};p&&h||(p=function(t){for(var e=[],n=1;arguments.length>n;)e.push(arguments[n++]);return m[++g]=function(){u("function"==typeof t?t:Function(t),e)},i(g),g},h=function(t){delete m[t]},"process"==n(9)(f)?i=function(t){f.nextTick(s(y,t,1))}:v&&v.now?i=function(t){v.now(s(y,t,1))}:d?(r=new d,o=r.port2,r.port1.onmessage=b,i=s(o.postMessage,o,1)):c.addEventListener&&"function"==typeof postMessage&&!c.importScripts?(i=function(t){c.postMessage(t+"","*")},c.addEventListener("message",b,!1)):i="onreadystatechange"in l("script")?function(t){a.appendChild(l("script")).onreadystatechange=function(){a.removeChild(this),y.call(t)}}:function(t){setTimeout(s(y,t,1),0)}),t.exports={set:p,clear:h}},function(t,e){var n=Math.ceil,i=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?i:n)(t)}},function(t,e,n){"use strict";var i=n(3),r=n(20)(5),o=!0;"find"in[]&&Array(1).find(function(){o=!1}),i(i.P+i.F*o,"Array",{find:function(t){return r(this,t,arguments.length>1?arguments[1]:void 0)}}),n(36)("find")},function(t,e,n){"use strict";var i,r,o,s,u=n(24),a=n(0),l=n(11),c=n(38),f=n(3),p=n(5),h=n(14),d=n(61),v=n(66),g=n(50),m=n(52).set,y=n(75)(),b=n(43),_=n(80),x=n(86),w=n(48),S=a.TypeError,O=a.process,L=O&&O.versions,P=L&&L.v8||"",k=a.Promise,T="process"==c(O),E=function(){},V=r=b.f,A=!!function(){try{var t=k.resolve(1),e=(t.constructor={})[n(1)("species")]=function(t){t(E,E)};return(T||"function"==typeof PromiseRejectionEvent)&&t.then(E)instanceof e&&0!==P.indexOf("6.6")&&-1===x.indexOf("Chrome/66")}catch(t){}}(),C=function(t){var e;return!(!p(t)||"function"!=typeof(e=t.then))&&e},j=function(t,e){if(!t._n){t._n=!0;var n=t._c;y(function(){for(var i=t._v,r=1==t._s,o=0;n.length>o;)!function(e){var n,o,s,u=r?e.ok:e.fail,a=e.resolve,l=e.reject,c=e.domain;try{u?(r||(2==t._h&&$(t),t._h=1),!0===u?n=i:(c&&c.enter(),n=u(i),c&&(c.exit(),s=!0)),n===e.promise?l(S("Promise-chain cycle")):(o=C(n))?o.call(n,a,l):a(n)):l(i)}catch(t){c&&!s&&c.exit(),l(t)}}(n[o++]);t._c=[],t._n=!1,e&&!t._h&&N(t)})}},N=function(t){m.call(a,function(){var e,n,i,r=t._v,o=D(t);if(o&&(e=_(function(){T?O.emit("unhandledRejection",r,t):(n=a.onunhandledrejection)?n({promise:t,reason:r}):(i=a.console)&&i.error&&i.error("Unhandled promise rejection",r)}),t._h=T||D(t)?2:1),t._a=void 0,o&&e.e)throw e.v})},D=function(t){return 1!==t._h&&0===(t._a||t._c).length},$=function(t){m.call(a,function(){var e;T?O.emit("rejectionHandled",t):(e=a.onrejectionhandled)&&e({promise:t,reason:t._v})})},M=function(t){var e=this;e._d||(e._d=!0,e=e._w||e,e._v=t,e._s=2,e._a||(e._a=e._c.slice()),j(e,!0))},F=function(t){var e,n=this;if(!n._d){n._d=!0,n=n._w||n;try{if(n===t)throw S("Promise can't be resolved itself");(e=C(t))?y(function(){var i={_w:n,_d:!1};try{e.call(t,l(F,i,1),l(M,i,1))}catch(t){M.call(i,t)}}):(n._v=t,n._s=1,j(n,!1))}catch(t){M.call({_w:n,_d:!1},t)}}};A||(k=function(t){d(this,k,"Promise","_h"),h(t),i.call(this);try{t(l(F,this,1),l(M,this,1))}catch(t){M.call(this,t)}},i=function(t){this._c=[],this._a=void 0,this._s=0,this._d=!1,this._v=void 0,this._h=0,this._n=!1},i.prototype=n(81)(k.prototype,{then:function(t,e){var n=V(g(this,k));return n.ok="function"!=typeof t||t,n.fail="function"==typeof e&&e,n.domain=T?O.domain:void 0,this._c.push(n),this._a&&this._a.push(n),this._s&&j(this,!1),n.promise},catch:function(t){return this.then(void 0,t)}}),o=function(){var t=new i;this.promise=t,this.resolve=l(F,t,1),this.reject=l(M,t,1)},b.f=V=function(t){return t===k||t===s?new o(t):r(t)}),f(f.G+f.W+f.F*!A,{Promise:k}),n(26)(k,"Promise"),n(83)("Promise"),s=n(10).Promise,f(f.S+f.F*!A,"Promise",{reject:function(t){var e=V(this);return(0,e.reject)(t),e.promise}}),f(f.S+f.F*(u||!A),"Promise",{resolve:function(t){return w(u&&this===s?k:this,t)}}),f(f.S+f.F*!(A&&n(73)(function(t){k.all(t).catch(E)})),"Promise",{all:function(t){var e=this,n=V(e),i=n.resolve,r=n.reject,o=_(function(){var n=[],o=0,s=1;v(t,!1,function(t){var u=o++,a=!1;n.push(void 0),s++,e.resolve(t).then(function(t){a||(a=!0,n[u]=t,--s||i(n))},r)}),--s||i(n)});return o.e&&r(o.v),n.promise},race:function(t){var e=this,n=V(e),i=n.reject,r=_(function(){v(t,!1,function(t){e.resolve(t).then(n.resolve,i)})});return r.e&&i(r.v),n.promise}})},function(t,e,n){"use strict";var i=n(3),r=n(10),o=n(0),s=n(50),u=n(48);i(i.P+i.R,"Promise",{finally:function(t){var e=s(this,r.Promise||o.Promise),n="function"==typeof t;return this.then(n?function(n){return u(e,t()).then(function(){return n})}:t,n?function(n){return u(e,t()).then(function(){throw n})}:t)}})},function(t,e,n){"use strict";function i(t){n(99)}var r=n(35),o=n(101),s=n(100),u=i,a=s(r.a,o.a,!1,u,null,null);e.a=a.exports},function(t,e,n){"use strict";function i(t,e,n){return e in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}e.a=i},function(t,e,n){"use strict";function i(t){return(i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function r(t){return(r="function"==typeof Symbol&&"symbol"===i(Symbol.iterator)?function(t){return i(t)}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":i(t)})(t)}e.a=r},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var i=n(34),r=(n.n(i),n(55)),o=(n.n(r),n(56)),s=(n.n(o),n(57)),u=n(32),a=n(33);n.d(e,"Multiselect",function(){return s.a}),n.d(e,"multiselectMixin",function(){return u.a}),n.d(e,"pointerMixin",function(){return a.a}),e.default=s.a},function(t,e){t.exports=function(t,e,n,i){if(!(t instanceof e)||void 0!==i&&i in t)throw TypeError(n+": incorrect invocation!");return t}},function(t,e,n){var i=n(14),r=n(28),o=n(23),s=n(19);t.exports=function(t,e,n,u,a){i(e);var l=r(t),c=o(l),f=s(l.length),p=a?f-1:0,h=a?-1:1;if(n<2)for(;;){if(p in c){u=c[p],p+=h;break}if(p+=h,a?p<0:f<=p)throw TypeError("Reduce of empty array with no initial value")}for(;a?p>=0:f>p;p+=h)p in c&&(u=e(u,c[p],p,l));return u}},function(t,e,n){var i=n(5),r=n(42),o=n(1)("species");t.exports=function(t){var e;return r(t)&&(e=t.constructor,"function"!=typeof e||e!==Array&&!r(e.prototype)||(e=void 0),i(e)&&null===(e=e[o])&&(e=void 0)),void 0===e?Array:e}},function(t,e,n){var i=n(63);t.exports=function(t,e){return new(i(t))(e)}},function(t,e,n){"use strict";var i=n(8),r=n(6),o=n(7),s=n(16),u=n(1);t.exports=function(t,e,n){var a=u(t),l=n(s,a,""[t]),c=l[0],f=l[1];o(function(){var e={};return e[a]=function(){return 7},7!=""[t](e)})&&(r(String.prototype,t,c),i(RegExp.prototype,a,2==e?function(t,e){return f.call(t,this,e)}:function(t){return f.call(t,this)}))}},function(t,e,n){var i=n(11),r=n(70),o=n(69),s=n(2),u=n(19),a=n(87),l={},c={},e=t.exports=function(t,e,n,f,p){var h,d,v,g,m=p?function(){return t}:a(t),y=i(n,f,e?2:1),b=0;if("function"!=typeof m)throw TypeError(t+" is not iterable!");if(o(m)){for(h=u(t.length);h>b;b++)if((g=e?y(s(d=t[b])[0],d[1]):y(t[b]))===l||g===c)return g}else for(v=m.call(t);!(d=v.next()).done;)if((g=r(v,y,d.value,e))===l||g===c)return g};e.BREAK=l,e.RETURN=c},function(t,e,n){var i=n(5),r=n(82).set;t.exports=function(t,e,n){var o,s=e.constructor;return s!==n&&"function"==typeof s&&(o=s.prototype)!==n.prototype&&i(o)&&r&&r(t,o),t}},function(t,e){t.exports=function(t,e,n){var i=void 0===n;switch(e.length){case 0:return i?t():t.call(n);case 1:return i?t(e[0]):t.call(n,e[0]);case 2:return i?t(e[0],e[1]):t.call(n,e[0],e[1]);case 3:return i?t(e[0],e[1],e[2]):t.call(n,e[0],e[1],e[2]);case 4:return i?t(e[0],e[1],e[2],e[3]):t.call(n,e[0],e[1],e[2],e[3])}return t.apply(n,e)}},function(t,e,n){var i=n(15),r=n(1)("iterator"),o=Array.prototype;t.exports=function(t){return void 0!==t&&(i.Array===t||o[r]===t)}},function(t,e,n){var i=n(2);t.exports=function(t,e,n,r){try{return r?e(i(n)[0],n[1]):e(n)}catch(e){var o=t.return;throw void 0!==o&&i(o.call(t)),e}}},function(t,e,n){"use strict";var i=n(44),r=n(25),o=n(26),s={};n(8)(s,n(1)("iterator"),function(){return this}),t.exports=function(t,e,n){t.prototype=i(s,{next:r(1,n)}),o(t,e+" Iterator")}},function(t,e,n){"use strict";var i=n(24),r=n(3),o=n(6),s=n(8),u=n(15),a=n(71),l=n(26),c=n(78),f=n(1)("iterator"),p=!([].keys&&"next"in[].keys()),h=function(){return this};t.exports=function(t,e,n,d,v,g,m){a(n,e,d);var y,b,_,x=function(t){if(!p&&t in L)return L[t];switch(t){case"keys":case"values":return function(){return new n(this,t)}}return function(){return new n(this,t)}},w=e+" Iterator",S="values"==v,O=!1,L=t.prototype,P=L[f]||L["@@iterator"]||v&&L[v],k=P||x(v),T=v?S?x("entries"):k:void 0,E="Array"==e?L.entries||P:P;if(E&&(_=c(E.call(new t)))!==Object.prototype&&_.next&&(l(_,w,!0),i||"function"==typeof _[f]||s(_,f,h)),S&&P&&"values"!==P.name&&(O=!0,k=function(){return P.call(this)}),i&&!m||!p&&!O&&L[f]||s(L,f,k),u[e]=k,u[w]=h,v)if(y={values:S?k:x("values"),keys:g?k:x("keys"),entries:T},m)for(b in y)b in L||o(L,b,y[b]);else r(r.P+r.F*(p||O),e,y);return y}},function(t,e,n){var i=n(1)("iterator"),r=!1;try{var o=[7][i]();o.return=function(){r=!0},Array.from(o,function(){throw 2})}catch(t){}t.exports=function(t,e){if(!e&&!r)return!1;var n=!1;try{var o=[7],s=o[i]();s.next=function(){return{done:n=!0}},o[i]=function(){return s},t(o)}catch(t){}return n}},function(t,e){t.exports=function(t,e){return{value:e,done:!!t}}},function(t,e,n){var i=n(0),r=n(52).set,o=i.MutationObserver||i.WebKitMutationObserver,s=i.process,u=i.Promise,a="process"==n(9)(s);t.exports=function(){var t,e,n,l=function(){var i,r;for(a&&(i=s.domain)&&i.exit();t;){r=t.fn,t=t.next;try{r()}catch(i){throw t?n():e=void 0,i}}e=void 0,i&&i.enter()};if(a)n=function(){s.nextTick(l)};else if(!o||i.navigator&&i.navigator.standalone)if(u&&u.resolve){var c=u.resolve(void 0);n=function(){c.then(l)}}else n=function(){r.call(i,l)};else{var f=!0,p=document.createTextNode("");new o(l).observe(p,{characterData:!0}),n=function(){p.data=f=!f}}return function(i){var r={fn:i,next:void 0};e&&(e.next=r),t||(t=r,n()),e=r}}},function(t,e,n){var i=n(13),r=n(2),o=n(47);t.exports=n(4)?Object.defineProperties:function(t,e){r(t);for(var n,s=o(e),u=s.length,a=0;u>a;)i.f(t,n=s[a++],e[n]);return t}},function(t,e,n){var i=n(46),r=n(22).concat("length","prototype");e.f=Object.getOwnPropertyNames||function(t){return i(t,r)}},function(t,e,n){var i=n(12),r=n(28),o=n(27)("IE_PROTO"),s=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=r(t),i(t,o)?t[o]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?s:null}},function(t,e){e.f={}.propertyIsEnumerable},function(t,e){t.exports=function(t){try{return{e:!1,v:t()}}catch(t){return{e:!0,v:t}}}},function(t,e,n){var i=n(6);t.exports=function(t,e,n){for(var r in e)i(t,r,e[r],n);return t}},function(t,e,n){var i=n(5),r=n(2),o=function(t,e){if(r(t),!i(e)&&null!==e)throw TypeError(e+": can't set as prototype!")};t.exports={set:Object.setPrototypeOf||("__proto__"in{}?function(t,e,i){try{i=n(11)(Function.call,n(45).f(Object.prototype,"__proto__").set,2),i(t,[]),e=!(t instanceof Array)}catch(t){e=!0}return function(t,n){return o(t,n),e?t.__proto__=n:i(t,n),t}}({},!1):void 0),check:o}},function(t,e,n){"use strict";var i=n(0),r=n(13),o=n(4),s=n(1)("species");t.exports=function(t){var e=i[t];o&&e&&!e[s]&&r.f(e,s,{configurable:!0,get:function(){return this}})}},function(t,e){t.exports="\t\n\v\f\r   ᠎             　\u2028\u2029\ufeff"},function(t,e,n){var i=n(53),r=Math.max,o=Math.min;t.exports=function(t,e){return t=i(t),t<0?r(t+e,0):o(t,e)}},function(t,e,n){var i=n(0),r=i.navigator;t.exports=r&&r.userAgent||""},function(t,e,n){var i=n(38),r=n(1)("iterator"),o=n(15);t.exports=n(10).getIteratorMethod=function(t){if(void 0!=t)return t[r]||t["@@iterator"]||o[i(t)]}},function(t,e,n){"use strict";var i=n(3),r=n(20)(2);i(i.P+i.F*!n(17)([].filter,!0),"Array",{filter:function(t){return r(this,t,arguments[1])}})},function(t,e,n){"use strict";var i=n(3),r=n(37)(!1),o=[].indexOf,s=!!o&&1/[1].indexOf(1,-0)<0;i(i.P+i.F*(s||!n(17)(o)),"Array",{indexOf:function(t){return s?o.apply(this,arguments)||0:r(this,t,arguments[1])}})},function(t,e,n){var i=n(3);i(i.S,"Array",{isArray:n(42)})},function(t,e,n){"use strict";var i=n(3),r=n(20)(1);i(i.P+i.F*!n(17)([].map,!0),"Array",{map:function(t){return r(this,t,arguments[1])}})},function(t,e,n){"use strict";var i=n(3),r=n(62);i(i.P+i.F*!n(17)([].reduce,!0),"Array",{reduce:function(t){return r(this,t,arguments.length,arguments[1],!1)}})},function(t,e,n){var i=Date.prototype,r=i.toString,o=i.getTime;new Date(NaN)+""!="Invalid Date"&&n(6)(i,"toString",function(){var t=o.call(this);return t===t?r.call(this):"Invalid Date"})},function(t,e,n){n(4)&&"g"!=/./g.flags&&n(13).f(RegExp.prototype,"flags",{configurable:!0,get:n(39)})},function(t,e,n){n(65)("search",1,function(t,e,n){return[function(n){"use strict";var i=t(this),r=void 0==n?void 0:n[e];return void 0!==r?r.call(n,i):new RegExp(n)[e](String(i))},n]})},function(t,e,n){"use strict";n(94);var i=n(2),r=n(39),o=n(4),s=/./.toString,u=function(t){n(6)(RegExp.prototype,"toString",t,!0)};n(7)(function(){return"/a/b"!=s.call({source:"a",flags:"b"})})?u(function(){var t=i(this);return"/".concat(t.source,"/","flags"in t?t.flags:!o&&t instanceof RegExp?r.call(t):void 0)}):"toString"!=s.name&&u(function(){return s.call(this)})},function(t,e,n){"use strict";n(51)("trim",function(t){return function(){return t(this,3)}})},function(t,e,n){for(var i=n(34),r=n(47),o=n(6),s=n(0),u=n(8),a=n(15),l=n(1),c=l("iterator"),f=l("toStringTag"),p=a.Array,h={CSSRuleList:!0,CSSStyleDeclaration:!1,CSSValueList:!1,ClientRectList:!1,DOMRectList:!1,DOMStringList:!1,DOMTokenList:!0,DataTransferItemList:!1,FileList:!1,HTMLAllCollection:!1,HTMLCollection:!1,HTMLFormElement:!1,HTMLSelectElement:!1,MediaList:!0,MimeTypeArray:!1,NamedNodeMap:!1,NodeList:!0,PaintRequestList:!1,Plugin:!1,PluginArray:!1,SVGLengthList:!1,SVGNumberList:!1,SVGPathSegList:!1,SVGPointList:!1,SVGStringList:!1,SVGTransformList:!1,SourceBufferList:!1,StyleSheetList:!0,TextTrackCueList:!1,TextTrackList:!1,TouchList:!1},d=r(h),v=0;v<d.length;v++){var g,m=d[v],y=h[m],b=s[m],_=b&&b.prototype;if(_&&(_[c]||u(_,c,p),_[f]||u(_,f,m),a[m]=p,y))for(g in i)_[g]||o(_,g,i[g],!0)}},function(t,e){},function(t,e){t.exports=function(t,e,n,i,r,o){var s,u=t=t||{},a=typeof t.default;"object"!==a&&"function"!==a||(s=t,u=t.default);var l="function"==typeof u?u.options:u;e&&(l.render=e.render,l.staticRenderFns=e.staticRenderFns,l._compiled=!0),n&&(l.functional=!0),r&&(l._scopeId=r);var c;if(o?(c=function(t){t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext,t||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),i&&i.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(o)},l._ssrRegister=c):i&&(c=i),c){var f=l.functional,p=f?l.render:l.beforeCreate;f?(l._injectStyles=c,l.render=function(t,e){return c.call(e),p(t,e)}):l.beforeCreate=p?[].concat(p,c):[c]}return{esModule:s,exports:u,options:l}}},function(t,e,n){"use strict";var i=function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",{staticClass:"multiselect",class:{"multiselect--active":t.isOpen,"multiselect--disabled":t.disabled,"multiselect--above":t.isAbove},attrs:{tabindex:t.searchable?-1:t.tabindex},on:{focus:function(e){t.activate()},blur:function(e){!t.searchable&&t.deactivate()},keydown:[function(e){return"button"in e||!t._k(e.keyCode,"down",40,e.key,["Down","ArrowDown"])?e.target!==e.currentTarget?null:(e.preventDefault(),void t.pointerForward()):null},function(e){return"button"in e||!t._k(e.keyCode,"up",38,e.key,["Up","ArrowUp"])?e.target!==e.currentTarget?null:(e.preventDefault(),void t.pointerBackward()):null},function(e){return"button"in e||!t._k(e.keyCode,"enter",13,e.key,"Enter")||!t._k(e.keyCode,"tab",9,e.key,"Tab")?(e.stopPropagation(),e.target!==e.currentTarget?null:void t.addPointerElement(e)):null}],keyup:function(e){if(!("button"in e)&&t._k(e.keyCode,"esc",27,e.key,"Escape"))return null;t.deactivate()}}},[t._t("caret",[n("div",{staticClass:"multiselect__select",on:{mousedown:function(e){e.preventDefault(),e.stopPropagation(),t.toggle()}}})],{toggle:t.toggle}),t._v(" "),t._t("clear",null,{search:t.search}),t._v(" "),n("div",{ref:"tags",staticClass:"multiselect__tags"},[t._t("selection",[n("div",{directives:[{name:"show",rawName:"v-show",value:t.visibleValues.length>0,expression:"visibleValues.length > 0"}],staticClass:"multiselect__tags-wrap"},[t._l(t.visibleValues,function(e,i){return[t._t("tag",[n("span",{key:i,staticClass:"multiselect__tag"},[n("span",{domProps:{textContent:t._s(t.getOptionLabel(e))}}),t._v(" "),n("i",{staticClass:"multiselect__tag-icon",attrs:{"aria-hidden":"true",tabindex:"1"},on:{keydown:function(n){if(!("button"in n)&&t._k(n.keyCode,"enter",13,n.key,"Enter"))return null;n.preventDefault(),t.removeElement(e)},mousedown:function(n){n.preventDefault(),t.removeElement(e)}}})])],{option:e,search:t.search,remove:t.removeElement})]})],2),t._v(" "),t.internalValue&&t.internalValue.length>t.limit?[t._t("limit",[n("strong",{staticClass:"multiselect__strong",domProps:{textContent:t._s(t.limitText(t.internalValue.length-t.limit))}})])]:t._e()],{search:t.search,remove:t.removeElement,values:t.visibleValues,isOpen:t.isOpen}),t._v(" "),n("transition",{attrs:{name:"multiselect__loading"}},[t._t("loading",[n("div",{directives:[{name:"show",rawName:"v-show",value:t.loading,expression:"loading"}],staticClass:"multiselect__spinner"})])],2),t._v(" "),t.searchable?n("input",{ref:"search",staticClass:"multiselect__input",style:t.inputStyle,attrs:{name:t.name,id:t.id,type:"text",autocomplete:"off",placeholder:t.placeholder,disabled:t.disabled,tabindex:t.tabindex},domProps:{value:t.search},on:{input:function(e){t.updateSearch(e.target.value)},focus:function(e){e.preventDefault(),t.activate()},blur:function(e){e.preventDefault(),t.deactivate()},keyup:function(e){if(!("button"in e)&&t._k(e.keyCode,"esc",27,e.key,"Escape"))return null;t.deactivate()},keydown:[function(e){if(!("button"in e)&&t._k(e.keyCode,"down",40,e.key,["Down","ArrowDown"]))return null;e.preventDefault(),t.pointerForward()},function(e){if(!("button"in e)&&t._k(e.keyCode,"up",38,e.key,["Up","ArrowUp"]))return null;e.preventDefault(),t.pointerBackward()},function(e){return"button"in e||!t._k(e.keyCode,"enter",13,e.key,"Enter")?(e.preventDefault(),e.stopPropagation(),e.target!==e.currentTarget?null:void t.addPointerElement(e)):null},function(e){if(!("button"in e)&&t._k(e.keyCode,"delete",[8,46],e.key,["Backspace","Delete"]))return null;e.stopPropagation(),t.removeLastElement()}]}}):t._e(),t._v(" "),t.isSingleLabelVisible?n("span",{staticClass:"multiselect__single",on:{mousedown:function(e){return e.preventDefault(),t.toggle(e)}}},[t._t("singleLabel",[[t._v(t._s(t.currentOptionLabel))]],{option:t.singleValue})],2):t._e(),t._v(" "),t.isPlaceholderVisible?n("span",{staticClass:"multiselect__placeholder",on:{mousedown:function(e){return e.preventDefault(),t.toggle(e)}}},[t._t("placeholder",[t._v("\n            "+t._s(t.placeholder)+"\n        ")])],2):t._e()],2),t._v(" "),n("transition",{attrs:{name:"multiselect"}},[n("div",{directives:[{name:"show",rawName:"v-show",value:t.isOpen,expression:"isOpen"}],ref:"list",staticClass:"multiselect__content-wrapper",style:{maxHeight:t.optimizedHeight+"px"},attrs:{tabindex:"-1"},on:{focus:t.activate,mousedown:function(t){t.preventDefault()}}},[n("ul",{staticClass:"multiselect__content",style:t.contentStyle},[t._t("beforeList"),t._v(" "),t.multiple&&t.max===t.internalValue.length?n("li",[n("span",{staticClass:"multiselect__option"},[t._t("maxElements",[t._v("Maximum of "+t._s(t.max)+" options selected. First remove a selected option to select another.")])],2)]):t._e(),t._v(" "),!t.max||t.internalValue.length<t.max?t._l(t.filteredOptions,function(e,i){return n("li",{key:i,staticClass:"multiselect__element"},[e&&(e.$isLabel||e.$isDisabled)?t._e():n("span",{staticClass:"multiselect__option",class:t.optionHighlight(i,e),attrs:{"data-select":e&&e.isTag?t.tagPlaceholder:t.selectLabelText,"data-selected":t.selectedLabelText,"data-deselect":t.deselectLabelText},on:{click:function(n){n.stopPropagation(),t.select(e)},mouseenter:function(e){if(e.target!==e.currentTarget)return null;t.pointerSet(i)}}},[t._t("option",[n("span",[t._v(t._s(t.getOptionLabel(e)))])],{option:e,search:t.search})],2),t._v(" "),e&&(e.$isLabel||e.$isDisabled)?n("span",{staticClass:"multiselect__option",class:t.groupHighlight(i,e),attrs:{"data-select":t.groupSelect&&t.selectGroupLabelText,"data-deselect":t.groupSelect&&t.deselectGroupLabelText},on:{mouseenter:function(e){if(e.target!==e.currentTarget)return null;t.groupSelect&&t.pointerSet(i)},mousedown:function(n){n.preventDefault(),t.selectGroup(e)}}},[t._t("option",[n("span",[t._v(t._s(t.getOptionLabel(e)))])],{option:e,search:t.search})],2):t._e()])}):t._e(),t._v(" "),n("li",{directives:[{name:"show",rawName:"v-show",value:t.showNoResults&&0===t.filteredOptions.length&&t.search&&!t.loading,expression:"showNoResults && (filteredOptions.length === 0 && search && !loading)"}]},[n("span",{staticClass:"multiselect__option"},[t._t("noResult",[t._v("No elements found. Consider changing the search query.")])],2)]),t._v(" "),n("li",{directives:[{name:"show",rawName:"v-show",value:t.showNoOptions&&0===t.options.length&&!t.search&&!t.loading,expression:"showNoOptions && (options.length === 0 && !search && !loading)"}]},[n("span",{staticClass:"multiselect__option"},[t._t("noOptions",[t._v("List is empty.")])],2)]),t._v(" "),t._t("afterList")],2)])])],2)},r=[],o={render:i,staticRenderFns:r};e.a=o}])});
+
+/***/ }),
+/* 179 */
+/***/ (function(module, exports, __webpack_require__) {
+>>>>>>> master
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("multiselect", {
+        attrs: {
+          options: _vm.options,
+          multiple: true,
+          "close-on-select": true,
+          "clear-on-select": false,
+          "preserve-search": true,
+          placeholder: "Select a group",
+          label: "name",
+          "track-by": "id"
+        },
+        model: {
+          value: _vm.groups,
+          callback: function($$v) {
+            _vm.groups = $$v
+          },
+          expression: "groups"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticStyle: { display: "none" },
+          attrs: { name: "groups[]", multiple: "" }
+        },
+        _vm._l(_vm.groups, function(group) {
+          return _c("option", {
+            attrs: { selected: "selected" },
+            domProps: { value: group.id }
+          })
+        })
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-64595c80", module.exports)
+  }
+}
+
+/***/ }),
+<<<<<<< HEAD
 /* 520 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -97613,6 +101560,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+=======
+/* 180 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(13)
+/* script */
+var __vue_script__ = __webpack_require__(181)
+/* template */
+var __vue_template__ = __webpack_require__(183)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/PolicyTable.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-060a5abe", Component.options)
+  } else {
+    hotAPI.reload("data-v-060a5abe", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+>>>>>>> master
 
 var searchStore = Object(__WEBPACK_IMPORTED_MODULE_0_vue_instantsearch__["a" /* createFromAlgoliaCredentials */])('N9H85PFJ44', '558648aceba7916f274eb28fe0b890ac');
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -97628,6 +101621,7 @@ var searchStore = Object(__WEBPACK_IMPORTED_MODULE_0_vue_instantsearch__["a" /* 
 });
 
 /***/ }),
+<<<<<<< HEAD
 /* 521 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -97755,6 +101749,475 @@ if (false) {
 
 /***/ }),
 /* 522 */
+=======
+/* 181 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            policies: []
+        };
+    },
+
+    methods: {
+        moment: function moment() {
+            return __WEBPACK_IMPORTED_MODULE_0_moment___default()();
+        },
+        getPolicies: function getPolicies() {
+            var _this = this;
+
+            axios.get('/policies').then(function (response) {
+                response.data.forEach(function (policy) {
+                    _this.policies.push(policy);
+                });
+            });
+        },
+        markAsRead: function markAsRead(policy) {
+            policy.pivot.read_at = __WEBPACK_IMPORTED_MODULE_0_moment___default()().format('MMMM Do YYYY, h:mm:ss a');
+            axios.get(route('policies.show', { id: policy.id })).then(function (response) {
+                window.open(response.data);
+            });
+        },
+        deletePolicy: function deletePolicy(policy) {
+            axios.delete(route('policies.destroy', { id: policy.id })).then(function (response) {
+                window.location.replace(route('settings'));
+            });
+        }
+    },
+    created: function created() {
+        this.getPolicies();
+    }
+});
+
+/***/ }),
+/* 182 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./af": 14,
+	"./af.js": 14,
+	"./ar": 15,
+	"./ar-dz": 16,
+	"./ar-dz.js": 16,
+	"./ar-kw": 17,
+	"./ar-kw.js": 17,
+	"./ar-ly": 18,
+	"./ar-ly.js": 18,
+	"./ar-ma": 19,
+	"./ar-ma.js": 19,
+	"./ar-sa": 20,
+	"./ar-sa.js": 20,
+	"./ar-tn": 21,
+	"./ar-tn.js": 21,
+	"./ar.js": 15,
+	"./az": 22,
+	"./az.js": 22,
+	"./be": 23,
+	"./be.js": 23,
+	"./bg": 24,
+	"./bg.js": 24,
+	"./bm": 25,
+	"./bm.js": 25,
+	"./bn": 26,
+	"./bn.js": 26,
+	"./bo": 27,
+	"./bo.js": 27,
+	"./br": 28,
+	"./br.js": 28,
+	"./bs": 29,
+	"./bs.js": 29,
+	"./ca": 30,
+	"./ca.js": 30,
+	"./cs": 31,
+	"./cs.js": 31,
+	"./cv": 32,
+	"./cv.js": 32,
+	"./cy": 33,
+	"./cy.js": 33,
+	"./da": 34,
+	"./da.js": 34,
+	"./de": 35,
+	"./de-at": 36,
+	"./de-at.js": 36,
+	"./de-ch": 37,
+	"./de-ch.js": 37,
+	"./de.js": 35,
+	"./dv": 38,
+	"./dv.js": 38,
+	"./el": 39,
+	"./el.js": 39,
+	"./en-au": 40,
+	"./en-au.js": 40,
+	"./en-ca": 41,
+	"./en-ca.js": 41,
+	"./en-gb": 42,
+	"./en-gb.js": 42,
+	"./en-ie": 43,
+	"./en-ie.js": 43,
+	"./en-il": 44,
+	"./en-il.js": 44,
+	"./en-nz": 45,
+	"./en-nz.js": 45,
+	"./eo": 46,
+	"./eo.js": 46,
+	"./es": 47,
+	"./es-do": 48,
+	"./es-do.js": 48,
+	"./es-us": 49,
+	"./es-us.js": 49,
+	"./es.js": 47,
+	"./et": 50,
+	"./et.js": 50,
+	"./eu": 51,
+	"./eu.js": 51,
+	"./fa": 52,
+	"./fa.js": 52,
+	"./fi": 53,
+	"./fi.js": 53,
+	"./fo": 54,
+	"./fo.js": 54,
+	"./fr": 55,
+	"./fr-ca": 56,
+	"./fr-ca.js": 56,
+	"./fr-ch": 57,
+	"./fr-ch.js": 57,
+	"./fr.js": 55,
+	"./fy": 58,
+	"./fy.js": 58,
+	"./gd": 59,
+	"./gd.js": 59,
+	"./gl": 60,
+	"./gl.js": 60,
+	"./gom-latn": 61,
+	"./gom-latn.js": 61,
+	"./gu": 62,
+	"./gu.js": 62,
+	"./he": 63,
+	"./he.js": 63,
+	"./hi": 64,
+	"./hi.js": 64,
+	"./hr": 65,
+	"./hr.js": 65,
+	"./hu": 66,
+	"./hu.js": 66,
+	"./hy-am": 67,
+	"./hy-am.js": 67,
+	"./id": 68,
+	"./id.js": 68,
+	"./is": 69,
+	"./is.js": 69,
+	"./it": 70,
+	"./it.js": 70,
+	"./ja": 71,
+	"./ja.js": 71,
+	"./jv": 72,
+	"./jv.js": 72,
+	"./ka": 73,
+	"./ka.js": 73,
+	"./kk": 74,
+	"./kk.js": 74,
+	"./km": 75,
+	"./km.js": 75,
+	"./kn": 76,
+	"./kn.js": 76,
+	"./ko": 77,
+	"./ko.js": 77,
+	"./ku": 78,
+	"./ku.js": 78,
+	"./ky": 79,
+	"./ky.js": 79,
+	"./lb": 80,
+	"./lb.js": 80,
+	"./lo": 81,
+	"./lo.js": 81,
+	"./lt": 82,
+	"./lt.js": 82,
+	"./lv": 83,
+	"./lv.js": 83,
+	"./me": 84,
+	"./me.js": 84,
+	"./mi": 85,
+	"./mi.js": 85,
+	"./mk": 86,
+	"./mk.js": 86,
+	"./ml": 87,
+	"./ml.js": 87,
+	"./mn": 88,
+	"./mn.js": 88,
+	"./mr": 89,
+	"./mr.js": 89,
+	"./ms": 90,
+	"./ms-my": 91,
+	"./ms-my.js": 91,
+	"./ms.js": 90,
+	"./mt": 92,
+	"./mt.js": 92,
+	"./my": 93,
+	"./my.js": 93,
+	"./nb": 94,
+	"./nb.js": 94,
+	"./ne": 95,
+	"./ne.js": 95,
+	"./nl": 96,
+	"./nl-be": 97,
+	"./nl-be.js": 97,
+	"./nl.js": 96,
+	"./nn": 98,
+	"./nn.js": 98,
+	"./pa-in": 99,
+	"./pa-in.js": 99,
+	"./pl": 100,
+	"./pl.js": 100,
+	"./pt": 101,
+	"./pt-br": 102,
+	"./pt-br.js": 102,
+	"./pt.js": 101,
+	"./ro": 103,
+	"./ro.js": 103,
+	"./ru": 104,
+	"./ru.js": 104,
+	"./sd": 105,
+	"./sd.js": 105,
+	"./se": 106,
+	"./se.js": 106,
+	"./si": 107,
+	"./si.js": 107,
+	"./sk": 108,
+	"./sk.js": 108,
+	"./sl": 109,
+	"./sl.js": 109,
+	"./sq": 110,
+	"./sq.js": 110,
+	"./sr": 111,
+	"./sr-cyrl": 112,
+	"./sr-cyrl.js": 112,
+	"./sr.js": 111,
+	"./ss": 113,
+	"./ss.js": 113,
+	"./sv": 114,
+	"./sv.js": 114,
+	"./sw": 115,
+	"./sw.js": 115,
+	"./ta": 116,
+	"./ta.js": 116,
+	"./te": 117,
+	"./te.js": 117,
+	"./tet": 118,
+	"./tet.js": 118,
+	"./tg": 119,
+	"./tg.js": 119,
+	"./th": 120,
+	"./th.js": 120,
+	"./tl-ph": 121,
+	"./tl-ph.js": 121,
+	"./tlh": 122,
+	"./tlh.js": 122,
+	"./tr": 123,
+	"./tr.js": 123,
+	"./tzl": 124,
+	"./tzl.js": 124,
+	"./tzm": 125,
+	"./tzm-latn": 126,
+	"./tzm-latn.js": 126,
+	"./tzm.js": 125,
+	"./ug-cn": 127,
+	"./ug-cn.js": 127,
+	"./uk": 128,
+	"./uk.js": 128,
+	"./ur": 129,
+	"./ur.js": 129,
+	"./uz": 130,
+	"./uz-latn": 131,
+	"./uz-latn.js": 131,
+	"./uz.js": 130,
+	"./vi": 132,
+	"./vi.js": 132,
+	"./x-pseudo": 133,
+	"./x-pseudo.js": 133,
+	"./yo": 134,
+	"./yo.js": 134,
+	"./zh-cn": 135,
+	"./zh-cn.js": 135,
+	"./zh-hk": 136,
+	"./zh-hk.js": 136,
+	"./zh-tw": 137,
+	"./zh-tw.js": 137
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 182;
+
+/***/ }),
+/* 183 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("table", { staticClass: "table align-items-center table-flush" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "tbody",
+      _vm._l(_vm.policies, function(policy) {
+        return _c("tr", [
+          _c("th", { attrs: { scope: "row" } }, [
+            _c(
+              "a",
+              {
+                attrs: { target: "_blank", href: "#" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.markAsRead(policy)
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(policy.name) +
+                    "\n                "
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            policy.pivot.read_at
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-success",
+                    attrs: { disabled: "", type: "button" }
+                  },
+                  [_vm._v("Read")]
+                )
+              : _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-danger",
+                    attrs: { disabled: "", type: "button" }
+                  },
+                  [_vm._v("Unread")]
+                )
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _vm._v(
+              "\n                " +
+                _vm._s(
+                  policy.pivot.read_at
+                    ? _vm.moment(policy.pivot.read_at).format("MMMM Do YYYY")
+                    : "-"
+                ) +
+                "\n            "
+            )
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-danger",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.deletePolicy(policy)
+                  }
+                }
+              },
+              [_vm._v("Remove")]
+            )
+          ])
+        ])
+      })
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Policy Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Read")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Read on")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Delete Policies")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-060a5abe", module.exports)
+  }
+}
+
+/***/ }),
+/* 184 */
+>>>>>>> master
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -15882,9 +15882,9 @@ a.text-lighter:focus {
   position: absolute;
   z-index: 9999;
   animation-name: slideIn;
-  animation-duration: 10s;
+  animation-duration: 8s;
   -webkit-animation-name: slideIn;
-  -webkit-animation-duration: 10s;
+  -webkit-animation-duration: 8s;
 }
 
 @-webkit-keyframes slideIn {
@@ -15896,6 +15896,14 @@ a.text-lighter:focus {
     top: 7px;
   }
 
+  11% {
+    top: 10px;
+  }
+
+  12% {
+    top: 7px;
+  }
+
   50% {
     top: 7px;
   }
@@ -15904,8 +15912,16 @@ a.text-lighter:focus {
     top: 7px;
   }
 
+  76% {
+    top: 9px;
+  }
+
+  77% {
+    top: 11px;
+  }
+
   100% {
-    top: -250px;
+    top: -550px;
   }
 }
 
@@ -15918,6 +15934,14 @@ a.text-lighter:focus {
     top: 7px;
   }
 
+  11% {
+    top: 9px;
+  }
+
+  12% {
+    top: 7px;
+  }
+
   50% {
     top: 7px;
   }
@@ -15926,8 +15950,16 @@ a.text-lighter:focus {
     top: 7px;
   }
 
+  76% {
+    top: 9px;
+  }
+
+  77% {
+    top: 11px;
+  }
+
   100% {
-    top: -250px;
+    top: -550px;
   }
 }
 

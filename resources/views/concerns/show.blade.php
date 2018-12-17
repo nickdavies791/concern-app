@@ -1,6 +1,9 @@
 @extends('layouts.argon')
 
 @section('content')
+    @component('partials.alerts.alert-success')
+        <strong>Success!</strong> {{ session('alert.success') }}
+    @endcomponent
     <div class="row">
         <div class="col-xl-12">
             @component('partials.cards.card')

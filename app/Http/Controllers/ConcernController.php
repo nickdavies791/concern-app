@@ -77,7 +77,7 @@ class ConcernController extends Controller
             $this->student->find($request->student)
         );
 
-        return redirect()->route('concerns.show', ['id' => $concern->id]);
+        return redirect()->route('concerns.show', ['id' => $concern->id])->with('alert.success', 'Your concern has been saved and a notification has been sent.');
     }
 
     /**

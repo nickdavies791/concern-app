@@ -50,7 +50,7 @@ class CommentController extends Controller
             'body' => $request->body,
             'action_taken' => $request->action_taken
         ]);
-        return redirect()->route('concerns.show', ['id' => $request->concern]);
+        return redirect()->route('concerns.show', ['id' => $request->concern])->with('alert.success', 'Your comment has been saved.');
     }
 
 }

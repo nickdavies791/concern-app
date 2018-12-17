@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Attachment;
 use App\Comment;
 use App\Concern;
 use App\Repositories\Image;
-use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
@@ -56,7 +56,13 @@ class CommentController extends Controller
         ]);
         if($request->image){
             $location = $this->image->location('concerns/'.$comment->concern_id);
-            $this->image->save($request->image, $location, date('Y-m-d_his').'_bodymap.png');
+            $name = date('Y-m-d_His').'_bodymap.png';
+            $this->image->save($request->image, $location, $name);
+            $attachment = new Attachment;
+            $attachment->create([
+                'concern_id' => $comment->concern_id,
+                'file_name' => $location.'/'.$name,
+            ]);
         }
         return redirect()->route('concerns.show', ['id' => $request->concern])->with('alert.success', 'Your comment has been saved.');
     }

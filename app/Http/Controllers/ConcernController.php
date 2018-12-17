@@ -6,9 +6,7 @@ use App\Group;
 use App\Repositories\Image;
 use App\Student;
 use App\Concern;
-use Illuminate\Http\Request;
 use App\Http\Requests\ConcernRequest;
-use Illuminate\Support\Facades\Storage;
 
 class ConcernController extends Controller
 {
@@ -78,7 +76,12 @@ class ConcernController extends Controller
 
         if($request->image){
             $location = $this->image->location('concerns/'.$concern->id);
-            $this->image->save($request->image, $location, date('Y-m-d_his').'_bodymap.png');
+            $name = date('Y-m-d_His').'_bodymap.png';
+            $this->image->save($request->image, $location, $name);
+            $concern->attachments()->create([
+                'concern_id' => $concern->id,
+                'file_name' => $location.'/'.$name,
+            ]);
         }
 
         $concern->students()->attach(
@@ -99,6 +102,7 @@ class ConcernController extends Controller
         $concern = $this->concern->with([
             'user:id,name',
             'students:student_id,forename,surname,year_group',
+            'attachments',
             'comments' => function($query) {
                 $query->orderBy('created_at', 'desc');
             }

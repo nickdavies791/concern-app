@@ -29,7 +29,7 @@ class Image implements ImageInterface
     public function save($url, $path, $name)
     {
         $image = $this->decode($url);
-        return Storage::put($path.'/'.$name, $image);
+        return Storage::disk('public')->put($path.'/'.$name, $image);
     }
 
     /**
@@ -39,8 +39,8 @@ class Image implements ImageInterface
      */
     public function location($path)
     {
-        if(!Storage::exists($path)){
-            Storage::makeDirectory($path, $recursive = true);
+        if(!Storage::disk('public')->exists($path)){
+            Storage::disk('public')->makeDirectory($path, $recursive = true);
         }
         return $path;
     }

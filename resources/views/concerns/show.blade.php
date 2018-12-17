@@ -5,7 +5,7 @@
         <strong>Success!</strong> {{ session('alert.success') }}
     @endcomponent
     <div class="row">
-        <div class="col-xl-12">
+        <div class="col-xl-8">
             @component('partials.cards.card')
                 @slot('title') Concern #{{ $concern->id }} - {{ $concern->title }} @endslot
                 @slot('body')
@@ -42,6 +42,18 @@
                 @endslot
             @endcomponent
         </div>
+        <div class="col-xl-4">
+            @component('partials.cards.card')
+                @slot('title') Attachments @endslot
+                @slot('body')
+                    <div class="card-body">
+                        @foreach($concern->attachments as $attachment)
+                            <small><a target="_blank" href="{{ asset('storage/'.$attachment->file_name) }}">{{ $attachment->file_name }}</a></small>
+                        @endforeach
+                    </div>
+                @endslot
+            @endcomponent
+        </div>
     </div>
     <div class="row mt-3">
         <div class="col-xl-12">
@@ -49,7 +61,6 @@
                 @slot('title') Comments @endslot
                 @slot('body')
                     <div class="card-body">
-
 
                         <ul class="comments">
                             @forelse($concern->comments as $comment)
@@ -62,7 +73,6 @@
                                 <li>There are no comments for this concern.</li>
                             @endforelse
                         </ul>
-
 
                     </div>
                 @endslot

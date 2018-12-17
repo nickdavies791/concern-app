@@ -1,6 +1,7 @@
 @extends('layouts.argon')
 
 @section('content')
+    @include('partials.alerts.alert-success')
     <div class="row">
         <div class="col-xl-8">
         @component('partials.cards.card')

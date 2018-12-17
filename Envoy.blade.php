@@ -80,6 +80,7 @@
     echo "Creating symlink...";
     [ -d {{ $app_directory }}/{{ $project }} ] || mkdir {{ $app_directory }}/{{ $project }};
     cd {{ $project_directory }}/{{ $project }};
+    php artisan storage:link;
     mv public public_bak;
     ln -s {{ $app_directory }}/{{ $project }} public;
     cp -a public_bak/* public/;

@@ -37,17 +37,12 @@ class ConcernController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->cannot('view', $this->concern)) {
-            return redirect('home')->with('alert.danger', 'You do not have access to this page.');
-        }
-
         $concerns = $this->concern->with([
             'user:id,name',
             'students:student_id,forename,surname,year_group',
         ])->simplePaginate(5);
 
         return view('concerns.index', ['concerns' => $concerns]);
-
     }
 
     /**
@@ -57,7 +52,7 @@ class ConcernController extends Controller
      */
     public function create()
     {
-        if (auth()->user()->cannot('view', $this->concern)) {
+        if (auth()->user()->cannot('create', $this->concern)) {
             return redirect('home')->with('alert.danger', 'You do not have access to this page.');
         }
 
@@ -75,7 +70,7 @@ class ConcernController extends Controller
      */
     public function store(ConcernRequest $request)
     {
-        if (auth()->user()->cannot('view', $this->concern)) {
+        if (auth()->user()->cannot('create', $this->concern)) {
             return redirect('home')->with('alert.danger', 'You do not have access to this page.');
         }
 
@@ -112,8 +107,8 @@ class ConcernController extends Controller
      */
     public function show(Concern $concern)
     {
-        if (auth()->user()->cannot('view', $this->concern)) {
-            return redirect('home')->with('alert.danger', 'You do not have access to this page.');
+        if (auth()->user()->cannot('view', $concern)) {
+            return back()->with('alert.danger', 'You do not have access to view this concern.');
         }
 
         $concern = $this->concern->with([
@@ -148,7 +143,7 @@ class ConcernController extends Controller
      */
     public function destroy(Concern $id)
     {
-        if (auth()->user()->cannot('view', $this->concern)) {
+        if (auth()->user()->cannot('delete', $this->concern)) {
             return redirect('home')->with('alert.danger', 'You do not have access to this page.');
         }
 

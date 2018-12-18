@@ -26,7 +26,9 @@ class ConcernPolicy
      */
     public function view(User $user, Concern $concern)
     {
-        return $user->isEditor();
+        if ($user->isEditor()) {
+            return $user->concerns->contains($concern->id);
+        }
     }
 
     /**
@@ -49,7 +51,7 @@ class ConcernPolicy
      */
     public function update(User $user, Concern $concern)
     {
-        return $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**

@@ -37,12 +37,17 @@ class ConcernController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->cannot('view', $this->concern)) {
+            return redirect('home')->with('alert.danger', 'You do not have access to this page.');
+        }
+
         $concerns = $this->concern->with([
             'user:id,name',
             'students:student_id,forename,surname,year_group',
         ])->simplePaginate(5);
 
         return view('concerns.index', ['concerns' => $concerns]);
+
     }
 
     /**
@@ -52,6 +57,10 @@ class ConcernController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->cannot('view', $this->concern)) {
+            return redirect('home')->with('alert.danger', 'You do not have access to this page.');
+        }
+
         return view('concerns.create', [
             'groups' => $this->group->all(),
             'students' => $this->student->all()
@@ -66,6 +75,10 @@ class ConcernController extends Controller
      */
     public function store(ConcernRequest $request)
     {
+        if (auth()->user()->cannot('view', $this->concern)) {
+            return redirect('home')->with('alert.danger', 'You do not have access to this page.');
+        }
+
         $concern = $this->concern->create([
             'user_id' => $request->user_id,
             'group_id' => $request->group,
@@ -99,6 +112,10 @@ class ConcernController extends Controller
      */
     public function show(Concern $concern)
     {
+        if (auth()->user()->cannot('view', $this->concern)) {
+            return redirect('home')->with('alert.danger', 'You do not have access to this page.');
+        }
+
         $concern = $this->concern->with([
             'user:id,name',
             'students:student_id,forename,surname,year_group',
@@ -111,24 +128,13 @@ class ConcernController extends Controller
         return view('concerns.show', ['concern' => $concern]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         // TODO: Create the form for editing concerns
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         // TODO: Create the method to update the concern
@@ -142,6 +148,10 @@ class ConcernController extends Controller
      */
     public function destroy(Concern $id)
     {
+        if (auth()->user()->cannot('view', $this->concern)) {
+            return redirect('home')->with('alert.danger', 'You do not have access to this page.');
+        }
+
         $this->concern->destroy($id);
     }
 }

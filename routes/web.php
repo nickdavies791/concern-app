@@ -29,3 +29,4 @@ Route::resource('groups', 'GroupController');
 Route::resource('policies', 'PolicyController');
 Route::resource('concerns', 'ConcernController');
 Route::resource('comments', 'CommentController');
+Route::get('users/me/concerns', 'UserController@concerns')->name('user.concerns');

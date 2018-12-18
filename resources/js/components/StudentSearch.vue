@@ -9,8 +9,8 @@
                     <ais-powered-by></ais-powered-by>
                 </div>
             </div>
-            <ul class="student-search w-100 list-group mt-2" v-show="searchStore.query.length > 0">
-                <ais-results>
+            <ul class="student-search w-100 list-group mt-1" v-show="searchStore.query.length > 0">
+                <ais-results :results-per-page="6">
                     <template slot-scope="{ result }">
                         <li class="list-group-item d-flex align-items-center">
                             <img class="search-icon mr-1" src="/images/search-icon.svg" alt="generic user profile image">
@@ -53,5 +53,10 @@ export default {
     }
     .ais-powered-by > a > svg {
         width: 100px;
+    }
+
+    .student-search{
+        background-color: #f8f9fe;
+        border-radius: 12px;
     }
 </style>

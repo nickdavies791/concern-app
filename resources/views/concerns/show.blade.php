@@ -21,11 +21,17 @@
                             </div>
                             <div class="col-xl-3">
                                 <h3>Students</h3>
-                                <p>
+                                <ul class="list-unstyled">
                                     @foreach($concern->students as $student)
-                                        <small>{{ $student->forename }} {{ $student->surname }} (Year {{ $student->year_group }})</small>
+                                        <li>
+                                            <small>
+                                                <a href="{{route("students.show", ['id' => $student->student_id])}}">
+                                                    {{ $student->forename }} {{ $student->surname }} (Year {{ $student->year_group }})
+                                                </a>
+                                            </small>
+                                        </li>
                                     @endforeach
-                                </p>
+                                </ul>
                             </div>
                             <div class="col-xl-3">
                                 <h3>Reported By</h3>

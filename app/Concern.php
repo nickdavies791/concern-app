@@ -28,7 +28,7 @@ class Concern extends Model
     * The attributes that are dates.
     * @var array
     */
-    protected $dates = ['concern_date', 'created_at', 'updated_at', 'deleted_at'];
+    protected $dates = ['concern_date', 'created_at', 'updated_at', 'resolved_on'];
 
     /**
     * return comments associated with a concern

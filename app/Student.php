@@ -29,7 +29,7 @@ class Student extends Model
     protected $guarded = [];
 
     /**
-     * Get the indexable data array for the model.
+     * Get the indexable data array for the model - Algolia/Scout.
      * @return array
      */
     public function toSearchableArray(){

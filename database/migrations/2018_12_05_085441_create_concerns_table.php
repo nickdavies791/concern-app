@@ -16,7 +16,6 @@ class CreateConcernsTable extends Migration
         Schema::create('concerns', function (Blueprint $table) {
             $table->increments('id')->index();
             $table->unsignedInteger('user_id')->index();
-            $table->unsignedInteger('group_id')->index();
             $table->text('title');
             $table->datetime('concern_date');
             $table->text('body');

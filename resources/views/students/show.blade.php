@@ -59,8 +59,7 @@
                         <div class="col">
                             <div class="text-center  mt-md-5">
                                 <h3>
-                                    {{$student->forename . ' ' . $student->surname}}
-                                    <span class="font-weight-light">, Year {{$student->year_group}}</span>
+                                    {{$student->forename . ' ' . $student->surname}}<span class="font-weight-light">, Year {{$student->year_group}}</span>
                                 </h3>
                             </div>
                         </div>

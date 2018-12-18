@@ -29,6 +29,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * Return the Role associated with a User
+     */
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
     * returns policies associated with user
     */
     public function policies(){

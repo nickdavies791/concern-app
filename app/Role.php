@@ -17,4 +17,11 @@ class Role extends Model
     * @var boolean
     */
     public $timestamps = false;
+
+    /**
+     * Returns the Users associated with a Role
+     */
+    public function users(){
+        return $this->hasMany(User::class);
+    }
 }

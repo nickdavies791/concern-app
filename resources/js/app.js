@@ -10,6 +10,7 @@ Vue.use(InstantSearch);
 Vue.component('group-select', require('./components/GroupSelect.vue'));
 Vue.component('policy-table', require('./components/PolicyTable.vue'));
 Vue.component('student-search', require('./components/StudentSearch.vue'));
+Vue.component('student-select', require('./components/StudentSelect.vue'));
 
 $(document).ready( function(){
     const app = new Vue({

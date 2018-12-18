@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Comment;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CommentRequest extends FormRequest
@@ -9,12 +10,14 @@ class CommentRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
+     * @param Comment $comment
      * @return bool
      */
-    public function authorize()
+    public function authorize(Comment $comment)
     {
-        // TODO: needs policies setting up
-        return true;
+        if (auth()->user()->can('create', $comment)) {
+            return true;
+        }
     }
 
     /**

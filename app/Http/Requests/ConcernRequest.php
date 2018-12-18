@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Concern;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ConcernRequest extends FormRequest
@@ -9,12 +10,14 @@ class ConcernRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
+     * @param Concern $concern
      * @return bool
      */
-    public function authorize()
+    public function authorize(Concern $concern)
     {
-        // TODO: needs policies setting up
-        return true;
+        if (auth()->user()->can('create', $concern)) {
+            return true;
+        }
     }
 
     /**

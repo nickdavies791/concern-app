@@ -10,6 +10,11 @@ class ConcernPolicy
 {
     use HandlesAuthorization;
 
+    /**
+     * Perform initial checks before all other checks
+     * @param User $user
+     * @return bool
+     */
     public function before(User $user)
     {
         if ($user->isAdmin()) {

@@ -28,14 +28,20 @@
 <body>
     <div id="app">
         <main class="app-wrapper">
-            <!-- Sidebar -->
-            @include('partials.sidebar')
+        <!-- Sidebar -->
+        @include('partials.sidebar')
 
-            <!-- Main content -->
+        <!-- Main content -->
             <div class="main-content">
                 @include('partials.navbar')
                 @include('partials.header')
                 <div class="container-fluid mt--7">
+                    @component('partials.alerts.alert-success')
+                        <strong>Success!</strong> {{ session('alert.success') }}
+                    @endcomponent
+                    @component('partials.alerts.alert-danger')
+                        <strong>Error!</strong> {{ session('alert.danger') }}
+                    @endcomponent
                     @yield('content')
                     @include('partials.footer')
                 </div>

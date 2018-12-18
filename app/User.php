@@ -57,6 +57,30 @@ class User extends Authenticatable
     }
 
     /**
+     * Check the User has the 'Admin' role type
+     * @return bool
+     */
+    public function isAdmin(){
+        return $this->role()->where('type', 'Admin')->exists();
+    }
+
+    /**
+     * Check the User has the 'Editor' role type
+     * @return bool
+     */
+    public function isEditor(){
+        return $this->role()->where('type', 'Editor')->exists();
+    }
+
+    /**
+     * Check the User has the 'User' role type
+     * @return bool
+     */
+    public function isUser(){
+        return $this->role()->where('type', 'User')->exists();
+    }
+
+    /**
      * gets student data from sims api and formats it appropriately
      * @return array
      */

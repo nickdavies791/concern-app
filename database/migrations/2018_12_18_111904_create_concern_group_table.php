@@ -18,7 +18,7 @@ class CreateConcernGroupTable extends Migration
             $table->unsignedInteger('concern_id')->index();
             $table->unsignedInteger('group_id')->index();
             $table->foreign('concern_id')->references('id')->on('concerns')->onDelete('cascade');
-            $table->foreign('group_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
         });
     }
 

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Group;
-use App\Repositories\Image;
 use App\Student;
 use App\Concern;
+use App\Repositories\Image;
+use App\Events\ConcernCreated;
 use App\Http\Requests\ConcernRequest;
 
 class ConcernController extends Controller
@@ -83,8 +84,8 @@ class ConcernController extends Controller
             ]);
         }
 
-        $concern->students()->attach($request->students);
-        $concern->groups()->attach($request->groups);
+        //sorts relationships and notifies selected groups
+        event(new ConcernCreated($concern, $request));
 
         return redirect()
         ->route('concerns.show', ['id' => $concern->id])

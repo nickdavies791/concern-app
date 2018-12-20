@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @if(auth()->user()->role_id === 3)
+                    @admin
                         <h6 class="heading-small text-muted mb-4">Sync data with Sims</h6>
                         <div class="pl-lg-4">
                             <label class="form-control-label mb-3">
@@ -41,17 +41,7 @@
                                 </a>
                             </div>
                         </div>
-                        <hr class="my-4">
-                    @endif
-                    <h6 class="heading-small text-muted mb-4">
-                        My Policies
-                        <span class="float-right">
-                            <a href="{{route('policies.create')}}" class="btn btn-sm btn-primary text-white">New Policy?</a>
-                        </span>
-                    </h6>
-                    <div class="pl-lg-4">
-                        <policy-table></policy-table>
-                    </div>
+                    @endadmin
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Student;
 use Illuminate\Database\Seeder;
 
 class StudentsTableSeeder extends Seeder
@@ -11,6 +12,7 @@ class StudentsTableSeeder extends Seeder
      */
     public function run()
     {
+        Student::disableSearchSyncing();
         factory('App\Student', 1104)->create();
     }
 }

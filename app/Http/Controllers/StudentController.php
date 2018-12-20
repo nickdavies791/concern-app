@@ -14,7 +14,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-
+        return Student::select('id', 'forename', 'surname')->get();
     }
 
     /**

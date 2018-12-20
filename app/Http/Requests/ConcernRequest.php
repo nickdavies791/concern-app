@@ -28,8 +28,8 @@ class ConcernRequest extends FormRequest
     public function rules()
     {
         return [
-            'group' => 'required|exists:groups,id',
-            'student' => 'required|exists:students,id',
+            'groups.*' => 'required|exists:groups,id',
+            'students.*' => 'required|exists:students,id',
             'title' => 'required|max:100',
         ];
     }

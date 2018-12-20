@@ -1,6 +1,6 @@
 <template lang="html">
     <div>
-        <multiselect v-model="groups" :options="options" :multiple="true" :close-on-select="true"
+        <multiselect  :open-direction="bottom" v-model="groups" :options="options" :multiple="true" :close-on-select="true"
         :clear-on-select="false" :preserve-search="true" placeholder="Select a group"
         label="name" track-by="id">
     </multiselect>
@@ -29,7 +29,8 @@ export default {
     data () {
         return {
             groups: [],
-            options: []
+            options: [],
+            bottom: 'bottom'
         }
     },
     created(){

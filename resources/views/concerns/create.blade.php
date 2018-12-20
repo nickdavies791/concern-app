@@ -13,11 +13,7 @@
                             @csrf
                             <div class="form-group">
                                 <label>Find a Student</label>
-                                <select name="student" class="form-control">
-                                    @foreach($students as $student)
-                                        <option value="{{ $student->id }}">{{ $student->forename . ' ' . $student->surname }}</option>
-                                    @endforeach
-                                </select>
+                                <student-select></student-select>
                             </div>
                             <div class="form-group">
                                 <label>Concern Summary</label>
@@ -36,12 +32,8 @@
                                 <input type="hidden" id="url" name="image" value="">
                             </div>
                             <div class="form-group">
-                                <label>Notify Group</label>
-                                <select name="group" class="form-control">
-                                    @foreach($groups as $group)
-                                        <option value="{{ $group->id }}">{{ $group->name }}</option>
-                                    @endforeach
-                                </select>
+                                <label>Notify Group(s)</label>
+                                <group-select></group-select>
                             </div>
                             <button type="submit" class="btn btn-primary btn-lg">Save Concern</button>
                         </form>

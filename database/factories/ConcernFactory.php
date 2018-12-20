@@ -10,9 +10,6 @@ $factory->define(App\Concern::class, function (Faker $faker) {
         'user_id' => function(){
             return (User::inRandomOrder()->first())->id;
         },
-        'group_id' => function(){
-            return (Group::inRandomOrder()->first())->id;
-        },
         'title' => $faker->sentence(),
         'body' => $faker->paragraph(),
         'concern_date' => now(),

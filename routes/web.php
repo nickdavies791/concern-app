@@ -12,10 +12,6 @@
 */
 
 
-// Route::get('/blank', function () {
-//     return view('partials.blank');
-// });
-
 Auth::routes(['register' => false, 'reset' => false]);
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');

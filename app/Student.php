@@ -11,16 +11,18 @@ class Student extends Model
 {
     use EncryptableTrait, Searchable;
 
+     protected $appends = ['full_name'];
+
     /**
-	 * Encrypted fields
-	 * @var array
-	 */
-	protected $encryptable = [
-		'forename',
-		'surname',
+    * Encrypted fields
+    * @var array
+    */
+    protected $encryptable = [
+        'forename',
+        'surname',
         'upn',
         'admission_number'
-	];
+    ];
 
     /**
     * The attributes that are not mass assignable.
@@ -29,9 +31,9 @@ class Student extends Model
     protected $guarded = [];
 
     /**
-     * Get the indexable data array for the model - Algolia/Scout.
-     * @return array
-     */
+    * Get the indexable data array for the model - Algolia/Scout.
+    * @return array
+    */
     public function toSearchableArray(){
         return [
             'id' => $this->id,
@@ -49,9 +51,9 @@ class Student extends Model
     }
 
     /**
-     * gets student data from sims api and formats it appropriately
-     * @return array
-     */
+    * gets student data from sims api and formats it appropriately
+    * @return array
+    */
     private function getSimsData(){
         $students = (new Assembly())->getStudents();
 
@@ -81,8 +83,13 @@ class Student extends Model
                     'birth_date' => $student->birth_date
                 ]);
             } catch (\Exception $e) {
-                info(['student not added' => ['data' => $data, 'error' => $e]]);
+                info(['student not added' => ['data' => $student, 'error' => $e]]);
             }
         }
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->forename} {$this->surname}";
     }
 }

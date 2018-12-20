@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-lg-8">
-            <div class="card shadow">
+            <div class="card shadow mb-sm-5">
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
@@ -12,7 +12,7 @@
                     </div>
                 </div>
 
-                <table class="table align-items-center table-flush">
+                <table class="table align-items-center table-flush table-responsive d-lg-table">
                     <thead class="thead-light">
                     <tr>
                         <th scope="col">Summary</th>

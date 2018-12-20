@@ -45,6 +45,13 @@ class Concern extends Model
     }
 
     /**
+    * return groups notified about a concern
+    */
+    public function groups(){
+        return $this->belongsToMany(Group::class);
+    }
+
+    /**
     * return users associated with a concern
     */
     public function user(){

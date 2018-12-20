@@ -43,7 +43,7 @@ export default {
             return moment();
         },
         getPolicies(){
-            axios.get('/policies').then(response => {
+            axios.get('/policies/all').then(response => {
                 response.data.forEach(policy => {
                     this.policies.push(policy);
                 })

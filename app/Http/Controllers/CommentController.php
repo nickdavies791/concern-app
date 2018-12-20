@@ -35,6 +35,9 @@ class CommentController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->cannot('create', $this->comment)) {
+            return back()->with('alert.danger', 'You do not have access to this page.');
+        }
         return view('comments.create', [
             'concerns' => $this->concern->all()
         ]);
@@ -48,6 +51,10 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
+        $concern = $this->concern->find($request->concern);
+        if (auth()->user()->cannot('view', $concern)) {
+            return back()->with('alert.danger', 'You do not have access to add comments to this concern.');
+        }
         $comment = $this->comment->create([
             'user_id' => $request->user_id,
             'concern_id' => $request->concern,

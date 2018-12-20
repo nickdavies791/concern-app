@@ -9,13 +9,21 @@ use App\Http\Requests\PolicyRequest;
 
 class PolicyController extends Controller
 {
+
+    public function all()
+    {
+        return auth()->user()->policies;
+    }
+
     /**
      * Returns policies associated with logged in user.
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return auth()->user()->policies;
+        $policies = Policy::all();
+
+        return view('policies.index')->with(['policies', $policies]);
     }
 
     /**

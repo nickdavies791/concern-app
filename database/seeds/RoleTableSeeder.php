@@ -17,10 +17,14 @@ class RoleTableSeeder extends Seeder
         ]);
         factory('App\Role')->create([
             'id' => 2,
-            'type' => 'Editor',
+            'type' => 'Contributor',
         ]);
         factory('App\Role')->create([
             'id' => 3,
+            'type' => 'Editor',
+        ]);
+        factory('App\Role')->create([
+            'id' => 4,
             'type' => 'Admin',
         ]);
     }

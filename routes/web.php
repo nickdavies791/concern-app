@@ -22,6 +22,8 @@ Route::get('staff/sync', 'UserController@update')->name('syncStaff');
 Route::get('students/sync', 'StudentController@update')->name('syncStudents');
 Route::resource('students', 'StudentController')->except(['update']);
 Route::resource('groups', 'GroupController');
+Route::get('policies/all', 'PolicyController@all');
 Route::resource('policies', 'PolicyController');
 Route::resource('concerns', 'ConcernController');
 Route::resource('comments', 'CommentController');
+Route::get('users/me/concerns', 'UserController@concerns')->name('user.concerns');

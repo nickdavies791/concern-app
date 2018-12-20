@@ -47,46 +47,67 @@
                     </a>
                 </li>
             </ul>
-
             <ul class="navbar-nav mb-md-3">
+                @can('view-all', 'App\Concern')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('concerns.index') }}">
+                            <i class="ni ni-single-copy-04 text-primary"></i> View All Concerns
+                        </a>
+                    </li>
+                @endcan
+                @can('create', 'App\Concern')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('user.concerns') }}">
+                            <i class="ni ni-circle-08 text-primary"></i> View My Concerns
+                        </a>
+                    </li>
+                @endcan
+                @can('create', 'App\Concern')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('concerns.create') }}">
+                            <i class="ni ni-collection text-primary"></i> Report a Concern
+                        </a>
+                    </li>
+                @endcan
+                @can('create', 'App\Comment')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('comments.create') }}">
+                            <i class="ni ni-curved-next text-primary"></i> Update a Concern
+                        </a>
+                    </li>
+                @endcan
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('concerns.index') }}">
-                        <i class="ni ni-ungroup text-success"></i> View All Concerns
+                    <a class="nav-link" href="{{ route('policies.index') }}">
+                        <i class="ni ni-paper-diploma text-primary"></i> Policies
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('concerns.create') }}">
-                        <i class="ni ni-collection text-red"></i> Report a Concern
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('comments.create') }}">
-                        <i class="ni ni-curved-next text-yellow"></i> Update a Concern
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('settings')}}">
-                        <i class="ni ni-settings text-success"></i> Settings
-                    </a>
-                </li>
+                @admin
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('settings')}}">
+                            <i class="ni ni-settings text-primary"></i> Settings
+                        </a>
+                    </li>
+                @endadmin
             </ul>
-            <!-- Divider -->
-            <hr class="my-3">
-            <!-- Heading -->
-            <h6 class="navbar-heading text-muted">Reports</h6>
-            <!-- Navigation -->
-            <ul class="navbar-nav mb-md-3">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-chart-pie-35 text-orange"></i> View Reports
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-chart-bar-32 text-blue"></i> Create a Report
-                    </a>
-                </li>
-            </ul>
+            @can('view-all', 'App\Concern')
+                <!-- Divider -->
+                <hr class="my-3">
+                <!-- Heading -->
+                <h6 class="navbar-heading text-muted">Reports</h6>
+                <!-- Navigation -->
+                <ul class="navbar-nav mb-md-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="ni ni-chart-pie-35 text-red"></i> View Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="ni ni-chart-bar-32 text-green"></i> Create a Report
+                        </a>
+                    </li>
+                </ul>
+            @endcan
 
             <form action="{{ route('logout') }}" method="POST">
                 @csrf

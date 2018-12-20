@@ -29,6 +29,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * Return the Role associated with a User
+     */
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
     * returns policies associated with user
     */
     public function policies(){
@@ -47,6 +54,38 @@ class User extends Authenticatable
     */
     public function concerns(){
         return $this->hasMany(Concern::class);
+    }
+
+    /**
+     * Check the User has the 'Admin' role type
+     * @return bool
+     */
+    public function isAdmin(){
+        return $this->role()->where('type', 'Admin')->exists();
+    }
+
+    /**
+     * Check the User has the 'Editor' role type
+     * @return bool
+     */
+    public function isEditor(){
+        return $this->role()->where('type', 'Editor')->exists();
+    }
+
+    /**
+     * Check the User has the 'Contributor' role type
+     * @return bool
+     */
+    public function isContributor(){
+        return $this->role()->where('type', 'Contributor')->exists();
+    }
+
+    /**
+     * Check the User has the 'User' role type
+     * @return bool
+     */
+    public function isUser(){
+        return $this->role()->where('type', 'User')->exists();
     }
 
     /**

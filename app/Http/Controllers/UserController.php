@@ -2,12 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Concern;
 use App\User;
 use App\Repositories\Assembly;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    protected $user;
+    protected $concern;
+
+    /**
+     * UserController constructor.
+     * @param User $user
+     * @param Concern $concern
+     */
+    public function __construct(User $user, Concern $concern)
+    {
+        $this->user = $user;
+        $this->concern = $concern;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -59,6 +74,18 @@ class UserController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    public function concerns(){
+        if (auth()->user()->cannot('view-own', $this->concern)) {
+            return redirect('home')->with('alert.danger', 'You do not have access to this page.');
+        }
+        $concerns = auth()->user()->concerns()->with([
+            'user:id,name',
+            'students:student_id,forename,surname,year_group',
+        ])->simplePaginate(5);
+
+        return view('users.concerns', ['concerns' => $concerns]);
     }
 
     /**

@@ -73,6 +73,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Check the User has the 'Contributor' role type
+     * @return bool
+     */
+    public function isContributor(){
+        return $this->role()->where('type', 'Contributor')->exists();
+    }
+
+    /**
      * Check the User has the 'User' role type
      * @return bool
      */

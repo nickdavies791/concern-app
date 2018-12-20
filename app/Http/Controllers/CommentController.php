@@ -35,6 +35,9 @@ class CommentController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->cannot('create', $this->comment)) {
+            return back()->with('alert.danger', 'You do not have access to this page.');
+        }
         return view('comments.create', [
             'concerns' => $this->concern->all()
         ]);

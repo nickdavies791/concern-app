@@ -15,9 +15,7 @@ class ConcernRequest extends FormRequest
      */
     public function authorize(Concern $concern)
     {
-        if (auth()->user()->can('create', $concern)) {
-            return true;
-        }
+        return true;
     }
 
     /**

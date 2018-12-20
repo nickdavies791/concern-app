@@ -38,6 +38,9 @@ class ConcernController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->cannot('view-all', $this->concern)) {
+            return redirect('home')->with('alert.danger', 'You do not have access to this page.');
+        }
         $concerns = $this->concern->with([
             'user:id,name',
             'students:student_id,forename,surname,year_group',

@@ -4,20 +4,44 @@
     <div class="row">
         <div class="col-xl-8">
             @component('partials.cards.card')
-                @slot('title') Concern #{{ $concern->id }} - {{ $concern->title }} @endslot
+                @slot('title')
+                    #{{ $concern->id }} - {{ $concern->title }}
+                    <div class="float-right text-muted">
+                        <button disabled class="btn btn-sm {{$concern->resolved_on ? 'btn-success' : 'btn-danger'}}">
+                            {{$concern->resolved_on ? 'RESOLVED' : 'UNRESOLVED'}}
+                        </button>
+                    </div>
+                    <small class="d-block text-muted">{{$concern->concern_date}}</small>
+                @endslot
                 @slot('body')
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-xl-3">
-                                <h3>Date of Concern</h3>
-                                <small>{{ $concern->concern_date }}</small>
+                            <div class="col-xl-9">
+                                <div class="mb-3">
+                                    <h3 class="mb-0">Concern Details</h3>
+                                    <small class="text-muted d-block mb-2">
+                                        Occurred on -
+                                        {{ $concern->concern_date }}
+                                    </small>
+                                    <small>{{ $concern->body }}</small>
+                                </div>
+
                             </div>
                             <div class="col-xl-3">
-                                <h3>Date Reported</h3>
-                                <small>{{ $concern->reported_at }}</small>
-                            </div>
-                            <div class="col-xl-3">
-                                <h3>Students</h3>
+                                <div class="mb-3">
+                                    <h3 class="mb-2">Groups Notified</h3>
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        @forelse ($concern->groups as $group)
+                                            <button disabled class="btn btn-sm btn-primary mr-2 mb-1">
+                                                {{$group->name}}
+                                            </button>
+                                        @empty
+                                            <small>No groups notified.</small>
+                                        @endforelse
+                                    </div>
+
+                                </div>
+                                <h3>Students Involved</h3>
                                 <ul class="list-unstyled">
                                     @foreach($concern->students as $student)
                                         <li>
@@ -30,16 +54,6 @@
                                     @endforeach
                                 </ul>
                             </div>
-                            <div class="col-xl-3">
-                                <h3>Reported By</h3>
-                                <small>{{ $concern->user->name }}</small>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <h3>Concern Details</h3>
-                                <small>{{ $concern->body }}</small>
-                            </div>
                         </div>
                     </div>
                 @endslot
@@ -47,39 +61,47 @@
         </div>
         <div class="col-xl-4">
             @component('partials.cards.card')
-                @slot('title') Attachments @endslot
+                @slot('title')Attachments @endslot
                 @slot('body')
-                    <div class="card-body">
+                    <ul class="list-group list-group-flush">
                         @foreach($concern->attachments as $attachment)
-                            <small><a target="_blank" href="{{ asset('storage/'.$attachment->file_name) }}">{{ $attachment->file_name }}</a></small>
+                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                                <small>
+                                    <a target="_blank" href="{{ asset('storage/'.$attachment->file_name) }}">
+                                        {{ $attachment->file_name }}
+                                    </a>
+                                </small>
+                                <small class="text-muted">
+                                    {{$attachment->created_at->diffForHumans()}}
+                                </small>
+                            </li>
                         @endforeach
-                    </div>
+                    </ul>
                 @endslot
             @endcomponent
         </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-4">
         <div class="col-xl-12">
-            @component('partials.cards.card')
-                @slot('title') Comments @endslot
-                @slot('body')
-                    <div class="card-body">
-
-                        <ul class="comments">
-                            @forelse($concern->comments as $comment)
-                                <li>
-                                    <h4>{{ $comment->user->name }} on {{ $comment->posted_at }}</h4>
-                                    <small>{{ $comment->body }}</small><br>
-                                    <small>{{ $comment->action_taken }}</small>
-                                </li>
-                            @empty
-                                <li>There are no comments for this concern.</li>
-                            @endforelse
-                        </ul>
-
-                    </div>
-                @endslot
-            @endcomponent
+            <h2 class="">Comments -
+                <button class="btn btn-sm btn-primary">New comment</button>
+            </h2>
+            <ul class="comments mt-3">
+                @forelse($concern->comments as $comment)
+                    <li class="bg-white shadow mb-3">
+                        <h4>{{ $comment->user->name }} on {{ $comment->posted_at }}</h4>
+                        <small>{{ $comment->body }}</small><br>
+                        <small>{{ $comment->action_taken }}</small>
+                    </li>
+                    <li class="bg-white shadow mb-2">
+                        <h4>{{ $comment->user->name }} on {{ $comment->posted_at }}</h4>
+                        <small>{{ $comment->body }}</small><br>
+                        <small>{{ $comment->action_taken }}</small>
+                    </li>
+                @empty
+                    <li class="bg-white shadow mb-3 text-center">There are no comments for this concern.</li>
+                @endforelse
+            </ul>
         </div>
     </div>
 

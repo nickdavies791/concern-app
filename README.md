@@ -87,6 +87,7 @@ The following roles exist in Concerns app:-
 
 ## Notes
 
+### Assembly Education  
 This app uses the PHP SDK for the Assembly API by Assembly. [https://github.com/assembly-edu/assembly-client-php ](https://github.com/assembly-edu/assembly-client-php) to connect to SIMS and retrieve staff and student information. The following data is pulled from SIMS using Assembly for this application:-
 
 | Scope                         | Description                                                  |
@@ -106,3 +107,7 @@ This app uses the PHP SDK for the Assembly API by Assembly. [https://github.com/
 | `staff_members.basic`           | The basic staff information e.g. (Staff code, name, title)   |
 | `staff_members.emails`          | The email address of the staff member                        |
 | `staff_members.teaching_status` | The current teaching status of the staff member              |
+
+### Theme
+
+Argon Dashboard Theme by [@creativetim](https://twitter.com/creativetim) - [https://www.creative-tim.com/product/argon-dashboard ](https://www.creative-tim.com/product/argon-dashboard)

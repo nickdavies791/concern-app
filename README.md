@@ -108,6 +108,6 @@ This app uses the PHP SDK for the Assembly API by Assembly. [https://github.com/
 | `staff_members.emails`          | The email address of the staff member                        |
 | `staff_members.teaching_status` | The current teaching status of the staff member              |
 
-### Theme
+### Themes
 
 Argon Dashboard Theme by [@creativetim](https://twitter.com/creativetim) - [https://www.creative-tim.com/product/argon-dashboard ](https://www.creative-tim.com/product/argon-dashboard)

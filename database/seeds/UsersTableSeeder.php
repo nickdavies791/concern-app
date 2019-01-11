@@ -13,13 +13,18 @@ class UsersTableSeeder extends Seeder
     {
         factory('App\User')->create([
             'name' => 'Matt Tonks',
-            'role_id' => 3,
+            'role_id' => 4,
             'email' => 'matt.tonks@heathpark.net'
         ]);
         factory('App\User')->create([
             'name' => 'Nick Davies',
-            'role_id' => 3,
+            'role_id' => 4,
             'email' => 'nick.davies@clpt.co.uk'
+        ]);
+        factory('App\User')->create([
+            'name' => 'Admin Account',
+            'role_id' => 4,
+            'email' => 'admin@admin.com'
         ]);
 
         factory('App\User', 3)->create();

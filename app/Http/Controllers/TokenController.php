@@ -50,7 +50,7 @@ class TokenController extends Controller
             'expires_in' => $assembly->expires_in
         ]);
 
-        alert()->success('Sucess', 'Your application has now been authorised, you can now sync your data from SIMS')
+        alert()->success('Success', 'Your application has now been authorised, you can now sync your data from SIMS')
         ->showConfirmButton('Got it!');
         return redirect('/settings');
     }

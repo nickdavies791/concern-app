@@ -41,15 +41,26 @@ Run the following command to import tables into your database:-
 ```bash
 $ php artisan migrate:fresh
 ```
-## Sync Data From SIMS
-##### Default Admin Account:
-```php
+
+Run the following command to generate the roles to be assigned to each user:-
+```bash
+$ php artisan roles:create
+```
+
+Run the following command to generate a default admin account:-
+```bash
+$ php artisan admin:create
+Creating user...
 Username: admin@admin.com
 Password: secret
 ```
+
+## Sync Data From SIMS
 Concerns app allows you to sync your data directly from SIMS using the Assembly API. To sync your data, log into the application using an admin account. 
 
+```
 **Note:** Before authorising and syncing data from SIMS, ensure your database does not have dummy data present.
+```
 
 #### Authorising Assembly
 

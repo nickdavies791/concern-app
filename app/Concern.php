@@ -102,4 +102,15 @@ class Concern extends Model
         return $query->where('resolved_on', null)->latest();
     }
 
+    /**
+     * Return all resolved concerns
+     *
+     * @param mixed $query
+     * @return void
+     */
+    public function scopeResolvedLastMonth($query)
+    {
+        return $query->whereBetween('resolved_on', [Carbon::parse('first day of last month'), Carbon::parse('last day of last month')]);
+    }
+
 }

@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
+use Illuminate\Support\Facades\Auth;
 
 class Concern extends Model
 {
@@ -122,6 +123,20 @@ class Concern extends Model
         $start = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);
         $end = Carbon::now();
         return $query->whereBetween('resolved_on', [$start, $end]);
+    }
+
+    public function scopeReportedThisAcademicYear($query)
+    {
+        $start = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);
+        $end = Carbon::now();
+        return $query->whereBetween('created_at', [$start, $end]);
+    }
+
+    public function scopeReportedByAuthUserThisAcademicYear($query)
+    {
+        $start = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);
+        $end = Carbon::now();
+        return $query->where('user_id', Auth::user()->id)->whereBetween('created_at', [$start, $end]);
     }
 
 }

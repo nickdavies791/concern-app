@@ -103,14 +103,25 @@ class Concern extends Model
     }
 
     /**
-     * Return all resolved concerns
-     *
-     * @param mixed $query
-     * @return void
+     * Return all resolved concerns for last month
+     * @param $query
+     * @return mixed
      */
     public function scopeResolvedLastMonth($query)
     {
         return $query->whereBetween('resolved_on', [Carbon::parse('first day of last month'), Carbon::parse('last day of last month')]);
+    }
+
+    /**
+     * Return all resolved concerns for this academic year
+     * @param $query
+     * @return mixed
+     */
+    public function scopeResolvedThisAcademicYear($query)
+    {
+        $start = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);
+        $end = Carbon::now();
+        return $query->whereBetween('resolved_on', [$start, $end]);
     }
 
 }

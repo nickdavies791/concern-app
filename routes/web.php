@@ -11,6 +11,8 @@
 |
 */
 
+$concerns = new \App\Concern;
+dd($concerns->resolvedThisAcademicYear()->count());
 
 Auth::routes(['register' => false, 'reset' => false]);
 Route::get('/', 'HomeController@index');

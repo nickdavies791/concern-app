@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Role;
 use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ViewConcernsTest extends TestCase

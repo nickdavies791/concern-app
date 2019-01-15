@@ -5,11 +5,13 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
 class Concern extends Model
 {
     use EncryptableTrait;
+    use SoftDeletes;
 
     /**
 	 * Encrypted Fields
@@ -29,7 +31,7 @@ class Concern extends Model
     * The attributes that are dates.
     * @var array
     */
-    protected $dates = ['concern_date', 'created_at', 'updated_at', 'resolved_on'];
+    protected $dates = ['concern_date', 'created_at', 'updated_at', 'resolved_on', 'deleted_at'];
 
     /**
     * return comments associated with a concern

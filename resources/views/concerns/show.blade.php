@@ -5,7 +5,7 @@
         <div class="col-xl-8">
             @component('partials.cards.card')
                 @slot('title')
-                    #{{ $concern->id }} - {{ $concern->title }}
+                    {{ $concern->id }} - {{ $concern->title }}
                     <div class="float-right text-muted">
                         <button disabled class="btn btn-sm {{$concern->resolved_on ? 'btn-success' : 'btn-danger'}}">
                             {{$concern->resolved_on ? 'RESOLVED' : 'UNRESOLVED'}}
@@ -13,6 +13,11 @@
                         <a href="{{ route('concerns.edit', ['id' => $concern->id]) }}" class="btn btn-sm btn-primary">
                             Edit
                         </a>
+                        <form class="d-inline" method="POST" action="{{ route('concerns.delete', ['id' => $concern->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-primary">Delete</button>
+                        </form>
                     </div>
                     <small class="d-block text-muted">{{$concern->concern_date}}</small>
                 @endslot

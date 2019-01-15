@@ -24,5 +24,6 @@ Route::resource('groups', 'GroupController');
 Route::get('policies/all', 'PolicyController@all');
 Route::resource('policies', 'PolicyController');
 Route::resource('concerns', 'ConcernController');
+Route::delete('concerns/{concern}', 'ConcernController@delete')->name('concerns.delete');
 Route::resource('comments', 'CommentController');
 Route::get('users/me/concerns', 'UserController@concerns')->name('user.concerns');

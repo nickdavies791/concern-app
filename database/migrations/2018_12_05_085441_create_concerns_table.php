@@ -21,6 +21,7 @@ class CreateConcernsTable extends Migration
             $table->text('body');
             $table->datetime('resolved_on')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

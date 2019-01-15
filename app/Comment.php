@@ -2,12 +2,14 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
     use EncryptableTrait;
+    use SoftDeletes;
 
     /**
 	 * Encrypted Fields
@@ -23,6 +25,12 @@ class Comment extends Model
     * @var array
     */
     protected $guarded = [];
+
+    /**
+     * The attributes that are dates.
+     * @var array
+     */
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
     * returns the concern associated with the comment

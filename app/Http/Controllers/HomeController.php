@@ -29,7 +29,13 @@ class HomeController extends Controller
         return view('home', compact('concerns'));
     }
 
-    public function settings(){
+    /**
+     * Settings view
+     *
+     * @return resource
+     */
+    public function settings()
+    {
         return view('settings');
     }
 }

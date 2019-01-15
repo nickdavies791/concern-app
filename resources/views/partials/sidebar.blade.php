@@ -48,28 +48,28 @@
                 </li>
             </ul>
             <ul class="navbar-nav mb-md-3">
-                @can('view-all', 'App\Concern')
+                @can('view-all', App\Concern::class)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('concerns.index') }}">
                             <i class="ni ni-single-copy-04 text-primary"></i> View All Concerns
                         </a>
                     </li>
                 @endcan
-                @can('create', 'App\Concern')
+                @can('create', App\Concern::class)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.concerns') }}">
                             <i class="ni ni-circle-08 text-primary"></i> View My Concerns
                         </a>
                     </li>
                 @endcan
-                @can('create', 'App\Concern')
+                @can('create', App\Concern::class)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('concerns.create') }}">
                             <i class="ni ni-collection text-primary"></i> Report a Concern
                         </a>
                     </li>
                 @endcan
-                @can('create', 'App\Comment')
+                @can('create', App\Comment::class)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('comments.create') }}">
                             <i class="ni ni-curved-next text-primary"></i> Update a Concern
@@ -89,7 +89,7 @@
                     </li>
                 @endadmin
             </ul>
-            @can('view-all', 'App\Concern')
+            @can('view-all', App\Concern::class)
                 <!-- Divider -->
                 <hr class="my-3">
                 <!-- Heading -->

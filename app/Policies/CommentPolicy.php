@@ -54,19 +54,20 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment)
     {
-        return $user->isEditor();
+        if ($user->isContributor() || $user->isEditor()) {
+            return $comment->user->id == $user->id;
+        }
     }
 
     /**
      * Determine whether the user can delete the comment.
      *
      * @param  \App\User $user
-     * @param Comment $comment
      * @return mixed
      */
-    public function delete(User $user, Comment $comment)
+    public function delete(User $user)
     {
-        return $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**

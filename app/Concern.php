@@ -5,10 +5,13 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Concern extends Model
 {
     use EncryptableTrait;
+    use SoftDeletes;
 
     /**
 	 * Encrypted Fields
@@ -28,7 +31,7 @@ class Concern extends Model
     * The attributes that are dates.
     * @var array
     */
-    protected $dates = ['concern_date', 'created_at', 'updated_at', 'resolved_on'];
+    protected $dates = ['concern_date', 'created_at', 'updated_at', 'resolved_on', 'deleted_at'];
 
     /**
     * return comments associated with a concern
@@ -100,6 +103,52 @@ class Concern extends Model
     public function scopeLatestUnresolved($query)
     {
         return $query->where('resolved_on', null)->latest();
+    }
+
+    /**
+     * Return all resolved concerns for last month
+     * @param $query
+     * @return mixed
+     */
+    public function scopeResolvedLastMonth($query)
+    {
+        return $query->whereBetween('resolved_on', [Carbon::parse('first day of last month'), Carbon::parse('last day of last month')]);
+    }
+
+    /**
+     * Return all resolved concerns for this academic year
+     * @param $query
+     * @return mixed
+     */
+    public function scopeResolvedThisAcademicYear($query)
+    {
+        $start = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);
+        $end = Carbon::now();
+        return $query->whereBetween('resolved_on', [$start, $end]);
+    }
+
+    /**
+     * Return all concerns reported this academic year
+     * @param $query
+     * @return mixed
+     */
+    public function scopeReportedThisAcademicYear($query)
+    {
+        $start = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);
+        $end = Carbon::now();
+        return $query->whereBetween('created_at', [$start, $end]);
+    }
+
+    /**
+     * Return all concerns reported by the authenticated user this academic year
+     * @param $query
+     * @return mixed
+     */
+    public function scopeReportedByAuthUserThisAcademicYear($query)
+    {
+        $start = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);
+        $end = Carbon::now();
+        return $query->where('user_id', Auth::user()->id)->whereBetween('created_at', [$start, $end]);
     }
 
 }

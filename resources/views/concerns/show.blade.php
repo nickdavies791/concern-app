@@ -5,11 +5,23 @@
         <div class="col-xl-8">
             @component('partials.cards.card')
                 @slot('title')
-                    #{{ $concern->id }} - {{ $concern->title }}
+                    {{ $concern->id }} - {{ $concern->title }}
                     <div class="float-right text-muted">
                         <button disabled class="btn btn-sm {{$concern->resolved_on ? 'btn-success' : 'btn-danger'}}">
                             {{$concern->resolved_on ? 'RESOLVED' : 'UNRESOLVED'}}
                         </button>
+                        @can('update', $concern)
+                            <a href="{{ route('concerns.edit', ['id' => $concern->id]) }}" class="btn btn-sm btn-primary">
+                                Edit
+                            </a>
+                        @endcan
+                        @can('delete', $concern)
+                            <form class="d-inline" method="POST" action="{{ route('concerns.delete', ['id' => $concern->id]) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-primary">Delete</button>
+                            </form>
+                        @endcan
                     </div>
                     <small class="d-block text-muted">{{$concern->concern_date}}</small>
                 @endslot
@@ -25,7 +37,6 @@
                                     </small>
                                     <small>{{ $concern->body }}</small>
                                 </div>
-
                             </div>
                             <div class="col-xl-3">
                                 <div class="mb-3">
@@ -39,7 +50,6 @@
                                             <small>No groups notified.</small>
                                         @endforelse
                                     </div>
-
                                 </div>
                                 <h3>Students Involved</h3>
                                 <ul class="list-unstyled">
@@ -89,11 +99,20 @@
             <ul class="comments mt-3">
                 @forelse($concern->comments as $comment)
                     <li class="bg-white shadow mb-3">
-                        <h4>{{ $comment->user->name }} on {{ $comment->posted_at }}</h4>
-                        <small>{{ $comment->body }}</small><br>
-                        <small>{{ $comment->action_taken }}</small>
-                    </li>
-                    <li class="bg-white shadow mb-2">
+                        <div class="mb-3 float-right">
+                            @can('update', $comment)
+                                <a href="{{ route('comments.edit', ['id' => $comment->id]) }}" class="btn btn-sm btn-primary">
+                                    Edit
+                                </a>
+                            @endcan
+                            @can('delete', $comment)
+                                <form class="d-inline" method="POST" action="{{ route('comments.delete', ['id' => $comment->id]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-primary">Delete</button>
+                                </form>
+                            @endcan
+                        </div>
                         <h4>{{ $comment->user->name }} on {{ $comment->posted_at }}</h4>
                         <small>{{ $comment->body }}</small><br>
                         <small>{{ $comment->action_taken }}</small>

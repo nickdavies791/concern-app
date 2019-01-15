@@ -144,6 +144,13 @@ class ConcernController extends Controller
     }
 
 
+    /**
+     * Update the specified resource.
+     *
+     * @param ConcernRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(ConcernRequest $request, $id)
     {
         $concern = $this->concern->findOrFail($id);

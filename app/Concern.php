@@ -125,6 +125,11 @@ class Concern extends Model
         return $query->whereBetween('resolved_on', [$start, $end]);
     }
 
+    /**
+     * Return all concerns reported this academic year
+     * @param $query
+     * @return mixed
+     */
     public function scopeReportedThisAcademicYear($query)
     {
         $start = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);
@@ -132,6 +137,11 @@ class Concern extends Model
         return $query->whereBetween('created_at', [$start, $end]);
     }
 
+    /**
+     * Return all concerns reported by the authenticated user this academic year
+     * @param $query
+     * @return mixed
+     */
     public function scopeReportedByAuthUserThisAcademicYear($query)
     {
         $start = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);

@@ -10,6 +10,9 @@
                         <button disabled class="btn btn-sm {{$concern->resolved_on ? 'btn-success' : 'btn-danger'}}">
                             {{$concern->resolved_on ? 'RESOLVED' : 'UNRESOLVED'}}
                         </button>
+                        <a href="{{ route('concerns.edit', ['id' => $concern->id]) }}" class="btn btn-sm btn-primary">
+                            Edit
+                        </a>
                     </div>
                     <small class="d-block text-muted">{{$concern->concern_date}}</small>
                 @endslot

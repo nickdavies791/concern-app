@@ -71,47 +71,43 @@ class ConcernPolicy
      * Determine whether the user can update the concern.
      *
      * @param  \App\User  $user
-     * @param  \App\Concern  $concern
      * @return mixed
      */
-    public function update(User $user, Concern $concern)
+    public function update(User $user)
     {
-        return $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**
      * Determine whether the user can delete the concern.
      *
      * @param  \App\User  $user
-     * @param  \App\Concern  $concern
      * @return mixed
      */
-    public function delete(User $user, Concern $concern)
+    public function delete(User $user)
     {
-        return $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**
      * Determine whether the user can restore the concern.
      *
      * @param  \App\User  $user
-     * @param  \App\Concern  $concern
      * @return mixed
      */
-    public function restore(User $user, Concern $concern)
+    public function restore(User $user)
     {
-        return $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**
      * Determine whether the user can permanently delete the concern.
      *
      * @param  \App\User  $user
-     * @param  \App\Concern  $concern
      * @return mixed
      */
-    public function forceDelete(User $user, Concern $concern)
+    public function forceDelete(User $user)
     {
-        return $user->isEditor();
+        return $user->isAdmin();
     }
 }

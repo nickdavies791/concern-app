@@ -59,7 +59,6 @@ class ConcernController extends Controller
         if (auth()->user()->cannot('create', $this->concern)) {
             return redirect('home')->with('alert.danger', 'You do not have access to this page.');
         }
-
         return view('concerns.create', [
             'groups' => $this->group->all(),
             'students' => $this->student->all()
@@ -95,7 +94,7 @@ class ConcernController extends Controller
             ]);
         }
 
-        //sorts relationships and notifies selected groups
+        // Sorts relationships and notifies selected groups
         event(new ConcernCreated($concern, $request));
 
         return redirect()
@@ -128,15 +127,37 @@ class ConcernController extends Controller
     }
 
 
+    /**
+     * Display the form for editing the specified resource.
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit($id)
     {
-        // TODO: Create the form for editing concerns
+        $concern = $this->concern->findOrFail($id);
+
+        if (auth()->user()->cannot('update', $concern)) {
+            return back()->with('alert.danger', 'You do not have access to edit this concern.');
+        }
+        return view('concerns.edit', ['concern' => $concern]);
     }
 
 
-    public function update(Request $request, $id)
+    public function update(ConcernRequest $request, $id)
     {
-        // TODO: Create the method to update the concern
+        $concern = $this->concern->findOrFail($id);
+
+        if (auth()->user()->cannot('update', $concern)) {
+            return back()->with('alert.danger', 'You do not have access to edit this concern.');
+        }
+
+        $concern->title = $request->title;
+        $concern->body = $request->body;
+        $concern->save();
+
+        return redirect()->route('concerns.show', ['id' => $id])->with('alert.success', 'Your concern has been updated.');
+
     }
 
     /**

@@ -18,11 +18,11 @@ class ConcernTest extends TestCase
     public function test_a_concern_can_be_created()
     {
         $user = factory(User::class)->create();
-        $group = factory(Group::class)->create();
         factory(Concern::class)->create([
             'user_id' => $user->id,
-            'group_id' => $group->id,
         ]);
         $this->assertDatabaseHas('concerns', ['user_id' => $user->id]);
     }
+
+
 }

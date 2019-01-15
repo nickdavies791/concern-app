@@ -20,10 +20,8 @@ class CommentTest extends TestCase
     public function test_a_comment_can_be_created()
     {
         $user = factory(User::class)->create();
-        $group = factory(Group::class)->create();
         $concern = factory(Concern::class)->create([
             'user_id' => $user->id,
-            'group_id' => $group->id,
         ]);
         factory(Comment::class)->create([
             'user_id' => $user->id,

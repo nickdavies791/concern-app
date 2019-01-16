@@ -54,5 +54,6 @@
     @include('partials.modals.body-map')
     @include('partials.modals.protection')
     <script defer="defer" src="{{ asset('js/body-map.js') }}"></script>
+    {!! $chart->script() !!}
 </body>
 </html>

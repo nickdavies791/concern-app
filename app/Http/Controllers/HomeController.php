@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Concern;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    protected $concern;
+
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * HomeController constructor.
+     * @param Concern $concern
      */
-    public function __construct()
+    public function __construct(Concern $concern)
     {
+        $this->concern = $concern;
         $this->middleware('auth');
     }
 
@@ -24,8 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $concern = new Concern;
-        $concerns = $concern->latestUnresolved()->limit(5)->get();
+        $concerns = $this->concern->latestUnresolved()->limit(5)->get();
         return view('home', compact('concerns'));
     }
 

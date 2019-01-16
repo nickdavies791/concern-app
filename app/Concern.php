@@ -34,28 +34,36 @@ class Concern extends Model
     protected $dates = ['concern_date', 'created_at', 'updated_at', 'resolved_on', 'deleted_at'];
 
     /**
-    * return comments associated with a concern
+     * Return the tags associated with a concern
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+    * Return comments associated with a concern
     */
     public function comments(){
         return $this->hasMany(Comment::class);
     }
 
     /**
-    * return students associated with a concern
+    * Return students associated with a concern
     */
     public function students(){
         return $this->belongsToMany(Student::class);
     }
 
     /**
-    * return groups notified about a concern
+    * Return groups notified about a concern
     */
     public function groups(){
         return $this->belongsToMany(Group::class);
     }
 
     /**
-    * return users associated with a concern
+    * Return users associated with a concern
     */
     public function user(){
         return $this->belongsTo(User::class);

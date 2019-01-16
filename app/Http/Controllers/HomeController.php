@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\TestChart;
 use App\Concern;
 
 class HomeController extends Controller
@@ -25,8 +26,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $chart = new TestChart;
+        $chart->labels(['A', 'B', 'C']);
+        $chart->dataset('Test Dataset', 'line', [1, 2, 3]);
         $concerns = $this->concern->latestUnresolved()->limit(5)->get();
-        return view('home', compact('concerns'));
+        return view('home', compact('concerns', 'chart'));
     }
 
     /**

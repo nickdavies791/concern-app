@@ -52,7 +52,7 @@ class Chart
         $chart->dataset('2018-2019', 'line', $users->values()->all())->options([
             'backgroundColor' => '#5e72e4',
             'borderColor' => '#5e72e4',
-            'borderWidth' => 5,
+            'borderWidth' => 4,
             'fill' => false,
         ]);
         return $chart;

@@ -17,14 +17,15 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.5",
         "popper.js": "^1.12",
-        "vue": "^2.5.21"
+        "vue": "^2.5.22"
     },
     "dependencies": {
         "luxon": "^1.10.0",
         "moment": "^2.23.0",
-        "vue-datetime": "^1.0.0-beta.8",
+        "vue-datetime": "^1.0.0-beta.10",
         "vue-instantsearch": "^1.7.0",
         "vue-multiselect": "^2.1.3",
+        "vue-template-compiler": "^2.5.22",
         "weekstart": "^1.0.0"
     }
 }

@@ -29,7 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $chart = $this->chart->testChart();
+        $chart = $this->chart->concernsByMonthBreakdown();
         $concerns = $this->concern->latestUnresolved()->limit(5)->get();
         return view('home')->with(['concerns' => $concerns, 'chart' => $chart]);
     }

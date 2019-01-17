@@ -5,15 +5,17 @@
     <div class="row">
         <div class="col-xl-8">
             @component('partials.cards.card')
-                @slot('title') Latest Unresolved Concerns @endslot
+                @slot('title') Concerns by Month Breakdown @endslot
                 @slot('body')
-                    @include('concerns.partials.latest_unresolved')
+                    <div class="chart p-3">
+                        {!! $chart->container() !!}
+                    </div>
                 @endslot
             @endcomponent
             @component('partials.cards.card')
-                @slot('title') Test Chart @endslot
+                @slot('title') Latest Unresolved Concerns @endslot
                 @slot('body')
-                    <div class="chart">{!! $chart->container() !!}</div>
+                    @include('concerns.partials.latest_unresolved')
                 @endslot
             @endcomponent
         </div>

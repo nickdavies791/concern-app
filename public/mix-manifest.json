@@ -2,5 +2,6 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/body-map.js": "/js/body-map.js",
-    "/js/argon.min.js": "/js/argon.min.js"
+    "/js/argon.min.js": "/js/argon.min.js",
+    "/js/Chart.extension.js": "/js/Chart.extension.js"
 }

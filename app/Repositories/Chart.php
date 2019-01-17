@@ -31,13 +31,28 @@ class Chart
     public function concernsByMonthBreakdown()
     {
         // Set the start and end date
-        $start = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);
-        $end = Carbon::now();
-        $year = $start->format('Y').'-'.$end->format('Y');
+        $startThisYear = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);
+        $endThisYear = Carbon::now();
+        // Set start and end previous year
+        $startLastYear = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->subYear()->year, 9, 1);
+        $endLastYear = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);
+        // Set years
+        $thisYear = $startThisYear->format('Y').'-'.$endThisYear->format('Y');
+        $lastYear = $startLastYear->format('Y').'-'.$endLastYear->format('Y');
         // Query the database and return the total concerns by month between $start and $end
-        $concerns = DB::table('concerns')
+        $concernsThisYear = DB::table('concerns')
             ->select(DB::raw('MONTHNAME(created_at) as month, YEAR(created_at) as year, count(*) as total'))
-            ->whereBetween('created_at', [$start, $end])
+            ->whereBetween('created_at', [$startThisYear, $endThisYear])
+            ->where('deleted_at', null)
+            ->groupBy('month')->groupBy('year')
+            ->orderBy('year', 'asc')->orderByRaw("MONTH(STR_TO_DATE(CONCAT('1 ', month, ' ', year), '%e %M %y')) asc")
+            ->get()->mapWithKeys(function ($item) {
+                return [$item->month => $item->total];
+            });
+        // Query the database and return the total concerns by month between $start and $end
+        $concernsLastYear = DB::table('concerns')
+            ->select(DB::raw('MONTHNAME(created_at) as month, YEAR(created_at) as year, count(*) as total'))
+            ->whereBetween('created_at', [$startLastYear, $endLastYear])
             ->where('deleted_at', null)
             ->groupBy('month')->groupBy('year')
             ->orderBy('year', 'asc')->orderByRaw("MONTH(STR_TO_DATE(CONCAT('1 ', month, ' ', year), '%e %M %y')) asc")
@@ -46,8 +61,14 @@ class Chart
             });
         // Instantiate the chart and pass the key and values
         $chart = new ConcernsByMonthBreakdown;
-        $chart->labels($concerns->keys()->all());
-        $chart->dataset($year, 'line', $concerns->values()->all())->options([
+        $chart->labels($concernsThisYear->keys()->all());
+        $chart->dataset($thisYear, 'line', $concernsThisYear->values()->all())->options([
+            'backgroundColor' => '#5e72e4',
+            'borderColor' => '#5e72e4',
+            'borderWidth' => 4,
+            'fill' => false,
+        ]);
+        $chart->dataset($lastYear, 'line', $concernsLastYear->values()->all())->options([
             'backgroundColor' => '#5e72e4',
             'borderColor' => '#5e72e4',
             'borderWidth' => 4,

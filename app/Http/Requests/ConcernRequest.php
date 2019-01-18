@@ -28,6 +28,7 @@ class ConcernRequest extends FormRequest
         return [
             'groups.*' => 'required|exists:groups,id',
             'students.*' => 'required|exists:students,id',
+            'tags.*' => 'required|exists:tags,id',
             'title' => 'required|max:100',
         ];
     }
@@ -42,6 +43,8 @@ class ConcernRequest extends FormRequest
             'group.exists' => 'The group you have selected no longer exists, please choose another.',
             'student.required' => 'Please select a student which relates to your concern.',
             'student.exists' => 'The student you have selected does not exist on our records.',
+            'tag.required' => 'Please select a tag which relates to your concern.',
+            'tag.exists' => 'The tag you have selected does not exist on our records.',
             'title.required' => 'Please create an appropriate summary subject.',
             'title.max' => 'The summary needs to be shorter, please try again.',
         ];

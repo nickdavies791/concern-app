@@ -63,6 +63,16 @@
                                         </li>
                                     @endforeach
                                 </ul>
+                                <h3>Tags</h3>
+                                <ul class="list-unstyled">
+                                    @foreach($concern->tags as $tag)
+                                        <li>
+                                            <small>
+                                                {{ $tag->name }}
+                                            </small>
+                                        </li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
                     </div>

@@ -23,9 +23,19 @@
                                 <label>Details</label>
                                 <textarea name="body" class="form-control" placeholder="Include the details of the concern"></textarea>
                             </div>
-                            <div class="form-group">
-                                <label>Date of Concern</label>
-                                <datetime type="datetime" v-model="datetime" name="concern_date" input-id="concern_date" input-class="form-control" placeholder="Provide a date"></datetime>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Date of Concern</label>
+                                        <datetime type="datetime" v-model="datetime" name="concern_date" input-id="concern_date" input-class="form-control" placeholder="Provide a date"></datetime>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Assign a tag</label>
+                                        <tag-select></tag-select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <a href="#" class="text-primary" data-toggle="modal" data-target="#body-map">Include a Body Map</a>

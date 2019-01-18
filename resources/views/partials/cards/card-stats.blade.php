@@ -11,9 +11,5 @@
                 </div>
             </div>
         </div>
-        <p class="mt-3 mb-0 text-muted text-sm">
-            <span class="text-{{ $sub_icon_color }} mr-2"><i class="{{ $sub_icon }}"></i> {{ $value }}</span>
-            <span class="text-nowrap">{{ $overview }}</span>
-        </p>
     </div>
 </div>

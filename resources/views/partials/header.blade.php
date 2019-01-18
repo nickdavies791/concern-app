@@ -10,10 +10,6 @@
                         @slot('stats') {{ $countResolvedThisAcademicYear }} @endslot
                         @slot('color') danger @endslot
                         @slot('main_icon') ni ni-chart-bar-32 @endslot
-                        @slot('sub_icon') ni ni-bold-down @endslot
-                        @slot('sub_icon_color') warning @endslot
-                        @slot('value')  @endslot
-                        @slot('overview')  @endslot
                     @endcomponent
                 </div>
                 <div class="col-xl-3 col-lg-6">
@@ -22,10 +18,6 @@
                         @slot('stats') {{ $countResolvedLastMonth }} @endslot
                         @slot('color') warning @endslot
                         @slot('main_icon') ni ni-single-02 @endslot
-                        @slot('sub_icon') ni ni-bold-down @endslot
-                        @slot('sub_icon_color') warning @endslot
-                        @slot('value')  @endslot
-                        @slot('overview')  @endslot
                     @endcomponent
                 </div>
                 <div class="col-xl-3 col-lg-6">
@@ -34,10 +26,6 @@
                         @slot('stats') {{ $countReportedThisAcademicYear }} @endslot
                         @slot('color') yellow @endslot
                         @slot('main_icon') ni ni-chart-bar-32 @endslot
-                        @slot('sub_icon') ni ni-bold-up @endslot
-                        @slot('sub_icon_color') success @endslot
-                        @slot('value')  @endslot
-                        @slot('overview')  @endslot
                     @endcomponent
                 </div>
                 <div class="col-xl-3 col-lg-6">
@@ -46,10 +34,6 @@
                         @slot('stats') {{ $countReportedByMeThisAcademicYear }} @endslot
                         @slot('color') primary @endslot
                         @slot('main_icon') ni ni-single-02 @endslot
-                        @slot('sub_icon') ni ni-bold-down @endslot
-                        @slot('sub_icon_color') warning @endslot
-                        @slot('value')  @endslot
-                        @slot('overview')  @endslot
                     @endcomponent
                 </div>
             </div>

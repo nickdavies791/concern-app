@@ -97,7 +97,7 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('reports.index') }}">
                             <i class="ni ni-chart-pie-35 text-red"></i> View Reports
                         </a>
                     </li>

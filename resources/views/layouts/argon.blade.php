@@ -12,7 +12,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" ></script>
-    <script src="{{ asset('js/argon.min.js') }}" ></script>
+    <script src="{{ asset('js/argon.min.js') }}"></script>
+    <script src="{{ asset('js/Chart.min.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}" ></script>
 
     <!-- Fonts -->

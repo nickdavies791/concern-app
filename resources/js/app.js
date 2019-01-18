@@ -11,6 +11,7 @@ Vue.component('group-select', require('./components/GroupSelect.vue'));
 Vue.component('policy-table', require('./components/PolicyTable.vue'));
 Vue.component('student-search', require('./components/StudentSearch.vue'));
 Vue.component('student-select', require('./components/StudentSelect.vue'));
+Vue.component('tag-select', require('./components/TagSelect.vue'));
 
 $(document).ready( function(){
     const app = new Vue({

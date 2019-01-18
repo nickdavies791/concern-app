@@ -41957,6 +41957,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('group-select', __webpack_
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('policy-table', __webpack_require__(511));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('student-search', __webpack_require__(515));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('student-select', __webpack_require__(522));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('tag-select', __webpack_require__(533));
 
 $(document).ready(function () {
     var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
@@ -98591,6 +98592,170 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 526 */,
+/* 527 */,
+/* 528 */,
+/* 529 */,
+/* 530 */,
+/* 531 */,
+/* 532 */,
+/* 533 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(61)
+/* script */
+var __vue_script__ = __webpack_require__(534)
+/* template */
+var __vue_template__ = __webpack_require__(535)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/TagSelect.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-278b645b", Component.options)
+  } else {
+    hotAPI.reload("data-v-278b645b", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 534 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_multiselect__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_multiselect__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        Multiselect: __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default.a
+    },
+    methods: {
+        getTags: function getTags() {
+            var _this = this;
+
+            axios.get('/tags').then(function (response) {
+                response.data.forEach(function (tag) {
+                    _this.options.push(tag);
+                });
+            });
+        }
+    },
+    data: function data() {
+        return {
+            tags: [],
+            options: [],
+            bottom: 'bottom'
+        };
+    },
+    created: function created() {
+        this.getTags();
+    }
+});
+
+/***/ }),
+/* 535 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("multiselect", {
+        attrs: {
+          "open-direction": _vm.bottom,
+          options: _vm.options,
+          multiple: true,
+          "close-on-select": true,
+          "clear-on-select": false,
+          "preserve-search": true,
+          placeholder: "Select a tag",
+          label: "name",
+          "track-by": "id"
+        },
+        model: {
+          value: _vm.tags,
+          callback: function($$v) {
+            _vm.tags = $$v
+          },
+          expression: "tags"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticStyle: { display: "none" },
+          attrs: { name: "tag[]", multiple: "" }
+        },
+        _vm._l(_vm.tags, function(tag) {
+          return _c("option", {
+            attrs: { selected: "selected" },
+            domProps: { value: tag.id }
+          })
+        }),
+        0
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-278b645b", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

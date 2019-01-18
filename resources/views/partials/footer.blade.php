@@ -12,7 +12,7 @@
                     <a href="#" data-toggle="modal" data-target="#protection" class="nav-link" target="_blank">Data Protection</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" target="_blank">Report an Issue</a>
+                    <a href="mailto:concerns@clpt.co.uk" class="nav-link" target="_blank">Report an Issue</a>
                 </li>
             </ul>
         </div>

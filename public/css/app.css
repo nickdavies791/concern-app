@@ -18918,10 +18918,6 @@ textarea[resize="horizontal"] {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.navbar-search-dark .focused .input-group {
-  border-color: rgba(255, 255, 255, 0.9);
-}
-
 .navbar-search-light .input-group {
   border-color: rgba(0, 0, 0, 0.6);
 }
@@ -18944,10 +18940,6 @@ textarea[resize="horizontal"] {
 
 .navbar-search-light .form-control::placeholder {
   color: rgba(0, 0, 0, 0.6);
-}
-
-.navbar-search-light .focused .input-group {
-  border-color: rgba(0, 0, 0, 0.9);
 }
 
 @media (min-width: 768px) {

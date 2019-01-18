@@ -3,6 +3,9 @@
         <div class="navbar-search navbar-search-dark mr-3 ml-lg-auto">
             <div class="form-group mb-0">
                 <div class="search-input input-group input-group-alternative">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    </div>
                     <ais-input :class-names="{'ais-input' : 'form-control'}" placeholder="Search"></ais-input>
                 </div>
                 <div class="text-right mr-2">

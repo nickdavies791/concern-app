@@ -98278,6 +98278,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 var searchStore = Object(__WEBPACK_IMPORTED_MODULE_0_vue_instantsearch__["a" /* createFromAlgoliaCredentials */])('N9H85PFJ44', '558648aceba7916f274eb28fe0b890ac');
@@ -98316,6 +98319,12 @@ var render = function() {
                 staticClass: "search-input input-group input-group-alternative"
               },
               [
+                _c("div", { staticClass: "input-group-prepend" }, [
+                  _c("span", { staticClass: "input-group-text" }, [
+                    _c("i", { staticClass: "fas fa-search" })
+                  ])
+                ]),
+                _vm._v(" "),
                 _c("ais-input", {
                   attrs: {
                     "class-names": { "ais-input": "form-control" },

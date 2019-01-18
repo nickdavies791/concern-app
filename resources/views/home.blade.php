@@ -4,10 +4,10 @@
 @section('content')
     <div class="row">
         <div class="col-xl-8">
-            @component('partials.cards.card')
+            @component('partials.cards.card-chart')
                 @slot('title') Concerns by Month Breakdown @endslot
                 @slot('body')
-                    <div class="chart p-3">
+                    <div class="p-3">
                         {!! $chart->container() !!}
                     </div>
                 @endslot

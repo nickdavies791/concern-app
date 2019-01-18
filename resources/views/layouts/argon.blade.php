@@ -12,7 +12,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" ></script>
-    <script src="{{ asset('js/argon.min.js') }}" ></script>
+    <script src="{{ asset('js/argon.min.js') }}"></script>
+    <script src="{{ asset('js/Chart.min.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}" ></script>
 
     <!-- Fonts -->
@@ -54,6 +55,5 @@
     @include('partials.modals.body-map')
     @include('partials.modals.protection')
     <script defer="defer" src="{{ asset('js/body-map.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 </body>
 </html>

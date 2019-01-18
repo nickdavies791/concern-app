@@ -17,17 +17,17 @@
                             </div>
                             <div class="form-group">
                                 <label>Concern Summary</label>
-                                <input type="text" name="title" class="form-control" placeholder="Provide a brief summary">
+                                <input required type="text" name="title" class="form-control" placeholder="Provide a brief summary">
                             </div>
                             <div class="form-group">
                                 <label>Details</label>
-                                <textarea name="body" class="form-control" placeholder="Include the details of the concern"></textarea>
+                                <textarea required name="body" class="form-control" placeholder="Include the details of the concern"></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Date of Concern</label>
-                                        <datetime type="datetime" v-model="datetime" name="concern_date" input-id="concern_date" input-class="form-control" placeholder="Provide a date"></datetime>
+                                        <datetime required type="datetime" v-model="datetime" name="concern_date" input-id="concern_date" input-class="form-control" placeholder="Provide a date"></datetime>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

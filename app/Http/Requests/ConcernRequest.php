@@ -26,10 +26,11 @@ class ConcernRequest extends FormRequest
     public function rules()
     {
         return [
-            'groups.*' => 'required|exists:groups,id',
-            'students.*' => 'required|exists:students,id',
-            'tags.*' => 'required|exists:tags,id',
+            'groups' => 'required|exists:groups,id',
+            'students' => 'required|exists:students,id',
+            'tags' => 'required|exists:tags,id',
             'title' => 'required|max:100',
+            'concern_date' => 'required|date',
         ];
     }
 
@@ -39,14 +40,16 @@ class ConcernRequest extends FormRequest
      */
     public function messages(){
         return [
-            'group.required' => 'Please select a group to notify about your concern.',
-            'group.exists' => 'The group you have selected no longer exists, please choose another.',
-            'student.required' => 'Please select a student which relates to your concern.',
-            'student.exists' => 'The student you have selected does not exist on our records.',
-            'tag.required' => 'Please select a tag which relates to your concern.',
-            'tag.exists' => 'The tag you have selected does not exist on our records.',
-            'title.required' => 'Please create an appropriate summary subject.',
+            'groups.required' => 'Please select a group to notify about your concern.',
+            'groups.exists' => 'The group you have selected no longer exists, please choose another.',
+            'students.required' => 'Please select a student which relates to your concern.',
+            'students.exists' => 'The student you have selected does not exist on our records.',
+            'tags.required' => 'Please select a tag which relates to your concern.',
+            'tags.exists' => 'The tag you have selected does not exist on our records.',
+            'title.required' => 'Please create an appropriate summary subject. (Do not use sensitive information)',
             'title.max' => 'The summary needs to be shorter, please try again.',
+            'concern_date.required' => 'Please select the date you wish to log for this concern.',
+            'concern_date.date' => 'The concern date needs to be a date and time.',
         ];
     }
 }

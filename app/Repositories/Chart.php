@@ -63,8 +63,8 @@ class Chart
         $chart = new ConcernsByMonthBreakdown;
         $chart->labels($concernsThisYear->keys()->all());
         $chart->dataset($thisYear, 'line', $concernsThisYear->values()->all())->options([
-            'backgroundColor' => '#5e72e4',
-            'borderColor' => '#5e72e4',
+            'backgroundColor' => '#f5365c',
+            'borderColor' => '#f5365c',
             'borderWidth' => 4,
             'fill' => false,
         ]);

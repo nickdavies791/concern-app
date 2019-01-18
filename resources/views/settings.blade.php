@@ -28,7 +28,7 @@
                                 </a>
                             </div>
                             <label class="form-control-label mb-3">
-                                Here you can sync your student and staff data with you schools SIMS
+                                Sync your SIMS data by choosing the options below.
                             </label>
                             <div class="row ml-0">
                                 <a :disabled="loading" v-on:click="loading = true" href="{{route('syncStudents')}}" class="text-white btn btn-primary mr-2">

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-xl-12 mx-auto">
+        <div class="col-xl-10 mx-auto">
             <div class="card bg-secondary shadow">
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">

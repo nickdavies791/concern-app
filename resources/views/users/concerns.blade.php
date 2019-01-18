@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-xl-12">
+        <div class="col-xl-10 mx-auto">
             @component('partials.cards.card')
                 @slot('title') Concerns I've Raised @endslot
                 @slot('body')

@@ -11,16 +11,20 @@
 
             <div class="modal-body pb-0">
                 <p>
-                    Groups allow you to define a selection of users within this
-                    application who get to see and do certain things.
+                    Groups allow you to define a selection of users who get to see and do certain things.
                 </p>
-                <p>
-                    E.g. see certain policies or view certain comments related to a concern.
+                <p>For example, you can limit policies to only certain groups of staff
+                    or limit access to concerns to people within a particular group.
                 </p>
+                <div class="alert alert-primary" role="alert">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Example:</strong> Uploading a policy called 'Safeguarding.pdf' and assigning the group 'SLT' will
+                    only allow members of the SLT group to view the policy.
+                </div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="mx-auto btn btn-primary" data-dismiss="modal">Got it</button>
+                <button type="button" class="mx-auto btn btn-primary" data-dismiss="modal">Got it!</button>
             </div>
 
         </div>

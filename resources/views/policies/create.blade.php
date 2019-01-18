@@ -33,7 +33,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="form-control-label mb-3">
-                                        Who's allowed access?
+                                        Who can access?
                                         <a class="text-primary" data-toggle="modal" data-target="#groupHelp">Confused?</a>
                                     </label>
                                     <div class="form-group">

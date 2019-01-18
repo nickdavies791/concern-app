@@ -24,10 +24,6 @@ protected $host = 'https://api.assembly.education';
 ```
 
 ## Configuration
-Run the following command to generate a unique application key:-
-```bash
-$ php artisan key:generate
-```
 
 Rename `.env.example` to `.env` and configure the file to use your own information and keys. For example:-
 
@@ -37,20 +33,25 @@ APP_URL= // Location you installed the app
 ...
 ```
 
-Run the following command to import tables into your database:-
+Run the following command to perform the initial setup:-
 ```bash
-$ php artisan migrate:fresh
-```
+$ php artisan concerns:setup
+``````
 
-Run the following command to generate the roles to be assigned to each user:-
-```bash
-$ php artisan roles:create
-```
+**Note:** You can run the commands individually. See below for the description of what each command does.
 
-Run the following command to generate a default admin account:-
+| Artisan Command              | Description                                                                   |
+|------------------------------|-------------------------------------------------------------------------------|
+| `php artisan concerns:setup` | Runs all commands below.                                                      |
+| `php artisan key:generate`   | Creates an application key used for encryption.                               |
+| `php artisan migrate:fresh`  | Creates all tables in the database.                                           |
+| `php artisan admin:create`   | Creates a default admin user.                                                 |
+| `php artisan roles:create`   | Creates all of the roles. See [Roles and Permissions](#roles-and-permissions) |
+| `php artisan tags:create`    | Creates the default tags. See [Tagging a Concern](#tagging-a-concern)         |
+| `php artisan groups:create`  | Creates the default groups. See [Creating Groups](#creating-groups)           |
+
+The default admin details are:-
 ```bash
-$ php artisan admin:create
-Creating user...
 Username: admin@admin.com
 Password: secret
 ```
@@ -94,7 +95,38 @@ The following roles exist in Concerns app:-
 | 3       | Editor      | `$user->isEditor()`      | view, create, delete | view     | view all, create, update all         | view all, create, update own         | view, create, update, delete |
 | 4       | Admin       | `$user->isAdmin()`       | view, create, delete | sync     | view all, create, update all, delete | view all, create, update all, delete | view, create, update, delete |
 
+### Tagging a Concern
+You can assign a concern with a specific set of tags to better understand all of your logged concerns and to help with reporting. 
 
+The default tags are:-
+
+ | ID | Tag                       |
+|----|---------------------------|
+| 1  | Domestic Abuse            |
+| 2  | Sexual Abuse              |
+| 3  | Neglect                   |
+| 4  | Welfare                   |
+| 5  | Physical Abuse            |
+| 6  | Emotional Abuse           |
+| 7  | Child Sexual Exploitation |
+| 8  | Female Genital Mutilation |
+| 9  | Bullying                  |
+| 10 | Cyberbullying             |
+| 11 | Injury                    |
+| 12 | Mental Health             |
+| 13 | Behaviour                 |
+
+### Creating Groups
+
+The default groups are:-
+
+| ID | Name         |
+|----|--------------|
+| 1  | Behavioural  |
+| 2  | SLT          |
+| 3  | Pastoral     |
+| 4  | Safeguarding |
+| 5  | Year Leads   |
 
 ## Notes
 

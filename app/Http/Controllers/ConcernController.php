@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Http\Requests\ConcernUpdateRequest;
 use App\Student;
 use App\Concern;
 use App\Repositories\Image;
 use App\Events\ConcernCreated;
 use App\Http\Requests\ConcernRequest;
+use Carbon\Carbon;
 
 class ConcernController extends Controller
 {
@@ -149,11 +151,11 @@ class ConcernController extends Controller
     /**
      * Update the specified resource.
      *
-     * @param ConcernRequest $request
+     * @param ConcernUpdateRequest $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ConcernRequest $request, $id)
+    public function update(ConcernUpdateRequest $request, $id)
     {
         $concern = $this->concern->findOrFail($id);
 
@@ -161,6 +163,11 @@ class ConcernController extends Controller
             return back()->with('alert.danger', 'You do not have access to edit this concern.');
         }
 
+        if ($request->resolved) {
+            $concern->resolved_on = Carbon::now();
+        } else {
+            $concern->resolved_on = NULL;
+        }
         $concern->title = $request->title;
         $concern->body = $request->body;
         $concern->save();

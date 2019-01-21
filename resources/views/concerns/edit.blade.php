@@ -13,6 +13,12 @@
                             @csrf
                             @method('PATCH')
                             <div class="form-group">
+                                <div class="custom-control custom-checkbox mb-3">
+                                    <input {{ $concern->resolved_on ? 'checked' : '' }} class="custom-control-input" name="resolved" id="concernResolved" type="checkbox">
+                                    <label class="custom-control-label" for="concernResolved">Mark as Resolved</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label>Concern Summary</label>
                                 <input value="{{ $concern->title }}" type="text" name="title" class="form-control" placeholder="Provide a brief summary">
                             </div>

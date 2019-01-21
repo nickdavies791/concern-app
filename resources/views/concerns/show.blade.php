@@ -7,8 +7,8 @@
                 @slot('title')
                     {{ $concern->id }} - {{ $concern->title }}
                     <div class="float-right text-muted">
-                        <button disabled class="btn btn-sm {{$concern->resolved_on ? 'btn-success' : 'btn-danger'}}">
-                            {{$concern->resolved_on ? 'RESOLVED' : 'UNRESOLVED'}}
+                        <button disabled class="btn btn-sm {{ $concern->resolved_on ? 'btn-success' : 'btn-danger' }}">
+                            {{ $concern->resolved_on ? 'RESOLVED' : 'UNRESOLVED' }}
                         </button>
                         @can('update', $concern)
                             <a href="{{ route('concerns.edit', ['id' => $concern->id]) }}" class="btn btn-sm btn-primary">

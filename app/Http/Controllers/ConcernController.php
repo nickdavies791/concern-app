@@ -95,6 +95,7 @@ class ConcernController extends Controller
             ]);
         }
 
+
         // Sorts relationships and notifies selected groups
         event(new ConcernCreated($concern, $request));
 

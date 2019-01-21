@@ -27,7 +27,7 @@ class HandleConcernRelationships
     public function handle(ConcernCreated $event)
     {
         $event->concern->students()->attach($event->request->students);
-        $event->concern->tags()->attach($event->request->tag);
+        $event->concern->tags()->attach($event->request->tags);
         $event->concern->groups()->attach($event->request->groups);
     }
 }

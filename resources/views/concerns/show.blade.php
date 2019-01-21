@@ -63,15 +63,17 @@
                                         </li>
                                     @endforeach
                                 </ul>
-                                <h3>Tags</h3>
+                                <h3>Tagged As</h3>
                                 <ul class="list-unstyled">
-                                    @foreach($concern->tags as $tag)
-                                        <li>
-                                            <small>
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        @forelse ($concern->tags as $tag)
+                                            <button disabled class="btn btn-sm btn-primary mr-2 mb-1">
                                                 {{ $tag->name }}
-                                            </small>
-                                        </li>
-                                    @endforeach
+                                            </button>
+                                        @empty
+                                            <small>No tags added.</small>
+                                        @endforelse
+                                    </div>
                                 </ul>
                             </div>
                         </div>

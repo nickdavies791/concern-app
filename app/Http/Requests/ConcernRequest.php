@@ -26,9 +26,9 @@ class ConcernRequest extends FormRequest
     public function rules()
     {
         return [
-            'groups' => 'required|exists:groups,id',
-            'students' => 'required|exists:students,id',
-            'tags' => 'required|exists:tags,id',
+            'groups.*' => 'required|exists:groups,id',
+            'students.*' => 'required|exists:students,id',
+            'tags.*' => 'required|exists:tags,id',
             'title' => 'required|max:100',
             'concern_date' => 'required|date',
         ];

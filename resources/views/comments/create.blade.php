@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-xl-10 mx-auto">
             @component('partials.cards.card')
-                @slot('title') Update a Concern @endslot
+                @slot('title') Add Comment @endslot
                 @slot('body')
                     <div class="card-body">
                         @include('partials.errors.errors')

@@ -106,7 +106,7 @@
     <div class="row mt-4">
         <div class="col-xl-12">
             <h2 class="">Comments -
-                <button class="btn btn-sm btn-primary">New comment</button>
+                <a href="{{ route('comments.create', ['id' => $concern->id]) }}" class="btn btn-sm btn-primary">New Comment</a>
             </h2>
             <ul class="comments mt-3">
                 @forelse($concern->comments as $comment)

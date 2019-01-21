@@ -69,13 +69,6 @@
                         </a>
                     </li>
                 @endcan
-                @can('create', App\Comment::class)
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('comments.create') }}">
-                            <i class="ni ni-curved-next text-primary"></i> Update a Concern
-                        </a>
-                    </li>
-                @endcan
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('policies.index') }}">
                         <i class="ni ni-paper-diploma text-primary"></i> Policies

@@ -24,8 +24,9 @@
                 @slot('title') Actions @endslot
                 @slot('body')
                     <div class="card-body">
-                        <a href="{{ route('concerns.create') }}" class="btn btn-lg btn-danger">Report a Concern</a>
-                        <a href="{{ route('comments.create') }}" class="btn btn-lg btn-primary">Update a Concern</a>
+                        @can('create', App\Concern::class)
+                            <a href="{{ route('concerns.create') }}" class="btn btn-lg btn-danger">Report a Concern</a>
+                        @endcan
                     </div>
                 @endslot
             @endcomponent

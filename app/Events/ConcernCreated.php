@@ -24,7 +24,8 @@ class ConcernCreated
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Concern $concern
+     * @param Request $request
      */
     public function __construct(Concern $concern, Request $request)
     {

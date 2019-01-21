@@ -44,6 +44,7 @@ $ php artisan concerns:setup
 |------------------------------|-------------------------------------------------------------------------------|
 | `php artisan concerns:setup` | Runs all commands below.                                                      |
 | `php artisan key:generate`   | Creates an application key used for encryption.                               |
+| `php artisan storage:link`   | Creates a symbolic link from storage to public for attachments.                               |
 | `php artisan migrate:fresh`  | Creates all tables in the database.                                           |
 | `php artisan admin:create`   | Creates a default admin user.                                                 |
 | `php artisan roles:create`   | Creates all of the roles. See [Roles and Permissions](#roles-and-permissions) |

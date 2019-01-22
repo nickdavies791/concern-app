@@ -82,7 +82,7 @@ class ConcernPolicy
      */
     public function update(User $user)
     {
-        return $user->isAdmin();
+        return $user->isSafeguarding();
     }
 
     /**

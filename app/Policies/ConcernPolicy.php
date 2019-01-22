@@ -43,16 +43,6 @@ class ConcernPolicy
     }
 
     /**
-     * Determine whether the user can view concerns shared with them
-     * @param User $user
-     * @return bool
-     */
-    public function viewShared(User $user)
-    {
-        return $user->isContributor() || $user->isEditor();
-    }
-
-    /**
      * Determine whether the user can view the concern.
      *
      * @param  \App\User  $user

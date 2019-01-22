@@ -55,13 +55,6 @@
                         </a>
                     </li>
                 @endcan
-                @can('view-shared', App\Concern::class)
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('concerns.shared') }}">
-                            <i class="ni ni-single-copy-04 text-primary"></i> View Shared Concerns
-                        </a>
-                    </li>
-                @endcan
                 @can('view-own', App\Concern::class)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.concerns') }}">

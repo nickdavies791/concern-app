@@ -43,6 +43,16 @@ class ConcernPolicy
     }
 
     /**
+     * Determine whether the user can view concerns shared with them
+     * @param User $user
+     * @return bool
+     */
+    public function viewShared(User $user)
+    {
+        return $user->isContributor() || $user->isEditor();
+    }
+
+    /**
      * Determine whether the user can view the concern.
      *
      * @param  \App\User  $user
@@ -52,7 +62,14 @@ class ConcernPolicy
     public function view(User $user, Concern $concern)
     {
         if ($user->isContributor() || $user->isEditor()) {
-            return $user->concerns->contains($concern->id);
+            foreach ($concern->groups as $group){
+                if ($user->groups->contains($group->id)){
+                    return true;
+                }
+            }
+            if ($user->concerns->contains($concern->id)) {
+                return true;
+            }
         }
     }
 

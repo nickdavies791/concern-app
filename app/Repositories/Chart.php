@@ -37,7 +37,7 @@ class Chart
         $chart = new TotalConcernsByTag;
         $chart->labels($tags->keys()->all());
         $chart->dataset('Number of Concerns', 'bar', $tags->values()->all())->options([
-            'backgroundColor' => ['#2dce89', '#2dce89', '#2dce89', '#2dce89', '#2dce89'],
+            'backgroundColor' => ['#2dce89', '#2dce89', '#2dce89', '#2dce89', '#2dce89', '#2dce89', '#2dce89', '#2dce89', '#2dce89', '#2dce89', '#2dce89', '#2dce89', '#2dce89'],
             'borderWidth' => 1,
         ]);
         return $chart;

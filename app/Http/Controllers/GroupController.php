@@ -7,13 +7,27 @@ use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
+    protected $group;
+
+    /**
+     * GroupController constructor.
+     * @param Group $group
+     */
+    public function __construct(Group $group)
+    {
+        $this->group = $group;
+    }
+
     /**
      * Returns groups for vue-multiselect.
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return Group::all();
+        if (auth()->user()->isStaff()) {
+            return $this->group->where('name', 'Safeguarding')->get();
+        }
+        return $this->group->all();
     }
 
     /**

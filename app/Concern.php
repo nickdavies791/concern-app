@@ -81,7 +81,7 @@ class Concern extends Model
      * @param $value
      * @return mixed
      */
-    public function getReportedAtAttribute($value){
+    public function getCreatedAtAttribute($value){
         return Carbon::parse($value)->format('d M Y g:ia');
     }
 

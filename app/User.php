@@ -65,19 +65,19 @@ class User extends Authenticatable
     }
 
     /**
-     * Check the User has the 'Editor' role type
+     * Check the User has the 'Safeguarding' role type
      * @return bool
      */
-    public function isEditor(){
-        return $this->role()->where('type', 'Editor')->exists();
+    public function isSafeguarding(){
+        return $this->role()->where('type', 'Safeguarding')->exists();
     }
 
     /**
-     * Check the User has the 'Contributor' role type
+     * Check the User has the 'Staff' role type
      * @return bool
      */
-    public function isContributor(){
-        return $this->role()->where('type', 'Contributor')->exists();
+    public function isStaff(){
+        return $this->role()->where('type', 'Staff')->exists();
     }
 
     /**

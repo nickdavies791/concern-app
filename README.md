@@ -89,13 +89,12 @@ Staff can support their written concerns by including a body map, identifying ar
 
 The following roles exist in Concerns app:-
 
-| Role ID | Role Name   | Usage                  | Policies             | Students | Concerns                             | Comments                             | Groups                       |
-|---------|-------------|------------------------|----------------------|----------|--------------------------------------|--------------------------------------|------------------------------|
-| 1       | User        | `$user->isUser()`        | view                 | none     | none                                 | none                                 | none                         |
-| 2       | Contributor | `$user->isContributor()` | view                 | view     | view own, create, update own         | view all, create, update own         | view                           |
-| 3       | Editor      | `$user->isEditor()`      | view, create, delete | view     | view all, create, update all         | view all, create, update own         | view, create, update, delete |
-| 4       | Admin       | `$user->isAdmin()`       | view, create, delete | sync     | view all, create, update all, delete | view all, create, update all, delete | view, create, update, delete |
-
+| Role ID | Role Name    | Usage                     | Policies             | Students | Concerns                                  | Comments                             | Groups                       |
+|---------|--------------|---------------------------|----------------------|----------|-------------------------------------------|--------------------------------------|------------------------------|
+| 1       | User         | `$user->isUser()`         | view                 | none     | none                                      | none                                 | none                         |
+| 2       | Staff        | `$user->isStaff()`        | view                 | view     | view shared, view own, create, update own | view all, create, update own         | view                         |
+| 3       | Safeguarding | `$user->isSafeguarding()` | view, create, delete | view     | view all, create, update all              | view all, create, update own         | view, create, update, delete |
+| 4       | Admin        | `$user->isAdmin()`        | view, create, delete | sync     | view all, create, update all, delete      | view all, create, update all, delete | view, create, update, delete |
 ### Tagging a Concern
 You can assign a concern with a specific set of tags to better understand all of your logged concerns and to help with reporting. 
 

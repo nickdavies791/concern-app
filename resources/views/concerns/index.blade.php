@@ -10,19 +10,16 @@
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col">Identifier</th>
                             <th scope="col">Summary</th>
                             <th scope="col">Students</th>
-                            <th scope="col">Reported on</th>
-                            <th scope="col">Reported by</th>
+                            <th scope="col">Logged by</th>
+                            <th scope="col">Logged on</th>
+                            <th scope="col">Groups</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($concerns as $concern)
                             <tr>
-                                <td>
-                                    {{ $concern->id }}
-                                </td>
                                 <td>
                                     <a href="{{ route('concerns.show', ['concern' => $concern->id]) }}">{{ $concern->title }}</a>
                                 </td>
@@ -32,10 +29,17 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    {{ $concern->reported_at }}
+                                    {{ $concern->user->name }}
                                 </td>
                                 <td>
-                                    {{ $concern->user->name }}
+                                    {{ $concern->created_at }}
+                                </td>
+                                <td>
+                                    @foreach($concern->groups as $group)
+                                        <button disabled class="btn btn-sm btn-danger">
+                                            {{ $group->name }}
+                                        </button>
+                                    @endforeach
                                 </td>
                             </tr>
                         @endforeach

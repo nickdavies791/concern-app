@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+    protected $student;
+
+    /**
+     * StudentController constructor.
+     * @param Student $student
+     */
+    public function __construct(Student $student)
+    {
+        $this->student = $student;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +25,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return Student::select('id', 'forename', 'surname')->get();
+        return $this->student->select('id', 'forename', 'surname')->get();
     }
 
     /**
@@ -46,7 +57,7 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        $student = Student::where('id', '=', $id)->with('concerns')->first();
+        $student = $this->student->where('id', '=', $id)->with('concerns')->first();
         return view('students.show', ['student' => $student]);
     }
 

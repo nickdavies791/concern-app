@@ -23,6 +23,7 @@ Route::resource('students', 'StudentController')->except(['update']);
 Route::resource('groups', 'GroupController');
 Route::get('policies/all', 'PolicyController@all');
 Route::resource('policies', 'PolicyController');
+Route::get('concerns/shared', 'ConcernController@shared')->name('concerns.shared');
 Route::resource('concerns', 'ConcernController');
 Route::delete('concerns/{concern}', 'ConcernController@delete')->name('concerns.delete');
 Route::resource('comments', 'CommentController');

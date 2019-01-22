@@ -31,7 +31,7 @@ class CommentPolicy
      */
     public function view(User $user, Comment $comment)
     {
-        return $user->isContributor() || $user->isEditor();
+        return $user->isStaff() || $user->isSafeguarding();
     }
 
     /**
@@ -42,7 +42,7 @@ class CommentPolicy
      */
     public function create(User $user)
     {
-        return $user->isContributor() || $user->isEditor();
+        return $user->isStaff() || $user->isSafeguarding();
     }
 
     /**
@@ -54,7 +54,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment)
     {
-        if ($user->isContributor() || $user->isEditor()) {
+        if ($user->isStaff() || $user->isSafeguarding()) {
             return $comment->user->id == $user->id;
         }
     }
@@ -79,7 +79,7 @@ class CommentPolicy
      */
     public function restore(User $user, Comment $comment)
     {
-        return $user->isEditor();
+        return $user->isAdmin();
     }
 
     /**
@@ -91,6 +91,6 @@ class CommentPolicy
      */
     public function forceDelete(User $user, Comment $comment)
     {
-        return $user->isEditor();
+        return $user->isAdmin();
     }
 }

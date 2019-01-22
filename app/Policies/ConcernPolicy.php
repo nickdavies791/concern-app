@@ -29,7 +29,7 @@ class ConcernPolicy
      */
     public function viewAll(User $user)
     {
-        return $user->isEditor();
+        return $user->isSafeguarding();
     }
 
     /**
@@ -39,7 +39,7 @@ class ConcernPolicy
      */
     public function viewOwn(User $user)
     {
-        return $user->isContributor() || $user->isEditor();
+        return $user->isStaff() || $user->isSafeguarding();
     }
 
     /**
@@ -51,7 +51,7 @@ class ConcernPolicy
      */
     public function view(User $user, Concern $concern)
     {
-        if ($user->isContributor() || $user->isEditor()) {
+        if ($user->isStaff() || $user->isSafeguarding()) {
             foreach ($concern->groups as $group){
                 if ($user->groups->contains($group->id)){
                     return true;
@@ -71,7 +71,7 @@ class ConcernPolicy
      */
     public function create(User $user)
     {
-        return $user->isContributor() || $user->isEditor();
+        return $user->isStaff() || $user->isSafeguarding();
     }
 
     /**

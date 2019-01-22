@@ -94,11 +94,6 @@
                             <i class="ni ni-chart-pie-35 text-red"></i> View Reports
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="ni ni-chart-bar-32 text-green"></i> Create a Report
-                        </a>
-                    </li>
                 </ul>
             @endcan
 

@@ -1,6 +1,8 @@
 @extends('layouts.argon')
 
-{!! $chart->script() !!}
+{!! $concernsByMonthBreakdown->script() !!}
+{!! $totalConcernsByTag->script() !!}
+
 @section('content')
     <div class="row">
         <div class="col-xl-8">
@@ -8,7 +10,7 @@
                 @slot('title') Concerns by Month Breakdown @endslot
                 @slot('body')
                     <div class="p-3">
-                        {!! $chart->container() !!}
+                        {!! $concernsByMonthBreakdown->container() !!}
                     </div>
                 @endslot
             @endcomponent
@@ -20,13 +22,11 @@
             @endcomponent
         </div>
         <div class="col-xl-4">
-            @component('partials.cards.card')
-                @slot('title') Actions @endslot
+            @component('partials.cards.card-chart')
+                @slot('title') Total Concerns By Tag @endslot
                 @slot('body')
-                    <div class="card-body">
-                        @can('create', App\Concern::class)
-                            <a href="{{ route('concerns.create') }}" class="btn btn-lg btn-danger">Report a Concern</a>
-                        @endcan
+                    <div class="p-3">
+                        {!! $totalConcernsByTag->container() !!}
                     </div>
                 @endslot
             @endcomponent

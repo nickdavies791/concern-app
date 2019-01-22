@@ -2,6 +2,7 @@
 
 {!! $concernsByMonthBreakdown->script() !!}
 {!! $totalConcernsByTag->script() !!}
+
 @section('content')
     <div class="row">
         <div class="col-xl-8">

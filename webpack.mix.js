@@ -11,11 +11,12 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
-
 mix.js('resources/js/argon.min.js', 'public/js');
 mix.js('resources/js/Chart.min.js', 'public/js');
 mix.js('resources/js/body-map.js', 'public/js');
 mix.copy('resources/images', 'public/images');
 mix.copy('resources/fonts', 'public/fonts');
+
+mix.js('resources/js/app.js', 'public/js')
+   .sass('resources/sass/app.scss', 'public/css');
+

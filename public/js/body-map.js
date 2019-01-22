@@ -60,20 +60,12 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 298);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 298:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(299);
-
-
-/***/ }),
-
-/***/ 299:
+/***/ "./resources/js/body-map.js":
 /***/ (function(module, exports) {
 
 $(function () {
@@ -145,6 +137,14 @@ $(function () {
         $("#url").val(data);
     }
 });
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__("./resources/js/body-map.js");
+
 
 /***/ })
 

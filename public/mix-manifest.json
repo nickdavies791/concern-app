@@ -1,7 +1,7 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/js/argon.min.js": "/js/argon.min.js",
-    "/css/app.css": "/css/app.css",
-    "/js/body-map.js": "/js/body-map.js",
-    "/js/Chart.min.js": "/js/Chart.min.js"
+    "/js/app.js": "/js/app.js?id=7cac2807bdfb88b626df",
+    "/js/argon.min.js": "/js/argon.min.js?id=1fd18793ba2f62fc97a6",
+    "/css/app.css": "/css/app.css?id=70da14185adc81f552cd",
+    "/js/body-map.js": "/js/body-map.js?id=4070a0b87da72ecae051",
+    "/js/Chart.min.js": "/js/Chart.min.js?id=9186d247be7602d99489"
 }

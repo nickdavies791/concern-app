@@ -46,7 +46,7 @@ class ConcernController extends Controller
         $concerns = $this->concern->with([
             'user:id,name',
             'students:student_id,forename,surname,year_group',
-        ])->simplePaginate(5);
+        ])->latest()->simplePaginate(5);
 
         return view('concerns.index', ['concerns' => $concerns]);
     }

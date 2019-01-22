@@ -15,6 +15,7 @@
     <script src="{{ asset('js/argon.min.js') }}"></script>
     <script src="{{ asset('js/Chart.min.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}" ></script>
+    <script src="https://unpkg.com/popper.js@1.14.6/dist/umd/popper.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -55,5 +56,10 @@
     @include('partials.modals.body-map')
     @include('partials.modals.protection')
     <script defer="defer" src="{{ asset('js/body-map.js') }}"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        });
+    </script>
 </body>
 </html>

@@ -1,7 +1,6 @@
 @extends('layouts.argon')
 
 @section('content')
-
     <div class="row">
         <div class="col-xl-10 mx-auto">
             @component('partials.cards.card')
@@ -17,11 +16,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Concern Summary</label>
-                                <input required type="text" name="title" class="form-control" placeholder="Provide a brief summary">
+                                <input required type="text" name="title" class="form-control" data-toggle="popover" data-trigger="focus" data-content="Please provide a short summary. Do not include sensitive information in this section." placeholder="Provide a brief summary">
                             </div>
                             <div class="form-group">
                                 <label>Details</label>
-                                <textarea required name="body" class="form-control" placeholder="Include the details of the concern"></textarea>
+                                <textarea required name="body" class="form-control" data-toggle="popover" data-trigger="focus" data-content="Provide full details regarding the concern and include any action taken." placeholder="Include the details of the concern"></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">

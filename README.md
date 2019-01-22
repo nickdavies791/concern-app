@@ -120,13 +120,16 @@ The default tags are:-
 
 The default groups are:-
 
-| ID | Name         |
-|----|--------------|
-| 1  | Behavioural  |
-| 2  | SLT          |
-| 3  | Pastoral     |
-| 4  | Safeguarding |
-| 5  | Year Leads   |
+| ID | Name              |
+|----|-------------------|
+| 1  | All Staff         |
+| 2  | Attendance        |
+| 3  | Behavioural       |
+| 4  | Learning Support  |
+| 5  | Safeguarding      |
+| 6  | Senior Leadership |
+| 7  | Year Leads        |
+
 
 ## Notes
 

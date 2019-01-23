@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Token;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
         });
         Blade::if('user', function () {
             return auth()->user()->isUser();
+        });
+        Blade::if('tokenExists', function () {
+            $token = new Token;
+            return $token->exists();
         });
     }
 

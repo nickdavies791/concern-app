@@ -31,14 +31,20 @@
                                 Sync your SIMS data by choosing the options below.
                             </label>
                             <div class="row ml-0">
-                                <a :disabled="loading" v-on:click="loading = true" href="{{route('syncStudents')}}" class="text-white btn btn-primary mr-2">
-                                    <i  v-if="loading" class="fas fa-2x fa-spinner fa-spin"></i>
-                                    <span v-else>Sync Students</span>
-                                </a>
-                                <a :disabled="loadingStaff" v-on:click="loadingStaff = true" href="{{route('syncStaff')}}" class="text-white btn btn-primary ml-2">
-                                    <i  v-if="loadingStaff" class="fas fa-2x fa-spinner fa-spin"></i>
-                                    <span v-else>Sync Staff</span>
-                                </a>
+                                @tokenExists
+                                    <a :disabled="loading" v-on:click="loading = true" href="{{route('syncStudents')}}" class="text-white btn btn-primary mr-2">
+                                        <i  v-if="loading" class="fas fa-2x fa-spinner fa-spin"></i>
+                                        <span v-else>Sync Students</span>
+                                    </a>
+                                    <a :disabled="loadingStaff" v-on:click="loadingStaff = true" href="{{route('syncStaff')}}" class="text-white btn btn-primary ml-2">
+                                        <i  v-if="loadingStaff" class="fas fa-2x fa-spinner fa-spin"></i>
+                                        <span v-else>Sync Staff</span>
+                                    </a>
+                                @else
+                                    <button data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Please authorise the app with your SIMS first by clicking Authorise." class="text-white btn btn-primary mr-2" disabled>Sync Students</button>
+                                    <button data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Please authorise the app with your SIMS first by clicking Authorise." class="text-white btn btn-primary mr-2" disabled>Sync Staff</button>
+                                @endtokenExists
+
                             </div>
                         </div>
                     @endadmin

@@ -12,17 +12,6 @@ $ npm install
 $ composer install
 ```
 
-In the following file `vendor\assembly-edu\assembly-client-php\src\Assembly\Client\Configuration.php` change this section to the following:-
-
-```php
-/**
-* The host
-*
-* @var string
-*/
-protected $host = 'https://api.assembly.education';
-```
-
 ## Configuration
 
 Rename `.env.example` to `.env` and configure the file to use your own information and keys. For example:-
@@ -44,7 +33,8 @@ $ php artisan concerns:setup
 |------------------------------|-------------------------------------------------------------------------------|
 | `php artisan concerns:setup` | Runs all commands below.                                                      |
 | `php artisan key:generate`   | Creates an application key used for encryption.                               |
-| `php artisan storage:link`   | Creates a symbolic link from storage to public for attachments.                               |
+| `php artisan storage:link`   | Creates a symbolic link from storage to public for attachments.               |
+| `php artisan scout:flush `   | Flushes any existing search data for models in Algolia                        |
 | `php artisan migrate:fresh`  | Creates all tables in the database.                                           |
 | `php artisan admin:create`   | Creates a default admin user.                                                 |
 | `php artisan roles:create`   | Creates all of the roles. See [Roles and Permissions](#roles-and-permissions) |

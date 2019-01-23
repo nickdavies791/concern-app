@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PolicyTableSeeder extends Seeder
+class DocumentTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class PolicyTableSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\Policy', 5)->create();
+        factory('App\Document', 5)->create();
     }
 }

@@ -70,8 +70,8 @@
                     </li>
                 @endcan
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('policies.index') }}">
-                        <i class="ni ni-paper-diploma text-primary"></i> Policies
+                    <a class="nav-link" href="{{ route('documents.index') }}">
+                        <i class="ni ni-paper-diploma text-primary"></i> Documents
                     </a>
                 </li>
                 @admin

@@ -79,7 +79,7 @@ Staff can support their written concerns by including a body map, identifying ar
 
 The following roles exist in Concerns app:-
 
-| Role ID | Role Name    | Usage                     | Policies             | Students | Concerns                                  | Comments                             | Groups                       |
+| Role ID | Role Name    | Usage                     | Documents            | Students | Concerns                                  | Comments                             | Groups                       |
 |---------|--------------|---------------------------|----------------------|----------|-------------------------------------------|--------------------------------------|------------------------------|
 | 1       | User         | `$user->isUser()`         | view                 | none     | none                                      | none                                 | none                         |
 | 2       | Staff        | `$user->isStaff()`        | view                 | view     | view shared, view own, create, update own | view all, create, update own         | view                         |

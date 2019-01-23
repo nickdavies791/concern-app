@@ -7,26 +7,26 @@
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">Policies</h3>
+                            <h3 class="mb-0">Documents</h3>
                         </div>
                         <div class="col-4 text-right">
-                            <a class="btn btn-sm btn-primary text-white">Policies</a>
+                            <a class="btn btn-sm btn-primary text-white">Documents</a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <h6 class="heading-small text-muted">Add a new policy</h6>
+                    <h6 class="heading-small text-muted">Add a document</h6>
                     @include('partials.errors.errors')
                     <div class="pl-lg-4 mt-3">
-                        <form action="{{url('policies')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-md-12">
                                     <label class="form-control-label mb-3">
-                                        Policy name
+                                        Document Name
                                     </label>
                                     <div class="form-group">
-                                        <input required autocomplete="off" name="name" type="text" class="form-control form-control-alternative" placeholder="Policy name">
+                                        <input required autocomplete="off" name="name" type="text" class="form-control form-control-alternative" data-toggle="popover" data-trigger="focus" data-content="Provide a clean, human-readable name for this document." placeholder="Name the document">
                                     </div>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-control-label mb-3">
-                                            Choose your policy
+                                            Choose your document
                                         </label>
                                         <div style="font-size: 14px" class="custom-file form-control-alternative">
                                             <input name="file_path" type="file" class="custom-file-input form-control form-control-alternative">

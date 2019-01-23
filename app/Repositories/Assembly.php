@@ -29,8 +29,8 @@ class Assembly {
     }
 
     /**
-     * refreshes access token in database
-     * @param  App\Token  $token
+     * Refreshes access token in database
+     * @param Token $token
      * @return boolean Success of refresh token
      */
     protected function refreshToken(Token $token){
@@ -53,8 +53,8 @@ class Assembly {
     }
 
     /**
-     * configures the assembly api client
-     * @return Assembly\Client\Api\AssemblyApi Instance of Assembly API Client
+     * Configures the Assembly API Client
+     * @return AssemblyApi Instance of Assembly API Client
      */
     protected function configureClient(){
         $token = Token::first();
@@ -64,14 +64,16 @@ class Assembly {
         }
 
         $config = Configuration::getDefaultConfiguration()
+            ->setHost('https://api.assembly.education')
             ->setAccessToken($token->secret);
 
         return new AssemblyApi(new Client(), $config);
     }
 
     /**
-     * gets the student data from sims for all students
+     * Gets the student data from SIMS for all students
      * @return object student sims data
+     * @throws \Assembly\Client\ApiException
      */
     public function getStudents(){
         $assembly = $this->configureClient();
@@ -84,8 +86,9 @@ class Assembly {
     }
 
     /**
-     * gets the staff data from sims for teaching staff
+     * Gets the staff data from sims for teaching staff
      * @return object staff sims data
+     * @throws \Assembly\Client\ApiException
      */
     public function getStaffMembers(){
         $assembly = $this->configureClient();

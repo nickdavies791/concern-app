@@ -23,9 +23,13 @@
                                 <a class="text-primary" data-toggle="modal" data-target="#syncHelp">Confused?</a>
                             </label>
                             <div class="row ml-0 mb-3">
-                                <a href="{{route('authorise-assembly')}}" class="text-white btn btn-primary mr-2">
-                                    Authorise
-                                </a>
+                                @tokenExists
+                                    <button data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Looks like you have already authorised this app to fetch the latest data from SIMS." class="text-white btn btn-primary mr-2" disabled>Authorise</button>
+                                @else
+                                    <a href="{{route('authorise-assembly')}}" class="text-white btn btn-primary mr-2">
+                                        Authorise
+                                    </a>
+                                @endtokenExists
                             </div>
                             <label class="form-control-label mb-3">
                                 Sync your SIMS data by choosing the options below.

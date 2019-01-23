@@ -16,11 +16,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Concern Summary</label>
-                                <input required type="text" name="title" class="form-control" data-toggle="popover" data-trigger="focus" data-content="Please provide a short summary. Do not include sensitive information in this section." placeholder="Provide a brief summary">
+                                <input required type="text" name="title" class="form-control" data-toggle="popover"   data-content="Please provide a short summary. Do not include sensitive information in this section." placeholder="Provide a brief summary">
                             </div>
                             <div class="form-group">
                                 <label>Details</label>
-                                <textarea required name="body" class="form-control" data-toggle="popover" data-trigger="focus" data-content="Provide full details regarding the concern and include any action taken." placeholder="Include the details of the concern"></textarea>
+                                <textarea required name="body" class="form-control" data-toggle="popover" data-content="Provide full details regarding the concern and include any action taken." placeholder="Include the details of the concern"></textarea>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -44,7 +44,7 @@
                                 <label>Notify Group(s)</label>
                                 <group-select></group-select>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-lg">Save Concern</button>
+                            <button type="submit" class="btn btn-primary btn-lg" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Please check all details before saving. The Safeguarding Team will be notified.">Save Concern</button>
                         </form>
                     </div>
                 @endslot

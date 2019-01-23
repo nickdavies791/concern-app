@@ -15,7 +15,7 @@ class Assembly {
      * @return object Oauth token details
      */
     public function authorise($code){
-        $response = (new Client())->post('https://platform.assembly.education/oauth/token', [
+        $response = (new Client())->post(config('services.assembly.auth_uri'), [
             'form_params' => [
                 'grant_type' => 'authorization_code',
                 'client_id' => config('services.assembly.client_id'),
@@ -34,7 +34,7 @@ class Assembly {
      * @return boolean Success of refresh token
      */
     protected function refreshToken(Token $token){
-        $response = (new Client())->post('https://platform.assembly.education/oauth/token', [
+        $response = (new Client())->post(config('services.assembly.auth_uri'), [
             'form_params' => [
                 'grant_type' => 'refresh_token',
                 'client_id' => config('services.assembly.client_id'),
@@ -64,7 +64,7 @@ class Assembly {
         }
 
         $config = Configuration::getDefaultConfiguration()
-            ->setHost('https://api.assembly.education')
+            ->setHost(config('services.assembly.endpoint'))
             ->setAccessToken($token->secret);
 
         return new AssemblyApi(new Client(), $config);

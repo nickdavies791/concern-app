@@ -43,8 +43,10 @@ return [
     'assembly' => [
         'client_id' => env('ASSEMBLY_CLIENT_ID'),
         'client_secret' => env('ASSEMBLY_CLIENT_SECRET'),
-        'redirect_uri' => 'http://concern.test/assembly/token/authorise',
-        'scopes' => env('ASSEMBLY_SCOPES')
+        'auth_uri' => env('ASSEMBLY_AUTH_URI'),
+        'redirect_uri' => env('ASSEMBLY_REDIRECT_URI'),
+        'scopes' => env('ASSEMBLY_SCOPES'),
+        'endpoint' => env('ASSEMBLY_API_ENDPOINT')
     ],
 
 ];

@@ -83,7 +83,7 @@ class Student extends Model
                     'birth_date' => $student->birth_date
                 ]);
             } catch (\Exception $e) {
-                info(['student not added' => ['error' => $e]]);
+                return view('settings')->with('alert.danger', 'There was a problem syncing the data');
             }
         }
     }

@@ -8,7 +8,7 @@
                 @slot('body')
                     <div class="card-body">
                         @include('partials.errors.errors')
-                        <form method="POST" action="{{ route('concerns.store') }}">
+                        <form method="POST" action="{{ route('concerns.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label>Find a Student</label>
@@ -35,6 +35,14 @@
                                         <tag-select></tag-select>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                    @csrf
+                                    <label>Add Supporting Files</label>
+                                    <div style="font-size: 14px" class="custom-file form-control-alternative">
+                                        <input name="files[]" type="file" multiple class="custom-file-input form-control form-control-alternative">
+                                        <label class="custom-file-label border-0">Select</label>
+                                    </div>
                             </div>
                             <div class="form-group">
                                 <a href="#" class="text-primary" data-toggle="modal" data-target="#body-map">Include a Body Map</a>

@@ -87,7 +87,17 @@ class ConcernController extends Controller
             'concern_date' => $request->concern_date,
         ]);
 
-        if($request->image){
+        if ($request->hasfile('files')) {
+            foreach ($request->file('files') as $file) {
+                $file->storeAs('concerns/'.$concern->id, $file->getClientOriginalName(), 'public');
+                $concern->attachments()->create([
+                    'concern_id' => $concern->id,
+                    'file_name' => 'concerns/'.$concern->id.'/'.$file->getClientOriginalName(),
+                ]);
+            }
+        }
+
+        if ($request->image){
             $location = $this->image->location('concerns/'.$concern->id);
             $this->image->save($request->image, $location, date('Y-m-d_His').'_bodymap.png');
 

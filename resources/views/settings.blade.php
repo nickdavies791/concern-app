@@ -16,7 +16,8 @@
                 </div>
                 <div class="card-body">
                     @admin
-                        <h6 class="heading-small text-muted mb-4">Sync data with Sims</h6>
+                    <div class="mb-4">
+                        <h6 class="heading-small text-muted mb-3">Sync data with Sims</h6>
                         <div class="pl-lg-4">
                             <label class="form-control-label mb-3">
                                 Authorise this app with your schools SIMS -
@@ -48,10 +49,23 @@
                                     <button data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Please authorise the app with your SIMS first by clicking Authorise." class="text-white btn btn-primary mr-2" disabled>Sync Students</button>
                                     <button data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Please authorise the app with your SIMS first by clicking Authorise." class="text-white btn btn-primary mr-2" disabled>Sync Staff</button>
                                 @endtokenExists
-
                             </div>
                         </div>
+                    </div>
                     @endadmin
+                    @can('create', App\Tag::class)
+                        <div class="mb-4">
+                            <h6 class="heading-small text-muted mb-3">Create Tags</h6>
+                            @include('partials.errors.errors')
+                            <div class="pl-lg-4">
+                                <form action="{{ route('tags.store') }}" method="POST">
+                                    @csrf
+                                    <input data-toggle="popover" data-trigger="focus" data-content="Provide a unique tag name. The tag must be no more than 30 characters in length." required maxlength="30" type="text" name="tag" class="form-control" placeholder="Enter a tag name">
+                                    <button type="submit" class="d-none"></button>
+                                </form>
+                            </div>
+                        </div>
+                    @endcan
                 </div>
             </div>
         </div>

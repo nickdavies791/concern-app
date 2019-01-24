@@ -74,13 +74,13 @@
                         <i class="ni ni-paper-diploma text-primary"></i> Documents
                     </a>
                 </li>
-                @admin
+                @adminOrSafeguarding
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('settings')}}">
                             <i class="ni ni-settings text-primary"></i> Settings
                         </a>
                     </li>
-                @endadmin
+                @endadminOrSafeguarding
             </ul>
             @can('view-all', App\Concern::class)
                 <!-- Divider -->

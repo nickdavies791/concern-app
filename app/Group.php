@@ -42,4 +42,22 @@ class Group extends Model
             }
         }
     }
+
+    /**
+     * Assign users in groups to the selected document
+     * @param array $groups
+     * @param string $id
+     */
+    public function assignDocuments(array $groups, string $id){
+        foreach ($groups as $group) {
+            foreach ($this->find($group)->users as $user) {
+                try {
+                    $user->documents()->attach($id);
+                } catch (\Exception $e) {
+                    info("User already has this policy", ['error' => $e]);
+                }
+            }
+        }
+    }
+
 }

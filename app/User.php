@@ -36,10 +36,10 @@ class User extends Authenticatable
     }
 
     /**
-    * returns policies associated with user
-    */
-    public function policies(){
-        return $this->belongsToMany(Policy::class)->withPivot('read_at');
+     * Returns documents associated with a user
+     */
+    public function documents(){
+        return $this->belongsToMany(Document::class)->withPivot('read_at');
     }
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePoliciesTable extends Migration
+class CreateDocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreatePoliciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('policies', function (Blueprint $table) {
-            $table->increments('id')->index();
+        Schema::create('documents', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('name');
             $table->string('file_path');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +28,6 @@ class CreatePoliciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('policies');
+        Schema::dropIfExists('documents');
     }
 }

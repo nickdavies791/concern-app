@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Concern extends Model
+class Concern extends Model implements Searchable
 {
     use EncryptableTrait;
     use SoftDeletes;
@@ -18,7 +20,7 @@ class Concern extends Model
 	 * @var array
 	 */
 	protected $encryptable = [
-	    'title', 'body'
+	    'body'
 	];
 
     /**
@@ -32,6 +34,20 @@ class Concern extends Model
     * @var array
     */
     protected $dates = ['concern_date', 'created_at', 'updated_at', 'resolved_on', 'deleted_at'];
+
+    /**
+     * Build search for students
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult {
+        $url = route('concerns.show', $this->id);
+
+        return new SearchResult(
+            $this,
+            $this->title,
+            $url
+        );
+    }
 
     /**
      * Return the tags associated with a concern

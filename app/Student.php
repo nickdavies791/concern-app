@@ -2,14 +2,15 @@
 
 namespace App;
 
-use Laravel\Scout\Searchable;
 use App\Repositories\Assembly;
 use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class Student extends Model
+class Student extends Model implements Searchable
 {
-    use EncryptableTrait, Searchable;
+    use EncryptableTrait;
 
      protected $appends = ['full_name'];
 
@@ -18,10 +19,8 @@ class Student extends Model
     * @var array
     */
     protected $encryptable = [
-        'forename',
-        'surname',
         'upn',
-        'admission_number'
+        'admission_number',
     ];
 
     /**
@@ -31,16 +30,18 @@ class Student extends Model
     protected $guarded = [];
 
     /**
-    * Get the indexable data array for the model - Algolia/Scout.
-    * @return array
-    */
-    public function toSearchableArray(){
-        return [
-            'id' => $this->id,
-            'forename' => $this->forename,
-            'surname' => $this->surname,
-            'year_group' => $this->year_group
-        ];
+     * Build search for students
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult {
+        $url = route('students.show', $this->id);
+        $field = $this->full_name.' - Year '.$this->year_group;
+
+        return new SearchResult(
+            $this,
+            $field,
+            $url
+        );
     }
 
     /**
@@ -74,7 +75,8 @@ class Student extends Model
     public function updateStudentRecords(){
         foreach ($this->getSimsData() as $student) {
             try {
-                $this->updateOrCreate(['admission_number' => $student->admission_number],[
+                $this->updateOrCreate(['admission_number' => $student->admission_number],
+                    [
                     'admission_number' => $student->admission_number,
                     'upn' => $student->upn,
                     'forename' => $student->forename,

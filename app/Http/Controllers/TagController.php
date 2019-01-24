@@ -2,11 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TagRequest;
 use App\Tag;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    protected $tag;
+
+    /**
+     * TagController constructor.
+     * @param Tag $tag
+     */
+    public function __construct(Tag $tag)
+    {
+        $this->tag = $tag;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,17 +26,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        return Tag::select('id', 'name')->get();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $this->tag->select('id', 'name')->get();
     }
 
     /**
@@ -33,9 +35,15 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-        //
+        if (auth()->user()->cannot('create', $this->tag)) {
+            return redirect('home')->with('alert.danger', 'You do not have access to create tags.');
+        }
+        $this->tag->create([
+            'name' => ucwords($request->tag)
+        ]);
+        return redirect('settings')->with('alert.success', 'New tag created successfully.');
     }
 
     /**

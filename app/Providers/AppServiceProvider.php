@@ -15,25 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::if('admin', function () {
-            return auth()->user()->isAdmin();
-        });
-        Blade::if('adminOrSafeguarding', function () {
-            return auth()->user()->isAdmin() || auth()->user()->isSafeguarding();
-        });
-        Blade::if('safeguarding', function () {
-            return auth()->user()->isSafeguarding();
-        });
-        Blade::if('staff', function () {
-            return auth()->user()->isStaff();
-        });
-        Blade::if('user', function () {
-            return auth()->user()->isUser();
-        });
-        Blade::if('tokenExists', function () {
-            $token = new Token;
-            return $token->exists();
-        });
+        //
     }
 
     /**

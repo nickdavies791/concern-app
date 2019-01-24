@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Token;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 

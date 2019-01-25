@@ -88,36 +88,49 @@ class User extends Authenticatable
         return $this->role()->where('type', 'User')->exists();
     }
 
+
     /**
-     * gets student data from sims api and formats it appropriately
-     * @return array
+     * Gets staff data from SIMS and formats
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function getSimsData(){
-        $staffMembers = (new Assembly())->getStaffMembers();
+        $response = (new Assembly())->getStaffMembers();
 
-        foreach ($staffMembers as $staff) {
-            $data[$staff->getId()] = [
-                'code' => $staff->getStaffCode(),
-                'email' => strtolower($staff->getFirstName() .'.'. $staff->getLastName().'@heathpark.net'),
-                'name' => $staff->getFirstName() .' '. $staff->getLastName()
+        $staffMembers = json_decode($response);
+
+        foreach ($staffMembers->data as $staff) {
+            $data[$staff->id] = [
+                'code' => $staff->staff_code,
+                'email' => strtolower($staff->first_name .'.'. $staff->last_name.config('app.mail_domain')),
+                'name' => $staff->first_name .' '. $staff->last_name
             ];
         }
 
         return json_decode(json_encode($data), FALSE);
     }
 
+    /**
+     * Import staff into database and set role and password
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function updateStaffRecords(){
         foreach ($this->getSimsData() as $staff) {
-            $staffMember = $this->updateOrCreate(['staff_code' => $staff->code],[
-                'staff_code' => $staff->code,
-                'name' => $staff->name,
-                'email' => $staff->email
-            ]);
+            try {
+                $staffMember = $this->updateOrCreate(['staff_code' => $staff->code],[
+                    'staff_code' => $staff->code,
+                    'name' => $staff->name,
+                    'email' => $staff->email
+                ]);
 
-            if($staffMember->wasRecentlyCreated){
-                $staffMember->role_id = 1;
-                $staffMember->password = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; // secret
-                $staffMember->save();
+                if($staffMember->wasRecentlyCreated){
+                    $staffMember->role_id = 1;
+                    $staffMember->password = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; // secret
+                    $staffMember->save();
+                }
+            } catch (\Exception $e) {
+                return view('settings');
             }
         }
     }

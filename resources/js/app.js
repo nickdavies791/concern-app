@@ -6,10 +6,8 @@ import Datetime from 'vue-datetime';
 import 'vue-datetime/dist/vue-datetime.css'; // You need a specific loader for CSS files
 
 Vue.use(Datetime)
-Vue.use(InstantSearch);
 Vue.component('group-select', require('./components/GroupSelect.vue'));
 Vue.component('document-table', require('./components/DocumentTable.vue'));
-Vue.component('student-search', require('./components/StudentSearch.vue'));
 Vue.component('student-select', require('./components/StudentSelect.vue'));
 Vue.component('tag-select', require('./components/TagSelect.vue'));
 

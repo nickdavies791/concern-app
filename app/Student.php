@@ -52,10 +52,12 @@ class Student extends Model implements Searchable
         return $this->belongsToMany(Concern::class);
     }
 
+
     /**
-    * gets student data from sims api and formats it appropriately
-    * @return array
-    */
+     * Get student data from SIMS and format
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     private function getSimsData(){
         $response = (new Assembly())->getStudents();
 
@@ -77,6 +79,10 @@ class Student extends Model implements Searchable
         return json_decode(json_encode($data), FALSE);
     }
 
+    /**
+     * Import students into database and store photos
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function updateStudentRecords(){
         foreach ($this->getSimsData() as $student) {
             try {
@@ -103,11 +109,15 @@ class Student extends Model implements Searchable
                     }
                 }
             } catch (\Exception $e) {
-                dd($e);
+                return view('settings');
             }
         }
     }
 
+    /**
+     * Returns the student forename and surname as full_name attribute
+     * @return string
+     */
     public function getFullNameAttribute()
     {
         return "{$this->forename} {$this->surname}";

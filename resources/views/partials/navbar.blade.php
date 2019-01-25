@@ -11,7 +11,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-search"></i></span>
                     </div>
-                    <input class="form-control" name="query" placeholder="Search" type="text">
+                    <input class="form-control" name="query" placeholder="Search" type="text" required>
                 </div>
             </div>
         </form>

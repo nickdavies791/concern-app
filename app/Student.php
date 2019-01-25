@@ -5,6 +5,7 @@ namespace App;
 use App\Repositories\Assembly;
 use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -56,36 +57,53 @@ class Student extends Model implements Searchable
     * @return array
     */
     private function getSimsData(){
-        $students = (new Assembly())->getStudents();
+        $response = (new Assembly())->getStudents();
 
-        foreach ($students as $student) {
-            $data[$student->getId()] = [
-                'admission_number' => $student->getPan(),
-                'upn' => $student->getUpn(),
-                'forename' => $student->getFirstName(),
-                'surname' => $student->getLastName(),
-                'year_group' => $student->getYearCode(),
-                'birth_date' => date_format($student->getDob(), 'Y-m-d')
+        $students = json_decode($response);
+
+        foreach ($students->data as $student) {
+            $data[$student->id] = [
+                'mis_id' => $student->mis_id,
+                'admission_number' => $student->pan,
+                'upn' => $student->upn,
+                'forename' => $student->first_name,
+                'surname' => $student->last_name,
+                'year_group' => $student->year_code,
+                'birth_date' => $student->dob,
+                'sen_category' => $student->demographics->sen_category,
+                'photo' => $student->photo
             ];
         }
-
         return json_decode(json_encode($data), FALSE);
     }
 
     public function updateStudentRecords(){
         foreach ($this->getSimsData() as $student) {
             try {
-                $this->updateOrCreate(['admission_number' => $student->admission_number],
+                $this->updateOrCreate(['mis_id' => $student->mis_id],
                     [
-                    'admission_number' => $student->admission_number,
-                    'upn' => $student->upn,
-                    'forename' => $student->forename,
-                    'surname' => $student->surname,
-                    'year_group' => $student->year_group,
-                    'birth_date' => $student->birth_date
+                        'mis_id' => $student->mis_id,
+                        'admission_number' => $student->admission_number,
+                        'upn' => $student->upn,
+                        'forename' => $student->forename,
+                        'surname' => $student->surname,
+                        'year_group' => $student->year_group,
+                        'birth_date' => $student->birth_date,
+                        'sen_category' => $student->sen_category,
+                        'photo_hash' => $student->photo->hash ?? null,
                 ]);
+                $existing = $this->whereMisId($student->mis_id)->first();
+                $photo = $student->photo->hash ?? null;
+
+                if ($existing->photo_hash !== $photo) {
+                    if ($photo !== null) {
+                        $image = $student->photo->url;
+                        $contents = file_get_contents($image);
+                        Storage::disk('students')->put($student->mis_id.'.jpg', $contents);
+                    }
+                }
             } catch (\Exception $e) {
-                return view('settings')->with('alert.danger', 'There was a problem syncing the data');
+                dd($e);
             }
         }
     }

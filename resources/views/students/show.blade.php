@@ -52,7 +52,7 @@
                     <div class="col-lg-3 order-lg-2">
                         <div class="card-profile-image">
                             <a href="#">
-                                <img src="/images/student-icon.svg" class="rounded-circle">
+                                <img style="object-fit: fill;" src="{{ asset('storage/students/'.$student->mis_id.'.jpg') }}" class="rounded-circle">
                             </a>
                         </div>
                     </div>

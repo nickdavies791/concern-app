@@ -4,8 +4,6 @@ namespace App\Repositories;
 
 use App\Token;
 use GuzzleHttp\Client;
-use Assembly\Client\Configuration;
-use Assembly\Client\Api\AssemblyApi;
 
 class Assembly {
 
@@ -63,11 +61,14 @@ class Assembly {
             $this->refreshToken($token);
         }
 
-        $config = Configuration::getDefaultConfiguration()
-            ->setHost(config('services.assembly.endpoint'))
-            ->setAccessToken($token->secret);
+        $client = new Client([
+            'headers' => [
+                'Accept' => 'application/vnd.assembly+json; version=1',
+                'Authorization' => 'Bearer '.$token->secret
+            ]
+        ]);
 
-        return new AssemblyApi(new Client(), $config);
+        return $client;
     }
 
     /**
@@ -76,13 +77,10 @@ class Assembly {
      * @throws \Assembly\Client\ApiException
      */
     public function getStudents(){
-        $assembly = $this->configureClient();
+        $client = $this->configureClient();
+        $response = $client->request('GET', 'https://api.assembly.education/students?page=1&per_page=1500&demographics=true&sen_needs=true&photo=true');
 
-        return $assembly->getStudents(
-            $year_code = null, $students = null, $date = null, $demographics = 'false',
-            $contacts = 'false', $sen_needs = 'false', $addresses = 'false', $care = 'false',
-            $languages = 'false', $page = '1', $per_page = '1500', $if_modified_since = null
-        )->getData();
+        return $response->getBody()->getContents();
     }
 
     /**

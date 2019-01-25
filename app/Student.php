@@ -98,16 +98,13 @@ class Student extends Model implements Searchable
                         'sen_category' => $student->sen_category,
                         'photo_hash' => $student->photo->hash ?? null,
                 ]);
-                $existing = $this->whereMisId($student->mis_id)->first();
-                $photo = $student->photo->hash ?? null;
 
-                if ($existing->photo_hash !== $photo) {
-                    if ($photo !== null) {
-                        $image = $student->photo->url;
-                        $contents = file_get_contents($image);
-                        Storage::disk('students')->put($student->mis_id.'.jpg', $contents);
-                    }
+                if (!file_exists(storage_path().'/students/'.$student->mis_id)) {
+                    $image = $student->photo->url;
+                    $contents = file_get_contents($image);
+                    Storage::disk('students')->put($student->mis_id.'.jpg', $contents);
                 }
+
             } catch (\Exception $e) {
                 return view('settings');
             }

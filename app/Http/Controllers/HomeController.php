@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Concern;
 use App\Repositories\Chart;
+use App\Student;
+use Illuminate\Http\Request;
+use Spatie\Searchable\Search;
 
 class HomeController extends Controller
 {
@@ -37,6 +40,21 @@ class HomeController extends Controller
             'totalConcernsByTag' => $totalConcernsByTag,
             'concerns' => $concerns
         ]);
+    }
+
+    /**
+     * Perform the search
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search(Request $request)
+    {
+        $results = (new Search())
+            ->registerModel(Student::class, ['forename', 'surname'])
+            ->registerModel(Concern::class, 'title')
+            ->search($request->input('query'));
+
+        return view('search')->with(['results' => $results]);
     }
 
     /**

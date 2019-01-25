@@ -125,6 +125,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Email Domain
+    |--------------------------------------------------------------------------
+    |
+    | This is the email domain used to create the staff email addresses
+    | and import them into the database when syncing staff members from  SIMS
+    |
+    */
+
+    'mail_domain' => env('MAIL_DOMAIN'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |

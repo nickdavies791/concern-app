@@ -52,7 +52,7 @@
                     <div class="col-lg-3 order-lg-2">
                         <div class="card-profile-image">
                             <a href="#">
-                                <img src="/images/student-icon.svg" class="rounded-circle">
+                                <img src="{{ asset('storage/students/'.$student->mis_id.'.jpg') }}" class="rounded-circle">
                             </a>
                         </div>
                     </div>
@@ -69,6 +69,9 @@
                                 <h3>
                                     {{ $student->forename . ' ' . $student->surname }}<span class="font-weight-light">, Year {{ $student->year_group }}</span>
                                 </h3>
+                                @if($student->sen_category)
+                                    <p>SEN Category: {{ $student->sen_category }}</p>
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -31,3 +31,4 @@ Route::delete('comments/{comment}', 'CommentController@delete')->name('comments.
 Route::get('users/me/concerns', 'UserController@concerns')->name('user.concerns');
 Route::get('reports', 'ReportController@index')->name('reports.index');
 Route::resource('tags', 'TagController');
+Route::post('search', 'HomeController@search')->name('search');

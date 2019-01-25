@@ -4,13 +4,11 @@ namespace App\Repositories;
 
 use App\Token;
 use GuzzleHttp\Client;
-use Assembly\Client\Configuration;
-use Assembly\Client\Api\AssemblyApi;
 
 class Assembly {
 
     /**
-     * Gets the Oauth details from the Assembly api
+     * Gets the Oauth details from the Assembly API
      * @param  string $code authorisation code
      * @return object Oauth token details
      */
@@ -52,9 +50,10 @@ class Assembly {
         return $refreshedToken ? true : false;
     }
 
+
     /**
-     * Configures the Assembly API Client
-     * @return AssemblyApi Instance of Assembly API Client
+     * Configure the client to access SIMS API
+     * @return Client
      */
     protected function configureClient(){
         $token = Token::first();
@@ -63,40 +62,49 @@ class Assembly {
             $this->refreshToken($token);
         }
 
-        $config = Configuration::getDefaultConfiguration()
-            ->setHost(config('services.assembly.endpoint'))
-            ->setAccessToken($token->secret);
+        $client = new Client([
+            'headers' => [
+                'Accept' => 'application/vnd.assembly+json; version=1',
+                'Authorization' => 'Bearer '.$token->secret
+            ]
+        ]);
 
-        return new AssemblyApi(new Client(), $config);
+        return $client;
     }
 
     /**
-     * Gets the student data from SIMS for all students
-     * @return object student sims data
-     * @throws \Assembly\Client\ApiException
+     * Get student data from SIMS for all students
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getStudents(){
-        $assembly = $this->configureClient();
-
-        return $assembly->getStudents(
-            $year_code = null, $students = null, $date = null, $demographics = 'false',
-            $contacts = 'false', $sen_needs = 'false', $addresses = 'false', $care = 'false',
-            $languages = 'false', $page = '1', $per_page = '1500', $if_modified_since = null
-        )->getData();
+        $client = $this->configureClient();
+        $response = $client->request('GET', config('services.assembly.endpoint').'/students', [
+            'form_params' => [
+                'page' => '1',
+                'per_page' => '1500',
+                'demographics' => true,
+                'sen_needs' => true,
+                'photo' => true
+            ]
+        ]);
+        return $response->getBody()->getContents();
     }
 
     /**
      * Gets the staff data from sims for teaching staff
      * @return object staff sims data
-     * @throws \Assembly\Client\ApiException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getStaffMembers(){
-        $assembly = $this->configureClient();
-
-        return $assembly->getStaffMembers(
-            $teachers_only = 'true', $demographics = 'false',
-            $qualifications = 'false', $page = null, $per_page = '1500',
-            $if_modified_since = null
-        )->getData();
+        $client = $this->configureClient();
+        $response = $client->request('GET', config('services.assembly.endpoint').'/staff_members', [
+            'form_params' => [
+                'page' => '1',
+                'per_page' => '1500',
+                'teachers_only' => true,
+            ]
+        ]);
+        return $response->getBody()->getContents();
     }
 }

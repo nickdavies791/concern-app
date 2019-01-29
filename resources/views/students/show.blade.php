@@ -52,7 +52,7 @@
                     <div class="col-lg-3 order-lg-2">
                         <div class="card-profile-image">
                             <a href="#">
-                                <img src="{{ asset('storage/students/'.$student->mis_id.'.jpg') }}" class="rounded-circle">
+                                <img src="{{ route('storage', ['folder' => 'students', 'filename' => $student->mis_id.'.jpg']) }}" class="rounded-circle">
                             </a>
                         </div>
                     </div>

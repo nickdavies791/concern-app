@@ -39,7 +39,6 @@ class InitialSetup extends Command
     {
         $this->info('Setting up, please wait...');
         \Artisan::call('key:generate');
-        \Artisan::call('storage:link');
         \Artisan::call('migrate:fresh');
         \Artisan::call('admin:create');
         \Artisan::call('roles:create');

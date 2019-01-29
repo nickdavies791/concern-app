@@ -1,7 +1,6 @@
 require('./bootstrap');
 
 import Vue from 'vue';
-import InstantSearch from 'vue-instantsearch';
 import Datetime from 'vue-datetime';
 import 'vue-datetime/dist/vue-datetime.css'; // You need a specific loader for CSS files
 

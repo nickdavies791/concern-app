@@ -20387,6 +20387,10 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   padding: 10px 40px 0 10px;
 }
 
+.multiselect__content-wrapper {
+  z-index: 3;
+}
+
 .home-link {
   position: fixed;
 }

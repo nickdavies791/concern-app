@@ -22,6 +22,14 @@
                                 <label>Details</label>
                                 <textarea required name="body" class="form-control" data-toggle="popover" data-trigger="focus" data-content="Provide full details regarding the concern and include any action taken." placeholder="Include the details of the concern"></textarea>
                             </div>
+                            <div class="form-group">
+                                @csrf
+                                <label>Add Supporting Files</label>
+                                <div style="font-size: 14px" class="custom-file form-control-alternative">
+                                    <input name="files[]" type="file" multiple class="custom-file-input form-control form-control-alternative">
+                                    <label class="custom-file-label border-0">Select</label>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -35,14 +43,6 @@
                                         <tag-select></tag-select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                    @csrf
-                                    <label>Add Supporting Files</label>
-                                    <div style="font-size: 14px" class="custom-file form-control-alternative">
-                                        <input name="files[]" type="file" multiple class="custom-file-input form-control form-control-alternative">
-                                        <label class="custom-file-label border-0">Select</label>
-                                    </div>
                             </div>
                             <div class="form-group">
                                 <a href="#" class="text-primary" data-toggle="modal" data-target="#body-map">Include a Body Map</a>

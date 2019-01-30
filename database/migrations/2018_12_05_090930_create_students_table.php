@@ -22,9 +22,9 @@ class CreateStudentsTable extends Migration
             $table->text('surname');
             $table->integer('year_group');
             $table->date('birth_date');
+            $table->boolean('ever_in_care')->nullable();
             $table->string('sen_category')->nullable();
             $table->string('photo_hash')->nullable();
-            $table->string('photo_path')->nullable();
             $table->timestamps();
         });
     }

@@ -72,6 +72,9 @@
                                 @if($student->sen_category)
                                     <p>SEN Category: {{ $student->sen_category }}</p>
                                 @endif
+                                @if($student->ever_in_care)
+                                    <p><span data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Indicates whether a student is either currently 'looked after' or has been in the past">Ever in care:</span> {{ $student->ever_in_care ? 'Yes' : 'No' }}</p>
+                                @endif
                             </div>
                         </div>
                     </div>

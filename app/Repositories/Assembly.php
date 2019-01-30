@@ -84,8 +84,9 @@ class Assembly {
                 'page' => '1',
                 'per_page' => '1500',
                 'demographics' => true,
+                'ever_in_care' => true,
                 'sen_needs' => true,
-                'photo' => true
+                'photo' => true,
             ]
         ]);
         return $response->getBody()->getContents();

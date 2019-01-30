@@ -33,8 +33,6 @@ $ php artisan concerns:setup
 |------------------------------|-------------------------------------------------------------------------------|
 | `php artisan concerns:setup` | Runs all commands below.                                                      |
 | `php artisan key:generate`   | Creates an application key used for encryption.                               |
-| `php artisan storage:link`   | Creates a symbolic link from storage to public for attachments.               |
-| `php artisan scout:flush `   | Flushes any existing search data for models in Algolia                        |
 | `php artisan migrate:fresh`  | Creates all tables in the database.                                           |
 | `php artisan admin:create`   | Creates a default admin user.                                                 |
 | `php artisan roles:create`   | Creates all of the roles. See [Roles and Permissions](#roles-and-permissions) |
@@ -126,9 +124,13 @@ The default groups are:-
 ### Assembly Education  
 This app uses the PHP SDK for the Assembly API by Assembly. [https://github.com/assembly-edu/assembly-client-php ](https://github.com/assembly-edu/assembly-client-php) to connect to SIMS and retrieve staff and student information. The following data is pulled from SIMS using Assembly for this application:-
 
-| Scope                         | Description                                                  |
-|-------------------------------|--------------------------------------------------------------|
-| `students.photo`                |  The photo of the student                                    |
+| Scope                           | Description                                                  |
+|---------------------------------|--------------------------------------------------------------|
+| `students.photo`                | The photo of the student                                     |
+| `students.ever_in_care`         | The ever_in_care status of the student                       |
+| `students.siblings`             | The siblings of the student                                  |
+| `students.sen_needs`            | The SEN needs of the student                                 |
+| `students.sen_provision`        | The SEN category for the student                             |
 | `students.basic`                | The basic student information (e.g. Forename, Surname, Year) |
 | `students.middle_names`         | The middle names of students                                 |
 | `students.legal_names`          | The legal names of the students                              |
@@ -143,7 +145,6 @@ This app uses the PHP SDK for the Assembly API by Assembly. [https://github.com/
 | `staff_members.basic`           | The basic staff information e.g. (Staff code, name, title)   |
 | `staff_members.emails`          | The email address of the staff member                        |
 | `staff_members.teaching_status` | The current teaching status of the staff member              |
-
 ### Themes
 
 Argon Dashboard Theme by [@creativetim](https://twitter.com/creativetim) - [https://www.creative-tim.com/product/argon-dashboard ](https://www.creative-tim.com/product/argon-dashboard)

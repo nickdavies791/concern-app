@@ -15,7 +15,7 @@ class CommentRequest extends FormRequest
      */
     public function authorize(Comment $comment)
     {
-        return true;
+        return $this->user()->can('create', $comment);
     }
 
     /**

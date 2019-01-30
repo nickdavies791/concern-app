@@ -10,11 +10,12 @@ class TagRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
+     * @param Tag $tag
      * @return bool
      */
     public function authorize(Tag $tag)
     {
-        return true;
+        return $this->user()->can('create', $tag);
     }
 
     /**

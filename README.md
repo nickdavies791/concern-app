@@ -122,7 +122,7 @@ The default groups are:-
 ## Notes
 
 ### Assembly Education  
-This app uses the PHP SDK for the Assembly API by Assembly. [https://github.com/assembly-edu/assembly-client-php ](https://github.com/assembly-edu/assembly-client-php) to connect to SIMS and retrieve staff and student information. The following data is pulled from SIMS using Assembly for this application:-
+This app uses the Assembly API by Assembly. [https://assembly.education](https://assembly.education) to authorise with SIMS and retrieve related data. The following data is pulled from SIMS using Assembly for this application:-
 
 | Scope                           | Description                                                  |
 |---------------------------------|--------------------------------------------------------------|

@@ -72,6 +72,9 @@
                                 @if($student->sen_category)
                                     <p>SEN Category: {{ $student->sen_category }}</p>
                                 @endif
+                                @if($student->ever_in_care)
+                                    <p>Ever in care: {{ $student->ever_in_care ? 'Yes' : 'No' }}</p>
+                                @endif
                             </div>
                         </div>
                     </div>

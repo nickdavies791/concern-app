@@ -72,6 +72,7 @@ class Student extends Model implements Searchable
                 'surname' => $student->last_name,
                 'year_group' => $student->year_code,
                 'birth_date' => $student->dob,
+                'ever_in_care' => $student->demographics->ever_in_care,
                 'sen_category' => $student->demographics->sen_category,
                 'photo' => $student->photo
             ];
@@ -95,6 +96,7 @@ class Student extends Model implements Searchable
                         'surname' => $student->surname,
                         'year_group' => $student->year_group,
                         'birth_date' => $student->birth_date,
+                        'ever_in_care' => $student->ever_in_care,
                         'sen_category' => $student->sen_category,
                         'photo_hash' => $student->photo->hash ?? null,
                 ]);

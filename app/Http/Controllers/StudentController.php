@@ -48,6 +48,6 @@ class StudentController extends Controller
     public function update()
     {
         $this->dispatch(new GetStudentsFromSims());
-        return redirect('settings')->with('alert.warning', 'The data is currently syncing. Please wait.');
+        return redirect('settings')->with('alert.warning', 'The student data is currently syncing.');
     }
 }

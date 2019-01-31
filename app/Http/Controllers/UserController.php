@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Concern;
+use App\Jobs\GetStaffMembersFromSims;
 use App\User;
 use App\Repositories\Assembly;
 use Illuminate\Http\Request;
@@ -24,58 +25,9 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Return the concerns related to the authenticated user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
     public function concerns(){
         if (auth()->user()->cannot('view-own', $this->concern)) {
             return redirect('home')->with('alert.danger', 'You do not have access to this page.');
@@ -85,36 +37,17 @@ class UserController extends Controller
             'students:student_id,forename,surname,year_group',
         ])->simplePaginate(5);
 
-        return view('users.concerns', ['concerns' => $concerns]);
+        return view('users.concerns')->with(['concerns' => $concerns]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Dispatch job to get SIMS data and update staff records
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(User $user)
+    public function update()
     {
-        $recordsUpdated = $user->updateStaffRecords();
-
-        if(!$recordsUpdated){
-            alert()->warning('Oops!', 'The staff data has not been updated, Please try again')->showConfirmButton('Got it!');
-        }
-
-        alert()->success('Success!', 'The staff data has been updated correctly');
-        return redirect('settings');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $this->dispatch(new GetStaffMembersFromSims());
+        return redirect('settings')->with('alert.warning', 'The staff data is currently syncing.');
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\GetStudentsFromSims;
 use App\Student;
-use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
@@ -19,7 +19,7 @@ class StudentController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the students.
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,28 +29,7 @@ class StudentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * Display the specified student.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -62,44 +41,13 @@ class StudentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Dispatch job to get SIMS data and update student records
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function update()
     {
-        //
-    }
-
-    /**
-     * Syncs Sims data with database records.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Student $student)
-    {
-
-        $recordsUpdated = $student->updateStudentRecords();
-
-        if(!$recordsUpdated){
-            alert()->warning('Oops!', 'The students data has not been updated, Please try again')->showConfirmButton('Got it!');
-        }
-
-        alert()->success('Success!', 'The students data has been updated correctly');
-        return redirect('settings');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $this->dispatch(new GetStudentsFromSims());
+        return redirect('settings')->with('alert.warning', 'The student data is currently syncing.');
     }
 }

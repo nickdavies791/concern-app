@@ -63,6 +63,7 @@ class Assembly {
         }
 
         $client = new Client([
+            'verify' => false,
             'headers' => [
                 'Accept' => 'application/vnd.assembly+json; version=1',
                 'Authorization' => 'Bearer '.$token->secret

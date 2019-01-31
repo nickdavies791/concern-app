@@ -41,6 +41,9 @@
                     @component('partials.alerts.alert-success')
                         <strong>Success!</strong> {{ session('alert.success') }}
                     @endcomponent
+                    @component('partials.alerts.alert-warning')
+                        <strong>Note: </strong> {{ session('alert.warning') }}
+                    @endcomponent
                     @component('partials.alerts.alert-danger')
                         <strong>Error!</strong> {{ session('alert.danger') }}
                     @endcomponent

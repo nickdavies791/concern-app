@@ -2,10 +2,8 @@
 
 namespace App;
 
-use App\Repositories\Assembly;
 use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
-use Illuminate\Support\Facades\Storage;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -50,67 +48,6 @@ class Student extends Model implements Searchable
     */
     public function concerns(){
         return $this->belongsToMany(Concern::class);
-    }
-
-
-    /**
-     * Get student data from SIMS and format
-     * @return mixed
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    private function getSimsData(){
-        $response = (new Assembly())->getStudents();
-
-        $students = json_decode($response);
-
-        foreach ($students->data as $student) {
-            $data[$student->id] = [
-                'mis_id' => $student->mis_id,
-                'admission_number' => $student->pan,
-                'upn' => $student->upn,
-                'forename' => $student->first_name,
-                'surname' => $student->last_name,
-                'year_group' => $student->year_code,
-                'birth_date' => $student->dob,
-                'ever_in_care' => $student->demographics->ever_in_care,
-                'sen_category' => $student->demographics->sen_category,
-                'photo' => $student->photo
-            ];
-        }
-        return json_decode(json_encode($data), FALSE);
-    }
-
-    /**
-     * Import students into database and store photos
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function updateStudentRecords(){
-        foreach ($this->getSimsData() as $student) {
-            try {
-                $this->updateOrCreate(['mis_id' => $student->mis_id],
-                    [
-                        'mis_id' => $student->mis_id,
-                        'admission_number' => $student->admission_number,
-                        'upn' => $student->upn,
-                        'forename' => $student->forename,
-                        'surname' => $student->surname,
-                        'year_group' => $student->year_group,
-                        'birth_date' => $student->birth_date,
-                        'ever_in_care' => $student->ever_in_care,
-                        'sen_category' => $student->sen_category,
-                        'photo_hash' => $student->photo->hash ?? null,
-                ]);
-
-                if (!file_exists(storage_path().'/students/'.$student->mis_id)) {
-                    $image = $student->photo->url;
-                    $contents = file_get_contents($image);
-                    Storage::disk('students')->put($student->mis_id.'.jpg', $contents);
-                }
-
-            } catch (\Exception $e) {
-                return view('settings');
-            }
-        }
     }
 
     /**

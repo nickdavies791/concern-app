@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\GetStudentsFromSims;
+use App\Repositories\Assembly;
 use App\Student;
 
 class StudentController extends Controller

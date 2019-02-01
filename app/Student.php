@@ -44,9 +44,18 @@ class Student extends Model implements Searchable
     }
 
     /**
+     * Retrieves the siblings related to a student
+     */
+    public function siblings()
+    {
+        return $this->belongsToMany(Sibling::class);
+    }
+
+    /**
     * Retrieves the concerns about a particular student.
     */
-    public function concerns(){
+    public function concerns()
+    {
         return $this->belongsToMany(Concern::class);
     }
 

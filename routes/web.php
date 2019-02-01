@@ -20,6 +20,7 @@ Route::get('assembly/token/authorise', 'TokenController@store');
 Route::get('staff/sync', 'UserController@update')->name('syncStaff');
 Route::get('students/sync', 'StudentController@update')->name('syncStudents');
 Route::resource('students', 'StudentController')->except(['update']);
+Route::resource('siblings', 'SiblingController');
 Route::resource('groups', 'GroupController');
 Route::get('documents/all', 'DocumentController@all');
 Route::resource('documents', 'DocumentController');

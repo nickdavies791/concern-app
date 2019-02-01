@@ -36,9 +36,11 @@ class SyncStudents implements ShouldQueue
     public function handle(Student $student)
     {
         foreach ($this->data as $api) {
+            Log::info('Processing '.$api->forename);
             try {
                 $student->updateOrCreate(['mis_id' => $api->mis_id],
                     [
+                        'id' => $api->id,
                         'mis_id' => $api->mis_id,
                         'admission_number' => $api->admission_number,
                         'upn' => $api->upn,
@@ -49,8 +51,17 @@ class SyncStudents implements ShouldQueue
                         'ever_in_care' => $api->ever_in_care,
                         'sen_category' => $api->sen_category,
                 ]);
+
                 // Get the student from the database
                 $database = $student->whereMisId($api->mis_id)->first();
+                $siblings = $api->siblings ?? null;
+                Log::info($siblings);
+
+                if (!$siblings == null) {
+                    Log::info('Student has a sibling');
+                    $database->siblings()->attach($siblings);
+                }
+
                 // Get the hash from the API
                 $hash = $api->photo->hash ?? null;
                 // If the hash from the API is not null

@@ -37,7 +37,7 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        $student = $this->student->where('id', '=', $id)->with('concerns')->first();
+        $student = $this->student->where('id', '=', $id)->with(['concerns','siblings'])->first();
         return view('students.show', ['student' => $student]);
     }
 

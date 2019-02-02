@@ -48,7 +48,7 @@ class Student extends Model implements Searchable
      */
     public function siblings()
     {
-        return $this->belongsToMany(Sibling::class);
+        return $this->belongsToMany(Student::class, 'sibling_student', 'sibling_id', 'student_id');
     }
 
     /**

@@ -55,11 +55,11 @@ class SyncStudents implements ShouldQueue
                 // Get the student from the database
                 $database = $student->whereMisId($api->mis_id)->first();
                 $siblings = $api->siblings ?? null;
-                Log::info($siblings);
-
                 if (!$siblings == null) {
+                    foreach ($siblings as $sibling) {
+                        $database->siblings()->sync($sibling);
+                    }
                     Log::info('Student has a sibling');
-                    $database->siblings()->attach($siblings);
                 }
 
                 // Get the hash from the API

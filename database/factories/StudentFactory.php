@@ -5,7 +5,8 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Student::class, function (Faker $faker) {
     return [
-        'admission_number' => $faker->unique()->randomNumber(6, true),
+        'mis_id' => $faker->unique()->randomNumber(6, true),
+        'admission_number' => $faker->unique()->randomNumber(4, true),
         'upn' => $faker->unique()->regexify("[a-f0-9]{6}"),
         'forename' => $faker->firstName(),
         'surname' => $faker->lastName(),

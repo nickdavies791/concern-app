@@ -77,7 +77,7 @@
                                 @endif
                                 @if($student->siblings)
                                     @foreach($student->siblings as $sibling)
-                                        <a class="d-block" href="{{ route('students.show', ['id' => $sibling->id]) }}">{{ $sibling->full_name }}</a>
+                                        <a class="d-block" href="{{ route('students.show', ['id' => $sibling->id]) }}">{{ $sibling->full_name }} - Year {{ $sibling->year_group }}</a>
                                     @endforeach
                                 @endif
                             </div>

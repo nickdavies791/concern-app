@@ -51,34 +51,11 @@ class SyncStudents implements ShouldQueue
                         'ever_in_care' => $api->ever_in_care,
                         'sen_category' => $api->sen_category,
                 ]);
-
-                // Get the student from the database
-                $database = $student->whereMisId($api->mis_id)->first();
-                $siblings = $api->siblings ?? null;
-                if (!$siblings == null) {
-                    foreach ($siblings as $sibling) {
-                        $database->siblings()->sync($sibling);
-                    }
-                    Log::info('Student has a sibling');
-                }
-
-                // Get the hash from the API
-                $hash = $api->photo->hash ?? null;
-                // If the hash from the API is not null
-                if (!$hash == null) {
-                    // If current hash is different or null
-                    if ($database->photo_hash !== $hash || $database->photo_hash == null) {
-                        // Save image
-                        $image = $api->photo->url;
-                        $contents = file_get_contents($image);
-                        Storage::disk('students')->put($api->mis_id.'.jpg', $contents);
-                        // Update the hash in the database
-                        $student->where('mis_id', $api->mis_id)->update(['photo_hash' => $api->photo->hash]);
-                    }
-                }
             } catch (\Exception $e) {
                 Log::info('Error: ', ['Error: ' => $e]);
             }
         }
+        Log::info('Students stored in database');
+        dispatch(new SyncSiblingsAndPhotos());
     }
 }

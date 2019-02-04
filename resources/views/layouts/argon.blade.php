@@ -64,5 +64,6 @@
             $('[data-toggle="popover"]').popover()
         });
     </script>
+    @stack('charts')
 </body>
 </html>

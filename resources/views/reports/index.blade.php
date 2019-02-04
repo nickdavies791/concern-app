@@ -1,9 +1,9 @@
 @extends('layouts.argon')
-
-{!! $concernsByMonthBreakdown->script() !!}
-{!! $totalConcernsByTag->script() !!}
-
 @section('content')
+    @push('charts')
+        {!! $concernsByMonthBreakdown->script() !!}
+        {!! $totalConcernsByTag->script() !!}
+    @endpush
     <div class="row">
         <div class="col-xl-8">
             @component('partials.cards.card-chart')

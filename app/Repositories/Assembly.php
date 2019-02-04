@@ -104,7 +104,6 @@ class Assembly {
             'form_params' => [
                 'page' => '1',
                 'per_page' => '1500',
-                'teachers_only' => true,
             ]
         ]);
         return $response->getBody()->getContents();

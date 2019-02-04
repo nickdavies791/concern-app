@@ -7,7 +7,7 @@
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="mb-0">{{ $student->forename . ' ' . $student->surname }}</h2>
+                            <h2 class="mb-0">{{ $student->full_name }}</h2>
                         </div>
                     </div>
                 </div>
@@ -67,13 +67,18 @@
                         <div class="col">
                             <div class="text-center  mt-md-5">
                                 <h3>
-                                    {{ $student->forename . ' ' . $student->surname }}<span class="font-weight-light">, Year {{ $student->year_group }}</span>
+                                    {{ $student->full_name }}<span class="font-weight-light">, Year {{ $student->year_group }}</span>
                                 </h3>
                                 @if($student->sen_category)
                                     <p>SEN Category: {{ $student->sen_category }}</p>
                                 @endif
                                 @if($student->ever_in_care)
                                     <p><span data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Indicates whether a student is either currently 'looked after' or has been in the past">Ever in care:</span> {{ $student->ever_in_care ? 'Yes' : 'No' }}</p>
+                                @endif
+                                @if($student->siblings)
+                                    @foreach($student->siblings as $sibling)
+                                        <a class="d-block" href="{{ route('students.show', ['id' => $sibling->id]) }}">{{ $sibling->full_name }} - Year {{ $sibling->year_group }}</a>
+                                    @endforeach
                                 @endif
                             </div>
                         </div>

@@ -60,8 +60,8 @@ class Chart
         $lastYear = $startLastYear->format('Y').'-'.$endLastYear->format('Y');
         // Query the database and return the total concerns by month between $start and $end
         $concernsThisYear = DB::table('concerns')
-            ->select(DB::raw('MONTHNAME(created_at) as month, YEAR(created_at) as year, count(*) as total'))
-            ->whereBetween('created_at', [$startThisYear, $endThisYear])
+            ->select(DB::raw('MONTHNAME(concern_date) as month, YEAR(concern_date) as year, count(*) as total'))
+            ->whereBetween('concern_date', [$startThisYear, $endThisYear])
             ->where('deleted_at', null)
             ->groupBy('month')->groupBy('year')
             ->orderBy('year', 'asc')->orderByRaw("MONTH(STR_TO_DATE(CONCAT('1 ', month, ' ', year), '%e %M %y')) asc")
@@ -70,8 +70,8 @@ class Chart
             });
         // Query the database and return the total concerns by month between $start and $end
         $concernsLastYear = DB::table('concerns')
-            ->select(DB::raw('MONTHNAME(created_at) as month, YEAR(created_at) as year, count(*) as total'))
-            ->whereBetween('created_at', [$startLastYear, $endLastYear])
+            ->select(DB::raw('MONTHNAME(concern_date) as month, YEAR(concern_date) as year, count(*) as total'))
+            ->whereBetween('concern_date', [$startLastYear, $endLastYear])
             ->where('deleted_at', null)
             ->groupBy('month')->groupBy('year')
             ->orderBy('year', 'asc')->orderByRaw("MONTH(STR_TO_DATE(CONCAT('1 ', month, ' ', year), '%e %M %y')) asc")

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\GetStudentsFromSims;
+use App\Repositories\Assembly;
 use App\Student;
 
 class StudentController extends Controller
@@ -36,7 +37,7 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        $student = $this->student->where('id', '=', $id)->with('concerns')->first();
+        $student = $this->student->where('id', '=', $id)->with(['concerns','siblings'])->first();
         return view('students.show', ['student' => $student]);
     }
 

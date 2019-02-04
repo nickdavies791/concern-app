@@ -12,7 +12,6 @@ class StudentsTableSeeder extends Seeder
      */
     public function run()
     {
-        Student::disableSearchSyncing();
         factory('App\Student', 1104)->create();
     }
 }

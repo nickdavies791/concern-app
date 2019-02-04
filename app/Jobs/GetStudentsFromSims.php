@@ -8,10 +8,13 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Log;
 
 class GetStudentsFromSims implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $data = [];
 
     /**
      * Create a new job instance.
@@ -36,7 +39,8 @@ class GetStudentsFromSims implements ShouldQueue
         $students = json_decode($response);
 
         foreach ($students->data as $student) {
-            $data[$student->id] = [
+            $this->data[$student->id] = [
+                'id' => $student->id,
                 'mis_id' => $student->mis_id,
                 'admission_number' => $student->pan,
                 'upn' => $student->upn,
@@ -46,10 +50,12 @@ class GetStudentsFromSims implements ShouldQueue
                 'birth_date' => $student->dob,
                 'ever_in_care' => $student->demographics->ever_in_care,
                 'sen_category' => $student->demographics->sen_category,
-                'photo' => $student->photo
+                'photo' => $student->photo,
+                'siblings' => $student->siblings
             ];
         }
-        $sync = json_decode(json_encode($data), FALSE);
+        Log::info('Students retrieved from API');
+        $sync = json_decode(json_encode($this->data), FALSE);
         dispatch(new SyncStudents($sync));
     }
 }

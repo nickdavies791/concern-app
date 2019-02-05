@@ -51,18 +51,28 @@
                         </div>
                     </div>
                     @endadmin
-                    @can('create', App\Tag::class)
+
+                    @can(['create','update','delete'], App\Tag::class)
                         <div class="mb-4">
-                            <h6 class="heading-small text-muted mb-3">Create Tags</h6>
+                            <h6 class="heading-small text-muted mb-3">Export/Import Tags</h6>
                             <div class="pl-lg-4">
-                                <form action="{{ route('tags.store') }}" method="POST">
+                                <form method="POST" action="{{ route('tag.import') }}" enctype="multipart/form-data">
                                     @csrf
-                                    <input data-toggle="popover" data-trigger="focus" data-content="Provide a unique tag name. The tag must be no more than 30 characters in length." required maxlength="30" type="text" name="tag" class="form-control" placeholder="Enter a tag name">
-                                    <button type="submit" class="d-none"></button>
+                                    <label class="form-control-label mb-3">
+                                        <a class="text-primary" href="{{ route('tag.export') }}">Export Tags</a>
+                                    </label>
+                                    <div style="font-size: 14px" class="custom-file form-control-alternative">
+                                        <input name="tag-import" type="file" class="custom-file-input form-control form-control-alternative">
+                                        <label class="custom-file-label border-0">Select</label>
+                                        <button class="btn btn-primary mt-2" type="submit">Submit</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
                     @endcan
+
+
+
                     @can(['create','update','delete'], App\User::class)
                         <div class="mb-4">
                             <h6 class="heading-small text-muted mb-3">Export/Import Staff</h6>
@@ -73,7 +83,7 @@
                                         <a class="text-primary" href="{{ route('staff.export') }}">Export Staff</a>
                                     </label>
                                     <div style="font-size: 14px" class="custom-file form-control-alternative">
-                                        <input name="import" type="file" class="custom-file-input form-control form-control-alternative">
+                                        <input name="staff-import" type="file" class="custom-file-input form-control form-control-alternative">
                                         <label class="custom-file-label border-0">Select</label>
                                         <button class="btn btn-primary mt-2" type="submit">Submit</button>
                                     </div>

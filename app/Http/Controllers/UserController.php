@@ -60,7 +60,7 @@ class UserController extends Controller
      */
     public function import(Request $request, Excel $excel)
     {
-        $excel::import(new StaffImport, $request->file('import'));
+        $excel::import(new StaffImport, $request->file('staff-import'));
         return redirect('settings')->with('alert.success', 'Staff imported successfully!');
     }
 

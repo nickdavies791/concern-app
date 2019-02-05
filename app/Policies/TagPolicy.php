@@ -23,18 +23,6 @@ class TagPolicy
     }
 
     /**
-     * Determine whether the user can view the Tag.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Tag  $Tag
-     * @return mixed
-     */
-    public function view(User $user, Tag $Tag)
-    {
-        //
-    }
-
-    /**
      * Determine whether the user can create Tags.
      *
      * @param  \App\User  $user
@@ -48,11 +36,10 @@ class TagPolicy
     /**
      * Determine whether the user can update the Tag.
      *
-     * @param  \App\User  $user
-     * @param  \App\Tag  $Tag
+     * @param  \App\User $user
      * @return mixed
      */
-    public function update(User $user, Tag $Tag)
+    public function update(User $user)
     {
         return $user->isSafeguarding();
     }
@@ -60,35 +47,10 @@ class TagPolicy
     /**
      * Determine whether the user can delete the Tag.
      *
-     * @param  \App\User  $user
-     * @param  \App\Tag  $Tag
+     * @param  \App\User $user
      * @return mixed
      */
-    public function delete(User $user, Tag $Tag)
-    {
-        return $user->isSafeguarding();
-    }
-
-    /**
-     * Determine whether the user can restore the Tag.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Tag  $Tag
-     * @return mixed
-     */
-    public function restore(User $user, Tag $Tag)
-    {
-        return $user->isSafeguarding();
-    }
-
-    /**
-     * Determine whether the user can permanently delete the Tag.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Tag  $Tag
-     * @return mixed
-     */
-    public function forceDelete(User $user, Tag $Tag)
+    public function delete(User $user)
     {
         return $user->isSafeguarding();
     }

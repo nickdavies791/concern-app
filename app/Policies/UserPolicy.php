@@ -47,9 +47,10 @@ class UserPolicy
      * Determine whether the user can delete Users.
      *
      * @param User $user
+     * @return bool
      */
     public function delete(User $user)
     {
-        $user->isSafeguarding();
+        return $user->isSafeguarding();
     }
 }

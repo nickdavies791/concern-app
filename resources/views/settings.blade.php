@@ -71,6 +71,25 @@
                         </div>
                     @endcan
 
+
+                        <div class="mb-4">
+                            <h6 class="heading-small text-muted mb-3">Export/Import Users and Groups</h6>
+                            <div class="pl-lg-4">
+                                <form method="POST" action="{{ route('group.staff.import') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <label class="form-control-label mb-3">
+                                        <a class="text-primary" href="{{ route('group.staff.export') }}">Export Users and Groups</a>
+                                    </label>
+                                    <div style="font-size: 14px" class="custom-file form-control-alternative">
+                                        <input name="group-import" type="file" class="custom-file-input form-control form-control-alternative">
+                                        <label class="custom-file-label border-0">Select</label>
+                                        <button class="btn btn-primary mt-2" type="submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+
                     @can(['create','update','delete'], App\Group::class)
                         <div class="mb-4">
                             <h6 class="heading-small text-muted mb-3">Export/Import Groups</h6>

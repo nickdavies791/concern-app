@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Concern;
+use App\Exports\GroupUserExport;
 use App\Exports\StaffExport;
 use App\Imports\StaffImport;
 use App\Jobs\GetStaffMembersFromSims;
@@ -53,11 +54,11 @@ class UserController extends Controller
     }
 
     /**
-     * Import staff members into the database
-     * @param Request $request
-     * @param Excel $excel
-     * @return \Illuminate\Http\RedirectResponse
-     */
+ * Import staff members into the database
+ * @param Request $request
+ * @param Excel $excel
+ * @return \Illuminate\Http\RedirectResponse
+ */
     public function import(Request $request, Excel $excel)
     {
         $excel::import(new StaffImport, $request->file('staff-import'));
@@ -72,5 +73,15 @@ class UserController extends Controller
     public function export(Excel $excel)
     {
         return $excel::download(new StaffExport, 'users.xlsx');
+    }
+
+    /**
+     * Export users and groups
+     * @param Excel $excel
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function exportGroups(Excel $excel)
+    {
+        return $excel::download(new GroupUserExport, 'group_user.xlsx');
     }
 }

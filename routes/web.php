@@ -22,6 +22,8 @@ Route::post('staff/import', 'UserController@import')->name('staff.import');
 Route::get('staff/export', 'UserController@export')->name('staff.export');
 Route::post('tag/import', 'TagController@import')->name('tag.import');
 Route::get('tag/export', 'TagController@export')->name('tag.export');
+Route::post('group/import', 'GroupController@import')->name('group.import');
+Route::get('group/export', 'GroupController@export')->name('group.export');
 Route::get('students/sync', 'StudentController@update')->name('syncStudents');
 Route::resource('students', 'StudentController')->except(['update']);
 Route::resource('siblings', 'SiblingController');

@@ -64,17 +64,22 @@
                         </div>
                     @endcan
                     <!-- CHECK CAN CREATE USERS -->
-                    <a class="btn btn-primary" href="{{ route('staff.export') }}">Export Users</a>
-
-                    <form method="POST" action="{{ route('staff.import') }}" enctype="multipart/form-data">
-                        @csrf
-                        <label>Import Staff</label>
-                        <div style="font-size: 14px" class="custom-file form-control-alternative">
-                            <input name="import" type="file" class="custom-file-input form-control form-control-alternative">
-                            <label class="custom-file-label border-0">Select</label>
+                    <div class="mb-4">
+                        <h6 class="heading-small text-muted mb-3">Export/Import Staff</h6>
+                        <div class="pl-lg-4">
+                            <form method="POST" action="{{ route('staff.import') }}" enctype="multipart/form-data">
+                                @csrf
+                                <label class="form-control-label mb-3">
+                                    <a class="text-primary" href="{{ route('staff.export') }}">Export Staff</a>
+                                </label>
+                                <div style="font-size: 14px" class="custom-file form-control-alternative">
+                                    <input name="import" type="file" class="custom-file-input form-control form-control-alternative">
+                                    <label class="custom-file-label border-0">Select</label>
+                                    <button class="btn btn-primary mt-2" type="submit">Submit</button>
+                                </div>
+                            </form>
                         </div>
-                        <button type="submit">Submit</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">Authorise with SIMS</h3>
+                            <h3 class="mb-0">Settings</h3>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                         </div>
                     @endcan
 
-
+                    @can(['create','update','delete'], App\User::class)
                         <div class="mb-4">
                             <h6 class="heading-small text-muted mb-3">Export/Import Users and Groups</h6>
                             <div class="pl-lg-4">
@@ -88,7 +88,7 @@
                                 </form>
                             </div>
                         </div>
-
+                    @endcan
 
                     @can(['create','update','delete'], App\Group::class)
                         <div class="mb-4">
@@ -127,7 +127,7 @@
                             </div>
                         </div>
                     @endcan
-
+                    @can(['create','update','delete'], App\Student::class)
                         <div class="mb-4">
                             <h6 class="heading-small text-muted mb-3">Export/Import Students</h6>
                             <div class="pl-lg-4">
@@ -144,8 +144,7 @@
                                 </form>
                             </div>
                         </div>
-
-
+                    @endcan
                 </div>
             </div>
         </div>

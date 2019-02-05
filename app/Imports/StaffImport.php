@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -10,18 +11,19 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class StaffImport implements ToModel, WithHeadingRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * Update the User with new data
+     * @param array $row
+     * @return void
+     */
     public function model(array $row)
     {
-        return new User([
+        User::updateOrCreate(['staff_code' => $row['staff_code']], [
             'role_id' => $row['role_id'],
             'staff_code' => $row['staff_code'],
             'name' => $row['name'],
             'email' => $row['email'],
-            'password' => Hash::make($row['password']),
+            'imported_at' => Carbon::now(),
+            'password' => Hash::make($row['password'])
         ]);
     }
 }

@@ -14,11 +14,11 @@ class StaffExport implements FromCollection, WithHeadings
      */
     public function headings(): array {
         return [
-            'ID',
             'Role ID',
             'Staff Code',
             'Name',
             'Email',
+            'Password'
         ];
     }
 
@@ -28,6 +28,6 @@ class StaffExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return User::all('id','role_id','staff_code','name','email');
+        return User::all('role_id','staff_code','name','email');
     }
 }

@@ -81,7 +81,7 @@
                                         <a class="text-primary" href="{{ route('group.staff.export') }}">Export Users and Groups</a>
                                     </label>
                                     <div style="font-size: 14px" class="custom-file form-control-alternative">
-                                        <input name="group-import" type="file" class="custom-file-input form-control form-control-alternative">
+                                        <input name="group-user-import" type="file" class="custom-file-input form-control form-control-alternative">
                                         <label class="custom-file-label border-0">Select</label>
                                         <button class="btn btn-primary mt-2" type="submit">Submit</button>
                                     </div>

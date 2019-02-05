@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Concern;
 use App\Exports\GroupUserExport;
 use App\Exports\StaffExport;
+use App\Imports\GroupUserImport;
 use App\Imports\StaffImport;
 use App\Jobs\GetStaffMembersFromSims;
 use App\User;
@@ -83,5 +84,17 @@ class UserController extends Controller
     public function exportGroups(Excel $excel)
     {
         return $excel::download(new GroupUserExport, 'group_user.xlsx');
+    }
+
+    /**
+     * Import staff members into the database
+     * @param Request $request
+     * @param Excel $excel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function importGroups(Request $request, Excel $excel)
+    {
+        $excel::import(new GroupUserImport, $request->file('group-user-import'));
+        return redirect('settings')->with('alert.success', 'Users assigned to groups successfully!');
     }
 }

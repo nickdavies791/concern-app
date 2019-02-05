@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Exports\StudentExport;
 use App\Imports\StudentImport;
 use App\Jobs\GetStudentsFromSims;
-use App\Repositories\Assembly;
 use App\Student;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;

@@ -14,7 +14,6 @@ class GroupUserExport implements FromCollection, WithHeadings
      */
     public function headings(): array {
         return [
-            'ID',
             'Group ID',
             'User ID',
         ];
@@ -26,6 +25,6 @@ class GroupUserExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return DB::table('group_user')->get();
+        return DB::table('group_user')->select('group_id', 'user_id')->get();
     }
 }

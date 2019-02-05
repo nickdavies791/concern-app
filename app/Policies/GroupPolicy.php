@@ -3,10 +3,9 @@
 namespace App\Policies;
 
 use App\User;
-use App\Tag;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TagPolicy
+class GroupPolicy
 {
     use HandlesAuthorization;
 
@@ -23,7 +22,7 @@ class TagPolicy
     }
 
     /**
-     * Determine whether the user can create Tags.
+     * Determine whether the user can create Groups.
      *
      * @param  \App\User  $user
      * @return mixed
@@ -34,7 +33,7 @@ class TagPolicy
     }
 
     /**
-     * Determine whether the user can update the Tag.
+     * Determine whether the user can update the Group.
      *
      * @param  \App\User $user
      * @return mixed
@@ -45,7 +44,7 @@ class TagPolicy
     }
 
     /**
-     * Determine whether the user can delete the Tag.
+     * Determine whether the user can delete the Group.
      *
      * @param  \App\User $user
      * @return mixed

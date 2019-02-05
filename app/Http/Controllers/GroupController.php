@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GroupExport;
 use App\Group;
+use App\Imports\GroupImport;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GroupController extends Controller
 {
@@ -31,68 +34,24 @@ class GroupController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Import groups into the database
+     * @param Request $request
+     * @param Excel $excel
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function create()
+    public function import(Request $request, Excel $excel)
     {
-        //
+        $excel::import(new GroupImport, $request->file('group-import'));
+        return redirect('settings')->with('alert.success', 'Groups imported successfully!');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Export groups
+     * @param Excel $excel
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function store(Request $request)
+    public function export(Excel $excel)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return $excel::download(new GroupExport, 'groups.xlsx');
     }
 }

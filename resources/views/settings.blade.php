@@ -7,14 +7,12 @@
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">Settings Page</h3>
-                        </div>
-                        <div class="col-4 text-right">
-                            <a class="btn btn-sm btn-primary text-white">Settings</a>
+                            <h3 class="mb-0">Settings</h3>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
+                    @include('partials.errors.errors')
                     @admin
                     <div class="mb-4">
                         <h6 class="heading-small text-muted mb-3">Sync data with Sims</h6>
@@ -53,15 +51,96 @@
                         </div>
                     </div>
                     @endadmin
-                    @can('create', App\Tag::class)
+
+                    @can(['create','update','delete'], App\Tag::class)
                         <div class="mb-4">
-                            <h6 class="heading-small text-muted mb-3">Create Tags</h6>
-                            @include('partials.errors.errors')
+                            <h6 class="heading-small text-muted mb-3">Export/Import Tags</h6>
                             <div class="pl-lg-4">
-                                <form action="{{ route('tags.store') }}" method="POST">
+                                <form method="POST" action="{{ route('tag.import') }}" enctype="multipart/form-data">
                                     @csrf
-                                    <input data-toggle="popover" data-trigger="focus" data-content="Provide a unique tag name. The tag must be no more than 30 characters in length." required maxlength="30" type="text" name="tag" class="form-control" placeholder="Enter a tag name">
-                                    <button type="submit" class="d-none"></button>
+                                    <label class="form-control-label mb-3">
+                                        <a class="text-primary" href="{{ route('tag.export') }}">Export Tags</a>
+                                    </label>
+                                    <div style="font-size: 14px" class="custom-file form-control-alternative">
+                                        <input name="tag-import" type="file" class="custom-file-input form-control form-control-alternative">
+                                        <label class="custom-file-label border-0">Select</label>
+                                        <button class="btn btn-primary mt-2" type="submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    @endcan
+
+                    @can(['create','update','delete'], App\User::class)
+                        <div class="mb-4">
+                            <h6 class="heading-small text-muted mb-3">Export/Import Users and Groups</h6>
+                            <div class="pl-lg-4">
+                                <form method="POST" action="{{ route('group.staff.import') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <label class="form-control-label mb-3">
+                                        <a class="text-primary" href="{{ route('group.staff.export') }}">Export Users and Groups</a>
+                                    </label>
+                                    <div style="font-size: 14px" class="custom-file form-control-alternative">
+                                        <input name="group-user-import" type="file" class="custom-file-input form-control form-control-alternative">
+                                        <label class="custom-file-label border-0">Select</label>
+                                        <button class="btn btn-primary mt-2" type="submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    @endcan
+
+                    @can(['create','update','delete'], App\Group::class)
+                        <div class="mb-4">
+                            <h6 class="heading-small text-muted mb-3">Export/Import Groups</h6>
+                            <div class="pl-lg-4">
+                                <form method="POST" action="{{ route('group.import') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <label class="form-control-label mb-3">
+                                        <a class="text-primary" href="{{ route('group.export') }}">Export Groups</a>
+                                    </label>
+                                    <div style="font-size: 14px" class="custom-file form-control-alternative">
+                                        <input name="group-import" type="file" class="custom-file-input form-control form-control-alternative">
+                                        <label class="custom-file-label border-0">Select</label>
+                                        <button class="btn btn-primary mt-2" type="submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    @endcan
+
+                    @can(['create','update','delete'], App\User::class)
+                        <div class="mb-4">
+                            <h6 class="heading-small text-muted mb-3">Export/Import Staff</h6>
+                            <div class="pl-lg-4">
+                                <form method="POST" action="{{ route('staff.import') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <label class="form-control-label mb-3">
+                                        <a class="text-primary" href="{{ route('staff.export') }}">Export Staff</a>
+                                    </label>
+                                    <div style="font-size: 14px" class="custom-file form-control-alternative">
+                                        <input name="staff-import" type="file" class="custom-file-input form-control form-control-alternative">
+                                        <label class="custom-file-label border-0">Select</label>
+                                        <button class="btn btn-primary mt-2" type="submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    @endcan
+                    @can(['create','update','delete'], App\Student::class)
+                        <div class="mb-4">
+                            <h6 class="heading-small text-muted mb-3">Export/Import Students</h6>
+                            <div class="pl-lg-4">
+                                <form method="POST" action="{{ route('student.import') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <label class="form-control-label mb-3">
+                                        <a class="text-primary" href="{{ route('student.export') }}">Export Students</a>
+                                    </label>
+                                    <div style="font-size: 14px" class="custom-file form-control-alternative">
+                                        <input name="student-import" type="file" class="custom-file-input form-control form-control-alternative">
+                                        <label class="custom-file-label border-0">Select</label>
+                                        <button class="btn btn-primary mt-2" type="submit">Submit</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>

@@ -3,10 +3,9 @@
 namespace App\Policies;
 
 use App\User;
-use App\Tag;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TagPolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
@@ -23,10 +22,10 @@ class TagPolicy
     }
 
     /**
-     * Determine whether the user can create Tags.
+     * Determine whether the user can create Users.
      *
-     * @param  \App\User  $user
-     * @return mixed
+     * @param User $user
+     * @return bool
      */
     public function create(User $user)
     {
@@ -34,10 +33,10 @@ class TagPolicy
     }
 
     /**
-     * Determine whether the user can update the Tag.
+     * Determine whether the user can update Users.
      *
-     * @param  \App\User $user
-     * @return mixed
+     * @param User $user
+     * @return bool
      */
     public function update(User $user)
     {
@@ -45,10 +44,10 @@ class TagPolicy
     }
 
     /**
-     * Determine whether the user can delete the Tag.
+     * Determine whether the user can delete Users.
      *
-     * @param  \App\User $user
-     * @return mixed
+     * @param User $user
+     * @return bool
      */
     public function delete(User $user)
     {

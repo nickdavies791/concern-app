@@ -18,6 +18,18 @@ Route::get('settings','HomeController@settings')->name('settings');
 Route::get('assembly/token/create', 'TokenController@create')->name('authorise-assembly');
 Route::get('assembly/token/authorise', 'TokenController@store');
 Route::get('staff/sync', 'UserController@update')->name('syncStaff');
+
+Route::post('staff/import', 'UserController@import')->name('staff.import');
+Route::get('staff/export', 'UserController@export')->name('staff.export');
+Route::post('student/import', 'StudentController@import')->name('student.import');
+Route::get('student/export', 'StudentController@export')->name('student.export');
+Route::post('tag/import', 'TagController@import')->name('tag.import');
+Route::get('tag/export', 'TagController@export')->name('tag.export');
+Route::post('group/import', 'GroupController@import')->name('group.import');
+Route::get('group/export', 'GroupController@export')->name('group.export');
+Route::post('group/staff/import', 'UserController@importGroups')->name('group.staff.import');
+Route::get('group/staff/export', 'UserController@exportGroups')->name('group.staff.export');
+
 Route::get('students/sync', 'StudentController@update')->name('syncStudents');
 Route::resource('students', 'StudentController')->except(['update']);
 Route::resource('siblings', 'SiblingController');

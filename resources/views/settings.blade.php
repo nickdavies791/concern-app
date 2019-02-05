@@ -64,6 +64,8 @@
                         </div>
                     @endcan
                     <!-- CHECK CAN CREATE USERS -->
+                    <a class="btn btn-primary" href="{{ route('staff.export') }}">Export Users</a>
+
                     <form method="POST" action="{{ route('staff.import') }}" enctype="multipart/form-data">
                         @csrf
                         <label>Import Staff</label>

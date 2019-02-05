@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Concern;
+use App\Exports\StaffExport;
 use App\Imports\StaffImport;
 use App\Jobs\GetStaffMembersFromSims;
 use App\User;
@@ -61,5 +62,15 @@ class UserController extends Controller
     {
         $excel::import(new StaffImport, $request->file('import'));
         return redirect('settings')->with('alert.success', 'Staff imported successfully!');
+    }
+
+    /**
+     * Export staff members
+     * @param Excel $excel
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function export(Excel $excel)
+    {
+        return $excel::download(new StaffExport, 'users.xlsx');
     }
 }

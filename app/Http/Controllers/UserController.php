@@ -54,11 +54,11 @@ class UserController extends Controller
     }
 
     /**
- * Import staff members into the database
- * @param Request $request
- * @param Excel $excel
- * @return \Illuminate\Http\RedirectResponse
- */
+     * Import staff members into the database
+     * @param Request $request
+     * @param Excel $excel
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function import(Request $request, Excel $excel)
     {
         $excel::import(new StaffImport, $request->file('staff-import'));

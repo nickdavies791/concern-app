@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\StudentExport;
+use App\Imports\StudentImport;
 use App\Jobs\GetStudentsFromSims;
 use App\Repositories\Assembly;
 use App\Student;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
@@ -51,4 +55,27 @@ class StudentController extends Controller
         $this->dispatch(new GetStudentsFromSims());
         return redirect('settings')->with('alert.warning', 'The student data is currently syncing.');
     }
+
+    /**
+     * Import students into the database
+     * @param Request $request
+     * @param Excel $excel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function import(Request $request, Excel $excel)
+    {
+        $excel::import(new StudentImport, $request->file('student-import'));
+        return redirect('settings')->with('alert.success', 'Students imported successfully!');
+    }
+
+    /**
+     * Export students
+     * @param Excel $excel
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function export(Excel $excel)
+    {
+        return $excel::download(new StudentExport, 'students.xlsx');
+    }
+
 }

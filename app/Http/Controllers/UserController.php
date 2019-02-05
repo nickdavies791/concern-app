@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Concern;
+use App\Imports\StaffImport;
 use App\Jobs\GetStaffMembersFromSims;
 use App\User;
-use App\Repositories\Assembly;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -42,12 +43,23 @@ class UserController extends Controller
 
     /**
      * Dispatch job to get SIMS data and update staff records
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update()
     {
         $this->dispatch(new GetStaffMembersFromSims());
         return redirect('settings')->with('alert.warning', 'The staff data is currently syncing.');
+    }
+
+    /**
+     * Import staff members into the database
+     * @param Request $request
+     * @param Excel $excel
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function import(Request $request, Excel $excel)
+    {
+        $excel::import(new StaffImport, $request->file('import'));
+        return redirect('settings')->with('alert.success', 'Staff imported successfully!');
     }
 }

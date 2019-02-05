@@ -18,6 +18,7 @@ Route::get('settings','HomeController@settings')->name('settings');
 Route::get('assembly/token/create', 'TokenController@create')->name('authorise-assembly');
 Route::get('assembly/token/authorise', 'TokenController@store');
 Route::get('staff/sync', 'UserController@update')->name('syncStaff');
+Route::post('staff/import', 'UserController@import')->name('staff.import');
 Route::get('students/sync', 'StudentController@update')->name('syncStudents');
 Route::resource('students', 'StudentController')->except(['update']);
 Route::resource('siblings', 'SiblingController');

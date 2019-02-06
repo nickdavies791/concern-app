@@ -2,8 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Charts\ConcernsByMonthBreakdown;
-use App\Charts\TotalConcernsByTag;
 use App\Concern;
 use App\Tag;
 use Carbon\Carbon;
@@ -27,20 +25,18 @@ class Chart
 
     /**
      * Return the chart data for total concerns by tag
-     * @return TotalConcernsByTag
+     * @return array
      */
     public function totalConcernsByTag()
     {
         $tags = $this->tag->withCount('concerns')->get()->mapWithKeys(function ($item) {
                 return [$item->name => $item->concerns_count];
             });;
-        $chart = new TotalConcernsByTag;
-        $chart->labels($tags->keys()->all());
-        $chart->dataset('Number of Concerns', 'bar', $tags->values()->all())->options([
-            'backgroundColor' => '#2dce89',
-            'borderWidth' => 1,
-        ]);
-        return $chart;
+        $chart = [
+            'labels' => $tags->keys()->all(),
+            'dataset' => $tags->values()->all()
+        ];
+        return json_encode($chart);
     }
 
     /**

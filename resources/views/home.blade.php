@@ -3,7 +3,9 @@
 @section('content')
     <div class="row">
         <div class="col-xl-6">
-            <chart></chart>
+            <div class="chart chart-light">
+                <chart type="bar" :data="{{ $totalConcernsByTag }}"></chart>
+            </div>
         </div>
     </div>
 @endsection

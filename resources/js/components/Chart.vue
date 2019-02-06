@@ -1,6 +1,6 @@
 <template>
-    <div id="chart" class="chart-light">
-        <canvas ref="chart"></canvas>
+    <div id="chart">
+        <canvas ref="chart" height="400px"></canvas>
     </div>
 </template>
 
@@ -10,20 +10,32 @@
     export default {
         name: 'chart',
 
+        props: {
+            type: {
+                default: 'line'
+            },
+            data: {
+                required: true,
+                default: [],
+            }
+        },
+
         mounted() {
             var chart = this.$refs.chart;
             var ctx = chart.getContext("2d");
             var myChart = new Chart(ctx, {
-                type: 'bar',
+                type: this.type,
                 data: {
-                    labels: ['Red', 'Green', 'Blue'],
+                    labels: this.data.labels,
                     datasets: [{
                         label: '# of Votes',
-                        data: [1, 65, 34],
+                        data: this.data.dataset,
                         borderWidth: 1
                     }]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         yAxes: [{
                             ticks: {

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Concern;
-use App\Repositories\Chart;
 use App\Student;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
@@ -11,17 +10,14 @@ use Spatie\Searchable\Search;
 class HomeController extends Controller
 {
     protected $concern;
-    protected $chart;
 
     /**
      * HomeController constructor.
      * @param Concern $concern
-     * @param Chart $chart
      */
-    public function __construct(Concern $concern, Chart $chart)
+    public function __construct(Concern $concern)
     {
         $this->concern = $concern;
-        $this->chart = $chart;
         $this->middleware('auth');
     }
 
@@ -32,12 +28,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $concernsByMonthBreakdown = $this->chart->concernsByMonthBreakdown();
-        $totalConcernsByTag = $this->chart->totalConcernsByTag();
         $concerns = $this->concern->latestUnresolved()->limit(5)->get();
         return view('home')->with([
-            'concernsByMonthBreakdown' => $concernsByMonthBreakdown,
-            'totalConcernsByTag' => $totalConcernsByTag,
             'concerns' => $concerns
         ]);
     }

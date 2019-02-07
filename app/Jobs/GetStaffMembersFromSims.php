@@ -38,7 +38,6 @@ class GetStaffMembersFromSims implements ShouldQueue
         foreach ($staffMembers->data as $staff) {
             $data[$staff->id] = [
                 'code' => $staff->staff_code,
-                'email' => strtolower($staff->first_name .'.'. $staff->last_name.config('app.mail_domain')),
                 'name' => $staff->first_name .' '. $staff->last_name
             ];
         }

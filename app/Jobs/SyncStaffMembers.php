@@ -39,7 +39,6 @@ class SyncStaffMembers implements ShouldQueue
                 $staffMember = $user->updateOrCreate(['staff_code' => $api->code],[
                     'staff_code' => $api->code,
                     'name' => $api->name,
-                    'email' => $api->email
                 ]);
 
                 if ($staffMember->wasRecentlyCreated) {

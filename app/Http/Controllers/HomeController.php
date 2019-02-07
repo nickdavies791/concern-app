@@ -33,9 +33,11 @@ class HomeController extends Controller
     public function index()
     {
         $totalConcernsByTag = $this->chart->totalConcernsByTag();
+        $concernsThisYear = $this->chart->concernsByMonthBreakdown();
         $concerns = $this->concern->latestUnresolved()->limit(5)->get();
         return view('home')->with([
             'totalConcernsByTag' => $totalConcernsByTag,
+            'concernsThisYear' => $concernsThisYear,
             'concerns' => $concerns
         ]);
     }

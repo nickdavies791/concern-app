@@ -14,10 +14,12 @@
             type: {
                 default: 'line'
             },
-            data: {
+            datasets: {
                 required: true,
-                default: [],
-            }
+            },
+            datalabel: {
+                default: null,
+            },
         },
 
         mounted() {
@@ -26,16 +28,13 @@
             var myChart = new Chart(ctx, {
                 type: this.type,
                 data: {
-                    labels: this.data.labels,
-                    datasets: [{
-                        label: '# of Votes',
-                        data: this.data.dataset,
-                        borderWidth: 1
-                    }]
+                    labels: this.datasets.labels,
+                    datasets: this.datasets.datasets,
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
+                    legend: {
+                        display: true,
+                    },
                     scales: {
                         yAxes: [{
                             ticks: {

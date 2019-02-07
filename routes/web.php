@@ -42,7 +42,9 @@ Route::delete('concerns/{concern}', 'ConcernController@delete')->name('concerns.
 Route::resource('comments', 'CommentController');
 Route::delete('comments/{comment}', 'CommentController@delete')->name('comments.delete');
 Route::get('users/me/concerns', 'UserController@concerns')->name('user.concerns');
-Route::get('reports', 'ReportController@index')->name('reports.index');
+
+Route::resource('charts', 'ChartController');
+Route::resource('reports', 'ReportController');
 
 Route::get('charts/total-concerns-by-tag', 'ChartController@totalConcernsByTag');
 

@@ -4,7 +4,7 @@
         :clear-on-select="false" :preserve-search="true" placeholder="Select a group"
         label="name" track-by="id">
     </multiselect>
-    <select name="groups[]" style="display:none;" multiple>
+    <select name="groups[]" style="display:none;" multiple required>
         <option v-for="group in groups" :value="group.id" selected="selected"></option>
     </select>
 </div>

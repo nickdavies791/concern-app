@@ -4,7 +4,7 @@
         :clear-on-select="false" :preserve-search="true" placeholder="Select a tag"
         label="name" track-by="id">
     </multiselect>
-    <select name="tags[]" style="display:none;" multiple>
+    <select name="tags[]" style="display:none;" multiple required>
         <option v-for="tag in tags" :value="tag.id" selected="selected"></option>
     </select>
 </div>

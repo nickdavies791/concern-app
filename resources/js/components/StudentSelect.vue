@@ -4,7 +4,7 @@
         :clear-on-select="false" :preserve-search="true" placeholder="Select a student"
         label="full_name" track-by="id">
     </multiselect>
-    <select name="students[]" style="display:none;" multiple>
+    <select name="students[]" style="display:none;" multiple required>
         <option v-for="student in students" :value="student.id" selected="selected"></option>
     </select>
 </div>

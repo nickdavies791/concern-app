@@ -78071,7 +78071,7 @@ var render = function() {
         "select",
         {
           staticStyle: { display: "none" },
-          attrs: { name: "tags[]", multiple: "" }
+          attrs: { name: "tags[]", multiple: "", required: "" }
         },
         _vm._l(_vm.tags, function(tag) {
           return _c("option", {
@@ -78155,7 +78155,7 @@ var render = function() {
         "select",
         {
           staticStyle: { display: "none" },
-          attrs: { name: "groups[]", multiple: "" }
+          attrs: { name: "groups[]", multiple: "", required: "" }
         },
         _vm._l(_vm.groups, function(group) {
           return _c("option", {
@@ -78335,7 +78335,7 @@ var render = function() {
         "select",
         {
           staticStyle: { display: "none" },
-          attrs: { name: "students[]", multiple: "" }
+          attrs: { name: "students[]", multiple: "", required: "" }
         },
         _vm._l(_vm.students, function(student) {
           return _c("option", {

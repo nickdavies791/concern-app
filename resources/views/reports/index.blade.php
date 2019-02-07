@@ -1,27 +1,11 @@
 @extends('layouts.argon')
 @section('content')
-    @push('charts')
-        {!! $concernsByMonthBreakdown->script() !!}
-        {!! $totalConcernsByTag->script() !!}
-    @endpush
     <div class="row">
-        <div class="col-xl-8">
-            @component('partials.cards.card-chart')
-                @slot('title') Concerns by Month Breakdown @endslot
+        <div class="col-xl-10 mx-auto">
+            @component('partials.cards.card')
+                @slot('title') Reports @endslot
                 @slot('body')
-                    <div class="p-3">
-                        {!! $concernsByMonthBreakdown->container() !!}
-                    </div>
-                @endslot
-            @endcomponent
-        </div>
-        <div class="col-xl-4">
-            @component('partials.cards.card-chart')
-                @slot('title') Total Concerns By Tag @endslot
-                @slot('body')
-                    <div class="p-3">
-                        {!! $totalConcernsByTag->container() !!}
-                    </div>
+                    <p></p>
                 @endslot
             @endcomponent
         </div>

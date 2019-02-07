@@ -10,18 +10,18 @@ use Spatie\Searchable\Search;
 
 class HomeController extends Controller
 {
-    protected $concern;
     protected $chart;
+    protected $concern;
 
     /**
      * HomeController constructor.
-     * @param Concern $concern
      * @param Chart $chart
+     * @param Concern $concern
      */
-    public function __construct(Concern $concern, Chart $chart)
+    public function __construct(Chart $chart, Concern $concern)
     {
-        $this->concern = $concern;
         $this->chart = $chart;
+        $this->concern = $concern;
         $this->middleware('auth');
     }
 
@@ -32,12 +32,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $concernsByMonthBreakdown = $this->chart->concernsByMonthBreakdown();
         $totalConcernsByTag = $this->chart->totalConcernsByTag();
+        $concernsThisYear = $this->chart->concernsByMonthBreakdown();
         $concerns = $this->concern->latestUnresolved()->limit(5)->get();
         return view('home')->with([
-            'concernsByMonthBreakdown' => $concernsByMonthBreakdown,
             'totalConcernsByTag' => $totalConcernsByTag,
+            'concernsThisYear' => $concernsThisYear,
             'concerns' => $concerns
         ]);
     }

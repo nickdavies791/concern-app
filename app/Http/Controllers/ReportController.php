@@ -2,32 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Chart;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    protected $chart;
-
-    /**
-     * ReportController constructor.
-     * @param Chart $chart
-     */
-    public function __construct(Chart $chart)
-    {
-        $this->chart = $chart;
-    }
-
-
     /**
      * Display a listing of the resource.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        $concernsByMonthBreakdown = $this->chart->concernsByMonthBreakdown();
-        $totalConcernsByTag = $this->chart->totalConcernsByTag();
-        return view('reports.index', compact('concernsByMonthBreakdown', 'totalConcernsByTag'));
+        return view('reports.index');
     }
 
     /**

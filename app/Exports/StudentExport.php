@@ -31,6 +31,7 @@ class StudentExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
+        dd(Student::all());
         return Student::all('mis_id','admission_number','upn','forename','surname','year_group','birth_date','ever_in_care','sen_category');
     }
 }

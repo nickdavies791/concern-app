@@ -38,6 +38,7 @@ class InitialSetup extends Command
     public function handle()
     {
         $this->info('Setting up, please wait...');
+        \Artisan::call('key:generate');
         \Artisan::call('migrate:fresh');
         \Artisan::call('admin:create');
         \Artisan::call('roles:create');

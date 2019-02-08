@@ -1839,7 +1839,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -1856,6 +1855,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this.options.push(student);
                 });
             });
+        },
+        customLabel: function customLabel(_ref) {
+            var admission_number = _ref.admission_number,
+                full_name = _ref.full_name,
+                year_group = _ref.year_group;
+
+            return admission_number + ' - ' + full_name + ' - Year ' + year_group;
         }
     },
     data: function data() {
@@ -78319,7 +78325,7 @@ var render = function() {
           "clear-on-select": false,
           "preserve-search": true,
           placeholder: "Select a student",
-          label: "full_name",
+          "custom-label": _vm.customLabel,
           "track-by": "id"
         },
         model: {
@@ -78335,7 +78341,7 @@ var render = function() {
         "select",
         {
           staticStyle: { display: "none" },
-          attrs: { name: "students[]", multiple: "", required: "" }
+          attrs: { name: "students[]", multiple: "" }
         },
         _vm._l(_vm.students, function(student) {
           return _c("option", {

@@ -1,13 +1,12 @@
 <template lang="html">
     <div>
         <multiselect :open-direction="bottom" v-model="students" :options="options" :multiple="true" :close-on-select="true"
-        :clear-on-select="false" :preserve-search="true" placeholder="Select a student"
-        label="full_name" track-by="id">
-    </multiselect>
-    <select name="students[]" style="display:none;" multiple required>
-        <option v-for="student in students" :value="student.id" selected="selected"></option>
-    </select>
-</div>
+        :clear-on-select="false" :preserve-search="true" placeholder="Select a student" :custom-label="customLabel" track-by="id">
+        </multiselect>
+        <select name="students[]" style="display:none;" multiple>
+            <option v-for="student in students" :value="student.id" selected="selected"></option>
+        </select>
+    </div>
 </template>
 
 <script>
@@ -24,6 +23,9 @@ export default {
                     this.options.push(student);
                 });
             });
+        },
+        customLabel ({admission_number, full_name, year_group}) {
+            return `${admission_number} - ${full_name} - Year ${year_group}`
         }
     },
     data () {

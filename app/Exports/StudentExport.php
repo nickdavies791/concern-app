@@ -3,13 +3,11 @@
 namespace App\Exports;
 
 use App\Student;
-use GregoryDuckworth\Encryptable\EncryptableTrait;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class StudentExport implements FromCollection, WithHeadings
 {
-    use EncryptableTrait;
     /**
      * Return row headings
      * @return array

@@ -56,16 +56,18 @@ class SyncSiblingsAndPhotos implements ShouldQueue
             $siblings = $record->siblings ?? null;
             // If student has siblings
             if (!$siblings == null) {
+                Log::info('Saving siblings...');
                 foreach ($siblings as $sibling) {
-                    Log::info('Saving '.$database->forename.' siblings');
                     // Store each sibling in pivot table
                     $database->siblings()->syncWithoutDetaching($sibling);
                 }
+                Log::info('Siblings saved.');
             }
             // Get the photo hash from the API
             $hash = $record->photo->hash ?? null;
             // If the student has a photo
             if (!$hash == null) {
+                Log::info('Saving photos...');
                 // If current hash is different or null
                 if ($database->photo_hash !== $hash || $database->photo_hash == null) {
                     // Save image
@@ -75,6 +77,7 @@ class SyncSiblingsAndPhotos implements ShouldQueue
                     // Update the hash in the database
                     Student::where('mis_id', $record->mis_id)->update(['photo_hash' => $record->photo->hash]);
                 }
+                Log::info('Photos saved.');
             }
         }
     }

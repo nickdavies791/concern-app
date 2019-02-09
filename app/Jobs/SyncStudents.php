@@ -35,8 +35,8 @@ class SyncStudents implements ShouldQueue
      */
     public function handle(Student $student)
     {
+        Log::info('Processing students...');
         foreach ($this->data as $api) {
-            Log::info('Processing '.$api->forename);
             try {
                 $student->updateOrCreate(['mis_id' => $api->mis_id],
                     [
@@ -55,7 +55,7 @@ class SyncStudents implements ShouldQueue
                 Log::info('Error: ', ['Error: ' => $e]);
             }
         }
-        Log::info('Students stored in database');
+        Log::info('Students saved.');
         dispatch(new SyncSiblingsAndPhotos());
     }
 }

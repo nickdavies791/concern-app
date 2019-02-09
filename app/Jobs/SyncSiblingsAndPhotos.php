@@ -59,7 +59,7 @@ class SyncSiblingsAndPhotos implements ShouldQueue
                 foreach ($siblings as $sibling) {
                     Log::info('Saving '.$database->forename.' siblings');
                     // Store each sibling in pivot table
-                    $database->siblings()->attach($sibling);
+                    $database->siblings()->syncWithoutDetaching($sibling);
                 }
             }
             // Get the photo hash from the API

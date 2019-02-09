@@ -62,12 +62,10 @@ class SyncSiblingsAndPhotos implements ShouldQueue
                     $database->siblings()->syncWithoutDetaching($sibling);
                 }
             }
-            Log::info('Siblings saved.');
             // Get the photo hash from the API
             $hash = $record->photo->hash ?? null;
             // If the student has a photo
             if (!$hash == null) {
-                Log::info('Saving photos...');
                 // If current hash is different or null
                 if ($database->photo_hash !== $hash || $database->photo_hash == null) {
                     // Save image

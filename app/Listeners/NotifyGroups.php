@@ -32,7 +32,7 @@ class NotifyGroups
     {
         foreach ($event->concern->groups as $group) {
             $group->users->each(function($user) use($event){
-                Mail::to('nick.davies@clpt.co.uk')
+                Mail::to($user->email)
                 ->queue(new NotifyConcernGroups($event->concern, $user));
             });
         }

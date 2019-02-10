@@ -5,14 +5,11 @@ namespace App\Console;
 use App\Jobs\GetStaffMembersFromSims;
 use App\Jobs\GetStudentsFromSims;
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
-    use DispatchesJobs;
-
     /**
      * The Artisan commands provided by your application.
      *
@@ -31,15 +28,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Schedule Students Sync
-        $schedule->call(function () {
-            Log::info('Task scheduler: Fetching students');
-            $this->dispatch(new GetStudentsFromSims());
-        })->everyTenMinutes()->runInBackground();
+        Log::info('Task scheduler: Fetching students');
+        $schedule->job(new GetStudentsFromSims())->everyMinute();
         // Schedule Staff Sync
-        $schedule->call(function () {
-            Log::info('Task scheduler: Fetching Staff');
-            $this->dispatch(new GetStaffMembersFromSims());
-        })->everyTenMinutes()->runInBackground();
+        Log::info('Task scheduler: Fetching Staff');
+        $schedule->job(new GetStaffMembersFromSims())->everyMinute();
     }
 
     /**

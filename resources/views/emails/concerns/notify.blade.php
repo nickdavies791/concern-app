@@ -5,7 +5,7 @@
 A new concern has been logged that requires your attention.
 </p>
 @component('mail::table')
-| Concern             | Occured on                | Logged by   |
+| Concern             | Occurred on                | Logged by   |
 | ------------------ |:------------------------- | ------------:|
 |{{$concern->title}} |{{$concern->concern_date}} |{{$loggedBy}} |
 @endcomponent

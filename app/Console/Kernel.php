@@ -28,10 +28,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Schedule Students Sync
-        Log::info('Task scheduler: Fetching students');
         $schedule->job(new GetStudentsFromSims())->weeklyOn(1, '6:00');
         // Schedule Staff Sync
-        Log::info('Task scheduler: Fetching Staff');
         $schedule->job(new GetStaffMembersFromSims())->weeklyOn(1, '6:00');
     }
 

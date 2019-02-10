@@ -7,6 +7,7 @@ use App\Mail\NotifyConcernGroups;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Mail;
 
 class NotifyGroups
 {
@@ -31,7 +32,7 @@ class NotifyGroups
     {
         foreach ($event->concern->groups as $group) {
             $group->users->each(function($user) use($event){
-                \Mail::to($user->email)
+                Mail::to($user->email)
                 ->queue(new NotifyConcernGroups($event->concern, $user));
             });
         }

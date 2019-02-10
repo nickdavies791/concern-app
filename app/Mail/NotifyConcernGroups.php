@@ -17,10 +17,12 @@ class NotifyConcernGroups extends Mailable
     public $user;
 
     public $loggedBy;
+
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param Concern $concern
+     * @param $user
      */
     public function __construct(Concern $concern, $user)
     {
@@ -35,10 +37,7 @@ class NotifyConcernGroups extends Mailable
      */
     public function build()
     {
-        $this->loggedBy = (\App\Concern::where('id', '=', $this->concern->id)
-            ->first())
-            ->user->name;
-            
-        return $this->markdown('emails.concerns.notify');
+        $this->loggedBy = ($this->concern->where('id', $this->concern->id)->first())->user->name;
+        return $this->from('test@test.com')->markdown('emails.concerns.notify');
     }
 }

@@ -3,8 +3,7 @@
 namespace App\Console;
 
 use App\Jobs\GetStaffMembersFromSims;
-use App\User;
-use App\Student;
+use App\Jobs\GetStudentsFromSims;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;

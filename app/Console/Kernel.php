@@ -29,10 +29,10 @@ class Kernel extends ConsoleKernel
     {
         // Schedule Students Sync
         Log::info('Task scheduler: Fetching students');
-        $schedule->job(new GetStudentsFromSims())->everyMinute();
+        $schedule->job(new GetStudentsFromSims())->weeklyOn(1, '6:00');
         // Schedule Staff Sync
         Log::info('Task scheduler: Fetching Staff');
-        $schedule->job(new GetStaffMembersFromSims())->everyMinute();
+        $schedule->job(new GetStaffMembersFromSims())->weeklyOn(1, '6:00');
     }
 
     /**

@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-xl-6">
             @component('partials.cards.card-chart')
-                @slot('title') Total Concerns By Tag @endslot
+                @slot('title') Total # Concerns By Tag @endslot
                 @slot('body')
                     <chart type="horizontalBar" :datasets="{{ $totalConcernsByTag }}"></chart>
                 @endslot

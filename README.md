@@ -14,13 +14,12 @@ $ composer install
 
 ## Configuration
 
-Rename `.env.example` to `.env` and configure the file to use your own information and keys. For example:-
-
-```php
-APP_NAME= // Your school name
-APP_URL= // Location you installed the app
-...
+Rename `.env.example` to `.env` and run the following command to set up the key used for encryption:-
+```bash
+$ php artisan key:generate
 ```
+
+Open the `.env` file and configure the file to use your own information.
 
 Run the following command to perform the initial setup:-
 ```bash
@@ -32,7 +31,6 @@ $ php artisan concerns:setup
 | Artisan Command              | Description                                                                   |
 |------------------------------|-------------------------------------------------------------------------------|
 | `php artisan concerns:setup` | Runs all commands below.                                                      |
-| `php artisan key:generate`   | Creates an application key used for encryption.                               |
 | `php artisan migrate:fresh`  | Creates all tables in the database.                                           |
 | `php artisan admin:create`   | Creates a default admin user.                                                 |
 | `php artisan roles:create`   | Creates all of the roles. See [Roles and Permissions](#roles-and-permissions) |
@@ -49,7 +47,7 @@ Password: secret
 Concerns app allows you to sync your data directly from SIMS using the Assembly API. To sync your data, log into the application using an admin account. 
 
 ```
-**Note:** Before authorising and syncing data from SIMS, ensure your database does not have dummy data present.
+**Note:** Before authorising and syncing data, ensure your database does not have dummy data.
 ```
 
 #### Authorising Assembly
@@ -63,7 +61,6 @@ In Settings, select the **'Authorise'** button. Log into your Assembly account t
 In Settings, select the **'Sync Students'** or **'Sync Staff'** button to sync your students from SIMS to the Concerns app. The sync may take a while depending on the data stored in your SIMS.
 
 ![Syncing Students and Staff](/screenshots/Sync-Student.gif "Syncing Students and Staff")
-
 
 
 ## Features
@@ -83,6 +80,7 @@ The following roles exist in Concerns app:-
 | 2       | Staff        | `$user->isStaff()`        | view                 | view     | view shared, view own, create, update own | view all, create, update own         | view                         |
 | 3       | Safeguarding | `$user->isSafeguarding()` | view, create, delete | view     | view all, create, update all              | view all, create, update own         | view, create, update, delete |
 | 4       | Admin        | `$user->isAdmin()`        | view, create, delete | sync     | view all, create, update all, delete      | view all, create, update all, delete | view, create, update, delete |
+
 ### Tagging a Concern
 You can assign a concern with a specific set of tags to better understand all of your logged concerns and to help with reporting. 
 

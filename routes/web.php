@@ -11,6 +11,27 @@
 |
 */
 
+// Create the Transport
+$transport = (new Swift_SmtpTransport(config('mail.host'), config('mail.port')))
+  ->setUsername(config('mail.username'))
+  ->setPassword(config('mail.password'));
+
+// Create the Mailer using your created Transport
+$mailer = new Swift_Mailer($transport);
+
+// Create a message
+$message = (new Swift_Message('Test Message'))
+  ->setFrom(config('mail.from.address'))
+  ->setTo('nick.davies@clpt.co.uk')
+  ->setBody('Here is the message');
+
+// Send the message
+$return = $mailer->send($message);
+
+
+
+
+
 Auth::routes(['register' => false, 'reset' => false]);
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');

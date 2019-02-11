@@ -30,11 +30,12 @@ class NotifyGroups
      */
     public function handle(ConcernCreated $event)
     {
-        foreach ($event->concern->groups as $group) {
-            $group->users->each(function($user) use($event){
-                Mail::to($user->email)
-                ->queue(new NotifyConcernGroups($event->concern, $user));
-            });
-        }
+        Mail::to('nick.davies@clpt.co.uk');
+//        foreach ($event->concern->groups as $group) {
+//            $group->users->each(function($user) use($event){
+//                Mail::to($user->email)
+//                ->queue(new NotifyConcernGroups($event->concern, $user));
+//            });
+//        }
     }
 }

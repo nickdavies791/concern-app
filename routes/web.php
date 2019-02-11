@@ -11,27 +11,6 @@
 |
 */
 
-// Create the Transport
-$transport = (new Swift_SmtpTransport('clpt-co-uk.mail.protection.outlook.com', 25))
-  ->setUsername('techsupport@clpt.co.uk')
-  ->setPassword('147Polki');
-
-// Create the Mailer using your created Transport
-$mailer = new Swift_Mailer($transport);
-
-// Create a message
-$message = (new Swift_Message('Wonderful Subject'))
-  ->setFrom(['john@doe.com' => 'John Doe'])
-  ->setTo('nick.davies@clpt.co.uk')
-  ->setBody('Here is the message itself');
-
-// Send the message
-dd($mailer->send($message));
-
-
-
-
-
 Auth::routes(['register' => false, 'reset' => false]);
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');

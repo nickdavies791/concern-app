@@ -1,0 +1,23 @@
+language: php
+
+php:
+  - '7.1'
+  - '7.2'
+  - '7.3'
+
+services:
+  - mysql
+
+before_script:
+  - cp .env.travis .env
+  - mysql -e 'create database testing;'
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+  - php artisan migrate --seed
+
+script:
+  - vendor/bin/phpunit
+
+after_success:
+  - chmod +x ./deploy.sh; ./deploy.sh

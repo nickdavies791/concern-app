@@ -26,7 +26,7 @@ $message = (new Swift_Message('Wonderful Subject'))
   ->setBody('Here is the message itself');
 
 // Send the message
-$result = $mailer->send($message);
+dd($mailer->send($message));
 
 
 

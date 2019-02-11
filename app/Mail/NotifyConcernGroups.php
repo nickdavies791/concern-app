@@ -38,6 +38,6 @@ class NotifyConcernGroups extends Mailable
     public function build()
     {
         $this->loggedBy = ($this->concern->where('id', $this->concern->id)->first())->user->name;
-        return $this->from(config('mail.from.address'))->markdown('emails.concerns.notify');
+        return $this->markdown('emails.concerns.notify');
     }
 }

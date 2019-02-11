@@ -7,7 +7,7 @@ use App\Mail\NotifyConcernGroups;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class NotifyGroups
 {

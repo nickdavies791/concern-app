@@ -33,13 +33,13 @@ class ViewConcernsTest extends TestCase
     }
 
     /**
-     * Test a user with role 'Contributor' cannot view all concerns
+     * Test a user with role 'Staff' cannot view all concerns
      */
-    public function test_role_contributor_cannot_view_all_concerns()
+    public function test_role_staff_cannot_view_all_concerns()
     {
         // Create the role in the database
         $role = factory(Role::class)->create([
-            'type' => 'Contributor',
+            'type' => 'Staff',
         ]);
         // Create a user with the role ID attached
         $user = factory(User::class)->create([
@@ -53,13 +53,13 @@ class ViewConcernsTest extends TestCase
     }
 
     /**
-     * Test a user with role 'Editor' can view all concerns
+     * Test a user with role 'Safeguarding' can view all concerns
      */
-    public function test_role_editor_can_view_all_concerns()
+    public function test_role_safeguarding_can_view_all_concerns()
     {
         // Create the role in the database
         $role = factory(Role::class)->create([
-            'type' => 'Editor',
+            'type' => 'Safeguarding',
         ]);
         // Create a user with the role ID attached
         $user = factory(User::class)->create([

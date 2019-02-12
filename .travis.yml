@@ -22,10 +22,10 @@ script:
 
 deploy:
   - provider: script
-    script: ./deploy_prod.sh
+    script: chmod +x ./deploy_prod.sh
     on:
       branch: master
   - provider: script
-    script: ./deploy_dev.sh
+    script: chmod +x ./deploy_dev.sh
     on:
       branch: dev

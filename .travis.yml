@@ -10,7 +10,7 @@ services:
   - mysql
 
 before_script:
-  - cp .env.travis .env
+  - cp .env.testing .env
   - mysql -e 'create database concern_app_testing;'
   - composer self-update
   - composer install --no-interaction

@@ -21,6 +21,4 @@ script:
   - vendor/bin/phpunit
 
 after_success:
-  - if [ $TRAVIS_BRANCH == "dev"]; then
-      scripts/deploy/development.sh;
-    fi
+  - if [[ "$TRAVIS_BRANCH" == "dev" ]]; then echo "Deployed"; fi

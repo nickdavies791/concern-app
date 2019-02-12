@@ -20,5 +20,12 @@ before_script:
 script:
   - vendor/bin/phpunit
 
-after_success:
-  - chmod +x ./deploy.sh; ./deploy.sh
+deploy:
+  - provider: script
+    script: ./deploy_prod.sh
+    on:
+      branch: master
+  - provider: script
+    script: ./deploy_dev.sh
+    on:
+      branch: dev

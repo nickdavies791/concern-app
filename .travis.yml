@@ -22,10 +22,12 @@ script:
 
 deploy:
   - provider: script
+    skip_cleanup: true
     script: chmod +x ./deploy_prod.sh
     on:
       branch: master
   - provider: script
+    skip_cleanup: true
     script: chmod +x ./deploy_dev.sh
     on:
       branch: dev

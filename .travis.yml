@@ -21,4 +21,4 @@ script:
   - vendor/bin/phpunit
 
 after_success:
-  - if [[ "$TRAVIS_BRANCH" == "dev" ]]; then echo "Deployed"; fi
+  - if [[ "$TRAVIS_BRANCH" == "dev" ]]; then curl "'https://forge.laravel.com/servers/264031/sites/705525/deploy/http?token='$FORGE_DEVELOPMENT_TOKEN"; fi

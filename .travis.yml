@@ -21,4 +21,6 @@ script:
   - vendor/bin/phpunit
 
 after_success:
-  - chmod +x ./deploy.sh
+  - if [ $TRAVIS_BRANCH == "dev"]; then
+      ./scripts/deploy/development.sh;
+    fi

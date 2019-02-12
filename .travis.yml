@@ -21,13 +21,13 @@ script:
   - vendor/bin/phpunit
 
 deploy:
-  # deploy develop to the development environment
+  # deploy dev to development server
   - provider: script
-    script: chmod +x ./scripts/deploy_dev.sh
+    script: chmod +x ./scripts/deploy/dev.sh
     on:
       branch: dev
-  # deploy master to production
+  # deploy master to production server
   - provider: script
-    script: chmod +x scripts/deploy_prod.sh
+    script: chmod +x scripts/deploy/production.sh
     on:
       branch: master

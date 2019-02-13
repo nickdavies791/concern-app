@@ -1839,6 +1839,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -78318,6 +78322,7 @@ var render = function() {
     [
       _c("multiselect", {
         attrs: {
+          "options-limit": 3,
           "open-direction": _vm.bottom,
           options: _vm.options,
           multiple: true,
@@ -78328,6 +78333,62 @@ var render = function() {
           "custom-label": _vm.customLabel,
           "track-by": "id"
         },
+        scopedSlots: _vm._u([
+          {
+            key: "singleLabel",
+            fn: function(props) {
+              return [
+                _c("img", {
+                  staticClass: "option__image rounded-circle",
+                  attrs: {
+                    src: "/storage/students/" + props.option.mis_id + ".jpg"
+                  }
+                }),
+                _c("span", { staticClass: "option__desc" }, [
+                  _c("span", { staticClass: "option__title" }, [
+                    _vm._v(_vm._s(props.option.full_name))
+                  ])
+                ])
+              ]
+            }
+          },
+          {
+            key: "option",
+            fn: function(props) {
+              return [
+                _c("img", {
+                  staticClass: "option__image rounded-circle",
+                  staticStyle: {
+                    width: "80px",
+                    height: "80px",
+                    "object-fit": "cover",
+                    display: "inline"
+                  },
+                  attrs: {
+                    src: "/storage/students/" + props.option.mis_id + ".jpg"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "option__desc",
+                    staticStyle: { display: "inline" }
+                  },
+                  [
+                    _c("span", { staticClass: "option__title" }, [
+                      _vm._v(_vm._s(props.option.full_name))
+                    ]),
+                    _vm._v(" - Year "),
+                    _c("span", { staticClass: "option__small" }, [
+                      _vm._v(_vm._s(props.option.year_group))
+                    ])
+                  ]
+                )
+              ]
+            }
+          }
+        ]),
         model: {
           value: _vm.students,
           callback: function($$v) {

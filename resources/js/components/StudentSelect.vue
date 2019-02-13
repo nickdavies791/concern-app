@@ -1,7 +1,11 @@
 <template lang="html">
     <div>
-        <multiselect :open-direction="bottom" v-model="students" :options="options" :multiple="true" :close-on-select="true"
+        <multiselect :options-limit="3" :open-direction="bottom" v-model="students" :options="options" :multiple="true" :close-on-select="true"
         :clear-on-select="false" :preserve-search="true" placeholder="Select a student" :custom-label="customLabel" track-by="id">
+            <template slot="singleLabel" slot-scope="props"><img class="option__image rounded-circle" :src="'/storage/students/'+props.option.mis_id+'.jpg'"><span class="option__desc"><span class="option__title">{{ props.option.full_name }}</span></span></template>
+            <template slot="option" slot-scope="props"><img class="option__image rounded-circle" style="width:80px;height:80px;object-fit:cover;display:inline;" :src="'/storage/students/'+props.option.mis_id+'.jpg'">
+                <div class="option__desc" style="display:inline;"><span class="option__title">{{ props.option.full_name }}</span> - Year <span class="option__small">{{ props.option.year_group }}</span></div>
+            </template>
         </multiselect>
         <select name="students[]" style="display:none;" multiple>
             <option v-for="student in students" :value="student.id" selected="selected"></option>

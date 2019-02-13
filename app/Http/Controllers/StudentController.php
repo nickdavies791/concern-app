@@ -29,7 +29,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return $this->student->select('id', 'admission_number', 'forename', 'surname', 'year_group')->get();
+        return $this->student->select('id', 'mis_id', 'admission_number', 'forename', 'surname', 'year_group')->get();
     }
 
     /**

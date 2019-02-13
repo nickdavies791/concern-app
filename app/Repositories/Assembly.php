@@ -74,6 +74,23 @@ class Assembly {
     }
 
     /**
+     * Get school information from SIMS
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getSchoolDetails()
+    {
+        $client = $this->configureClient();
+        $response = $client->request('GET', config('services.assembly.endpoint').'/school', [
+            'form_params' => [
+                'page' => '1',
+                'per_page' => '1500'
+            ]
+        ]);
+        return $response->getBody()->getContents();
+    }
+
+    /**
      * Get student data from SIMS for all students
      * @return string
      * @throws \GuzzleHttp\Exception\GuzzleException

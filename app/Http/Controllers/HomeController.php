@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Concern;
 use App\Repositories\Chart;
+use App\School;
 use App\Student;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
@@ -12,30 +13,33 @@ class HomeController extends Controller
 {
     protected $chart;
     protected $concern;
+    protected $school;
 
     /**
      * HomeController constructor.
      * @param Chart $chart
      * @param Concern $concern
+     * @param School $school
      */
-    public function __construct(Chart $chart, Concern $concern)
+    public function __construct(Chart $chart, Concern $concern, School $school)
     {
         $this->chart = $chart;
         $this->concern = $concern;
+        $this->school = $school;
         $this->middleware('auth');
     }
 
     /**
      * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        $school = $this->school->firstOrFail();
         $totalConcernsByTag = $this->chart->totalConcernsByTag();
         $concernsThisYear = $this->chart->concernsByMonthBreakdown();
         $concerns = $this->concern->latestUnresolved()->limit(5)->get();
         return view('home')->with([
+            'school' => $school,
             'totalConcernsByTag' => $totalConcernsByTag,
             'concernsThisYear' => $concernsThisYear,
             'concerns' => $concerns

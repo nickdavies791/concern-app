@@ -17,8 +17,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('settings','HomeController@settings')->name('settings');
 Route::get('assembly/token/create', 'TokenController@create')->name('authorise-assembly');
 Route::get('assembly/token/authorise', 'TokenController@store');
-Route::get('staff/sync', 'UserController@update')->name('syncStaff');
+Route::get('school/sync', 'SchoolController@update')->name('syncSchool');
 
+Route::get('staff/sync', 'UserController@update')->name('syncStaff');
 Route::post('staff/import', 'UserController@import')->name('staff.import');
 Route::get('staff/export', 'UserController@export')->name('staff.export');
 Route::post('student/import', 'StudentController@import')->name('student.import');

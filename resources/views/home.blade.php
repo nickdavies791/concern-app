@@ -28,7 +28,26 @@
                 @slot('title') School Details @endslot
                 @slot('body')
                     <div class="card-body">
-                        <p>School info here...</p>
+                        <table class="table align-items-center table-flush">
+                            <tbody>
+                                <tr>
+                                    <th>Headteacher</th>
+                                    <td>{{ $school->headteacher }}</td>
+                                </tr>
+                                <tr>
+                                    <th>School</th>
+                                    <td>{{ $school->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>URN</th>
+                                    <td>{{ $school->urn }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td>{{ $school->street }}, {{ $school->town }}, {{ $school->postcode }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 @endslot
             @endcomponent

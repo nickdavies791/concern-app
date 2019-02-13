@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\GetSchoolDetailsFromSims;
 use App\Token;
 use Illuminate\Http\Request;
 
@@ -50,31 +51,10 @@ class TokenController extends Controller
             'expires_in' => $assembly->expires_in
         ]);
 
+        $this->dispatch(new GetSchoolDetailsFromSims());
+
         alert()->success('Success', 'Your application has now been authorised, you can now sync your data from SIMS')
         ->showConfirmButton('Got it!');
         return redirect('/settings');
-    }
-
-    /**
-    * Show the form for editing the specified resource.
-    *
-    * @param  \App\Token  $token
-    * @return \Illuminate\Http\Response
-    */
-    public function edit(Token $token)
-    {
-        //
-    }
-
-    /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Token  $token
-    * @return \Illuminate\Http\Response
-    */
-    public function update(Request $request, Token $token)
-    {
-        //
     }
 }

@@ -128,6 +128,11 @@ class Assembly {
         return $response->getBody()->getContents();
     }
 
+    /**
+     * Gets the attendance summary data for students
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function getAttendance()
     {
         $client = $this->configureClient();

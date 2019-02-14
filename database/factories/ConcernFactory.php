@@ -10,7 +10,7 @@ $factory->define(App\Concern::class, function (Faker $faker) {
         'user_id' => function(){
             return (User::inRandomOrder()->first())->id;
         },
-        'title' => $faker->sentence(),
+        'type' => $faker->sentence(),
         'body' => $faker->paragraph(),
         'concern_date' => now(),
         'resolved_on' => function() use($faker){

@@ -11,6 +11,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th scope="col">Summary</th>
+                            <th scope="col">Tagged</th>
                             <th scope="col">Students</th>
                             <th scope="col">Logged by</th>
                             <th scope="col">Logged on</th>
@@ -22,6 +23,11 @@
                             <tr>
                                 <td>
                                     <a href="{{ route('concerns.show', ['concern' => $concern->id]) }}">{{ $concern->type }}</a>
+                                </td>
+                                <td>
+                                    @foreach($concern->tags as $tag)
+                                        <span class="badge badge-pill badge-primary">{{ $tag->name }}</span>
+                                    @endforeach
                                 </td>
                                 <td>
                                     @foreach($concern->students as $student)

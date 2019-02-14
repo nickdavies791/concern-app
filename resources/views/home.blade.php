@@ -24,10 +24,13 @@
     <div class="row">
         <div class="col-xl-8">
             @component('partials.cards.card')
-                @slot('title') School Details @endslot
+                @slot('title') Welcome, {{ auth()->user()->name }} @endslot
                 @slot('body')
                     <div class="card-body">
                         <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                            <th colspan="2">School Information</th>
+                            </thead>
                             <tbody>
                                 <tr>
                                     <th>Headteacher</th>

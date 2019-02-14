@@ -20,8 +20,7 @@
             @endcomponent
         </div>
     </div>
-    @endadminOrSafeguarding
-    @staff
+    @else
     <div class="row">
         <div class="col-xl-8">
             @component('partials.cards.card')
@@ -57,10 +56,12 @@
                 @slot('title') Actions @endslot
                 @slot('body')
                     <div class="card-body">
-                        <a href="{{ route('concerns.create') }}" class="btn btn-icon btn-3 btn-danger" type="button">
-                            <span class="btn-inner--icon"><i class="ni ni-chat-round"></i></span>
-                            <span class="btn-inner--text">Report a Concern</span>
-                        </a>
+                        @can('create', App\Concern::class)
+                            <a href="{{ route('concerns.create') }}" class="btn btn-icon btn-3 btn-danger" type="button">
+                                <span class="btn-inner--icon"><i class="ni ni-chat-round"></i></span>
+                                <span class="btn-inner--text">Report a Concern</span>
+                            </a>
+                        @endcan
                         <a href="{{ route('documents.index') }}" class="btn btn-icon btn-3 btn-primary" type="button">
                             <span class="btn-inner--icon"><i class="ni ni-books"></i></span>
                             <span class="btn-inner--text">View Policies</span>
@@ -70,5 +71,5 @@
             @endcomponent
         </div>
     </div>
-    @endstaff
+    @endadminOrSafeguarding
 @endsection

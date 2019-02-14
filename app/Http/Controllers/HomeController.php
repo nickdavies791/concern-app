@@ -34,7 +34,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $school = $this->school->firstOrFail();
+        $school = $this->school->first();
         $totalConcernsByTag = $this->chart->totalConcernsByTag();
         $concernsThisYear = $this->chart->concernsByMonthBreakdown();
         $concerns = $this->concern->latestUnresolved()->limit(5)->get();

@@ -5,7 +5,7 @@
         <div class="col-xl-8">
             @component('partials.cards.card')
                 @slot('title')
-                    {{ $concern->id }} - {{ $concern->title }}
+                    {{ $concern->type }}
                     <div class="float-right text-muted">
                         <button disabled class="btn btn-sm {{ $concern->resolved_on ? 'btn-success' : 'btn-danger' }}">
                             {{ $concern->resolved_on ? 'RESOLVED' : 'UNRESOLVED' }}

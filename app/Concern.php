@@ -44,7 +44,7 @@ class Concern extends Model implements Searchable
 
         return new SearchResult(
             $this,
-            $this->title,
+            $this->type,
             $url
         );
     }

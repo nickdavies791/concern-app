@@ -19,10 +19,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Concern Summary</label>
-                                <input value="{{ $concern->title }}" type="text" name="title" class="form-control" placeholder="Provide a brief summary">
-                            </div>
-                            <div class="form-group">
                                 <label>Details</label>
                                 <textarea name="body" class="form-control" placeholder="Include the details of the concern">{{ $concern->body }}</textarea>
                             </div>

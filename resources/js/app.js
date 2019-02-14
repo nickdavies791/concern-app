@@ -9,6 +9,7 @@ Vue.component('group-select', require('./components/GroupSelect.vue'));
 Vue.component('document-table', require('./components/DocumentTable.vue'));
 Vue.component('student-select', require('./components/StudentSelect.vue'));
 Vue.component('tag-select', require('./components/TagSelect.vue'));
+Vue.component('concern-type-select', require('./components/ConcernTypeSelect.vue'));
 Vue.component('chart', require('./components/Chart.vue'));
 
 $(document).ready( function(){

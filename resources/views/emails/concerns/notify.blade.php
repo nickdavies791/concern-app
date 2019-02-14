@@ -7,7 +7,7 @@ A new concern has been logged that requires your attention.
 @component('mail::table')
 | Concern             | Occurred on                | Logged by   |
 | ------------------ |:------------------------- | ------------:|
-|<a href="{{ route('concerns.show', ['id' => $concern->id]) }}">{{ $concern->title }}</a> |{{ $concern->concern_date }} |{{ $loggedBy }} |
+|<a href="{{ route('concerns.show', ['id' => $concern->id]) }}">{{ $concern->type }}</a> |{{ $concern->concern_date }} |{{ $loggedBy }} |
 @endcomponent
 Regards,
 <p>Concern App</p>

@@ -55,7 +55,7 @@ class HomeController extends Controller
     {
         $results = (new Search())
             ->registerModel(Student::class, ['forename', 'surname'])
-            ->registerModel(Concern::class, 'title')
+            ->registerModel(Concern::class, 'type')
             ->search($request->input('query'));
 
         return view('search')->with(['results' => $results]);

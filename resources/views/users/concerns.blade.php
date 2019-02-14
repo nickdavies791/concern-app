@@ -21,7 +21,7 @@
                         @foreach($concerns->sortByDesc('created_at') as $concern)
                             <tr>
                                 <td>
-                                    <a href="{{ route('concerns.show', ['concern' => $concern->id]) }}">{{ $concern->title }}</a>
+                                    <a href="{{ route('concerns.show', ['concern' => $concern->id]) }}">{{ $concern->type }}</a>
                                 </td>
                                 <td>
                                     @foreach($concern->students as $student)

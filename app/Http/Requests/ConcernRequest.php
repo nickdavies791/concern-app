@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Concern;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class ConcernRequest extends FormRequest
 {
@@ -29,7 +30,7 @@ class ConcernRequest extends FormRequest
             'groups.*' => 'required|exists:groups,id',
             'students.*' => 'required|exists:students,id',
             'tags.*' => 'required|exists:tags,id',
-            'title' => 'required|max:100',
+            'type' => 'required|in:Observation,Disclosure',
             'concern_date' => 'required|date',
         ];
     }
@@ -46,6 +47,8 @@ class ConcernRequest extends FormRequest
             'students.exists' => 'The student you have selected does not exist on our records.',
             'tags.required' => 'Please select a tag which relates to your concern.',
             'tags.exists' => 'The tag you have selected does not exist on our records.',
+            'type.required' => 'Please select whether this concern was an Observation or Disclosure.',
+            'type.in' => 'The type you selected was neither Observation or Disclosure.',
             'title.required' => 'Please create an appropriate summary subject. (Do not use sensitive information)',
             'title.max' => 'The summary needs to be shorter, please try again.',
             'concern_date.required' => 'Please select the date you wish to log for this concern.',

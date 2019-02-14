@@ -15,8 +15,8 @@
                                 <student-select></student-select>
                             </div>
                             <div class="form-group">
-                                <label>Concern Summary</label>
-                                <input required type="text" name="title" class="form-control" data-toggle="popover" data-trigger="focus" data-content="Please provide a short summary. Do not include sensitive information in this section." placeholder="Provide a brief summary">
+                                <label>Observation or Disclosure</label>
+                                <concern-type-select></concern-type-select>
                             </div>
                             <div class="form-group">
                                 <label>Details</label>
@@ -60,3 +60,9 @@
         </div>
     </div>
 @endsection
+<script>
+    import ConcernTypeSelect from "../../js/components/ConcernTypeSelect";
+    export default {
+        components: {ConcernTypeSelect}
+    }
+</script>

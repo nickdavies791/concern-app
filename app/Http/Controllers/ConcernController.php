@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Group;
-use App\Http\Requests\ConcernUpdateRequest;
 use App\Student;
 use App\Concern;
 use App\Repositories\Image;
@@ -82,7 +81,7 @@ class ConcernController extends Controller
 
         $concern = $this->concern->create([
             'user_id' => $request->user_id,
-            'title' => $request->title,
+            'type' => $request->type,
             'body' => $request->body,
             'concern_date' => $request->concern_date,
         ]);
@@ -161,11 +160,11 @@ class ConcernController extends Controller
     /**
      * Update the specified resource.
      *
-     * @param ConcernUpdateRequest $request
+     * @param Request $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ConcernUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $concern = $this->concern->findOrFail($id);
 
@@ -178,7 +177,6 @@ class ConcernController extends Controller
         } else {
             $concern->resolved_on = NULL;
         }
-        $concern->title = $request->title;
         $concern->body = $request->body;
         $concern->save();
 

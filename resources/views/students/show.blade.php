@@ -27,7 +27,7 @@
                             <tr>
                                 <td>
                                     <a href="{{ route("concerns.show", ['id' => $concern->id]) }}">
-                                        {{ $concern->title }}
+                                        {{ $concern->type }}
                                     </a>
                                 </td>
                                 <td>{{ $concern->user->name }}</td>

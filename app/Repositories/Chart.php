@@ -37,11 +37,11 @@ class Chart
             )->where('student_id', $id)->first()->toArray();
         $chart = [
             'labels' => [
-                'Possible Sessions',
-                'Attended Sessions',
-                'Late Sessions',
-                'Authorised Absences',
-                'Unauthorised Absences',
+                'Possible Sessions - '.$attendance['possible_sessions'],
+                'Attended Sessions - '.$attendance['attended_sessions'],
+                'Late Sessions - '.$attendance['late_sessions'],
+                'Authorised Absences - '.$attendance['authorised_absence_sessions'],
+                'Unauthorised Absences - '.$attendance['unauthorised_absence_sessions'],
             ],
             'datasets' => [
                 [

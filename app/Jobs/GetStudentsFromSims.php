@@ -56,6 +56,7 @@ class GetStudentsFromSims implements ShouldQueue
         }
         Log::info('Students retrieved from API');
         $sync = json_decode(json_encode($this->data), FALSE);
+        dispatch(new GetAttendanceFromSims());
         dispatch(new SyncStudents($sync));
     }
 }

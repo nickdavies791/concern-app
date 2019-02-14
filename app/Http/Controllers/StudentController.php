@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\StudentExport;
 use App\Imports\StudentImport;
 use App\Jobs\GetStudentsFromSims;
+use App\Repositories\Chart;
 use App\Student;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -12,14 +13,17 @@ use Maatwebsite\Excel\Facades\Excel;
 class StudentController extends Controller
 {
     protected $student;
+    protected $chart;
 
     /**
      * StudentController constructor.
      * @param Student $student
+     * @param Chart $chart
      */
-    public function __construct(Student $student)
+    public function __construct(Student $student, Chart $chart)
     {
         $this->student = $student;
+        $this->chart = $chart;
     }
 
     /**
@@ -41,7 +45,11 @@ class StudentController extends Controller
     public function show($id)
     {
         $student = $this->student->where('id', '=', $id)->with(['concerns','siblings'])->first();
-        return view('students.show', ['student' => $student]);
+        $attendance = $this->chart->getStudentAttendance($student->id);
+        return view('students.show')->with([
+            'student' => $student,
+            'attendance' => $attendance
+        ]);
     }
 
     /**

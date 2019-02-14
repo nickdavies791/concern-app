@@ -30,8 +30,10 @@
                 data: {
                     labels: this.datasets.labels,
                     datasets: this.datasets.datasets,
+                    backgroundColor: this.datasets.background,
                 },
                 options: {
+                    cutoutPercentage: 40,
                     legend: {
                         display: true,
                     },

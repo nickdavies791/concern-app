@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Attendance;
 use App\Concern;
+use App\Student;
 use App\Tag;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +26,40 @@ class Chart
     }
 
     /**
+     * Return the chart data for student attendance
+     * @param int $id
+     * @return false|string
+     */
+    public function getStudentAttendance(int $id)
+    {
+        $attendance = Attendance::select(
+            'possible_sessions', 'attended_sessions', 'late_sessions', 'authorised_absence_sessions', 'unauthorised_absence_sessions'
+            )->where('student_id', $id)->first()->toArray();
+        $chart = [
+            'labels' => [
+                'Possible Sessions',
+                'Attended Sessions',
+                'Late Sessions',
+                'Authorised Absences',
+                'Unauthorised Absences',
+            ],
+            'datasets' => [
+                [
+                    'data' => array_values($attendance),
+                    'backgroundColor' => [
+                        '#36a2eb',
+                        '#4bc0c0',
+                        '#ff9f40',
+                        '#ffcd56',
+                        '#ff6384',
+                    ]
+                ]
+            ]
+        ];
+        return json_encode($chart);
+    }
+
+    /**
      * Return the chart data for total concerns by tag
      * @return array
      */
@@ -31,7 +67,7 @@ class Chart
     {
         $tags = $this->tag->withCount('concerns')->get()->mapWithKeys(function ($item) {
                 return [$item->name => $item->concerns_count];
-            });;
+            });
         $chart = [
             'labels' => $tags->keys()->all(),
             'datasets' => [

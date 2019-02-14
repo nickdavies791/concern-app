@@ -44,6 +44,14 @@ class Student extends Model implements Searchable
     }
 
     /**
+     * Returns the attendance summary for a student
+     */
+    public function attendance()
+    {
+        return $this->hasOne(Attendance::class);
+    }
+
+    /**
      * Retrieves the siblings related to a student
      */
     public function siblings()

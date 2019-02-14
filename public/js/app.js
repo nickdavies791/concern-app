@@ -1671,9 +1671,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             type: this.type,
             data: {
                 labels: this.datasets.labels,
-                datasets: this.datasets.datasets
+                datasets: this.datasets.datasets,
+                backgroundColor: this.datasets.background
             },
             options: {
+                cutoutPercentage: 40,
                 legend: {
                     display: true
                 },

@@ -93,5 +93,15 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xl-4">
+            @component('partials.cards.card-chart')
+                @slot('title') Attendance {{ $student->attendance->start_date }} - {{ $student->attendance->end_date }} @endslot
+                @slot('body')
+                    <chart type="pie" :datasets="{{ $attendance }}"></chart>
+                @endslot
+            @endcomponent
+        </div>
+    </div>
 
 @endsection

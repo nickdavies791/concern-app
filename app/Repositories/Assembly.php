@@ -95,7 +95,8 @@ class Assembly {
      * @return string
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getStudents(){
+    public function getStudents()
+    {
         $client = $this->configureClient();
         $response = $client->request('GET', config('services.assembly.endpoint').'/students', [
             'form_params' => [
@@ -115,9 +116,22 @@ class Assembly {
      * @return object staff sims data
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getStaffMembers(){
+    public function getStaffMembers()
+    {
         $client = $this->configureClient();
         $response = $client->request('GET', config('services.assembly.endpoint').'/staff_members', [
+            'form_params' => [
+                'page' => '1',
+                'per_page' => '1500',
+            ]
+        ]);
+        return $response->getBody()->getContents();
+    }
+
+    public function getAttendance()
+    {
+        $client = $this->configureClient();
+        $response = $client->request('GET', config('services.assembly.endpoint').'/attendances/summaries', [
             'form_params' => [
                 'page' => '1',
                 'per_page' => '1500',

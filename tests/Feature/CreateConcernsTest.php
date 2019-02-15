@@ -11,7 +11,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class CreateConcernsTest extends TestCase
 {
     use RefreshDatabase;
-
     /**
      * Test a new concern can be created
      */
@@ -24,6 +23,7 @@ class CreateConcernsTest extends TestCase
         // Create fake concern with above user
         $concern = factory(Concern::class)->raw([
             'user_id' => $user->id,
+            'type' => 'Observation',
             'concern_date' => '15 June 2018 11:35am'
         ]);
         // Post the concern data to the concerns.store route
@@ -32,6 +32,7 @@ class CreateConcernsTest extends TestCase
         $response->assertRedirect('/concerns/1');
         $this->assertDatabaseHas('concerns', [
             'user_id' => $user->id,
+            'type' => 'Observation',
             'concern_date' => '2018-06-15 11:35:00'
         ]);
     }

@@ -144,4 +144,21 @@ class Assembly {
         ]);
         return $response->getBody()->getContents();
     }
+
+    /**
+     * Gets the exclusions data for students
+     * @return string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getExclusions()
+    {
+        $client = $this->configureClient();
+        $response = $client->request('GET', config('services.assembly.endpoint').'/exclusions', [
+            'form_params' => [
+                'page' => '1',
+                'per_page' => '1500',
+            ]
+        ]);
+        return $response->getBody()->getContents();
+    }
 }

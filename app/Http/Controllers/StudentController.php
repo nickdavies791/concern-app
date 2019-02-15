@@ -44,7 +44,7 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        $student = $this->student->where('id', '=', $id)->with(['concerns','siblings'])->first();
+        $student = $this->student->where('id', '=', $id)->with(['concerns','siblings','exclusions'])->first();
         $attendance = $this->chart->getStudentAttendance($student->id);
         return view('students.show')->with([
             'student' => $student,

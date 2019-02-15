@@ -24,7 +24,7 @@ class Attendance extends Model
      */
     public function student()
     {
-        return $this->hasOne(student::class);
+        return $this->hasOne(Student::class);
     }
 
     /**

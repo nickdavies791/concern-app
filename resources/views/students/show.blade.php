@@ -2,58 +2,8 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-8">
-            <div class="card shadow mb-sm-5">
-                <div class="card-header bg-transparent">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h2 class="mb-0">{{ $student->full_name }}</h2>
-                        </div>
-                    </div>
-                </div>
-
-                <table class="table align-items-center table-flush table-responsive d-lg-table">
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Summary</th>
-                        <th scope="col">Tagged</th>
-                        <th scope="col">Logged by</th>
-                        <th scope="col">Logged on</th>
-                        <th scope="col">Resolved</th>
-                        <th scope="col">Groups</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($student->concerns->sortByDesc('created_at') as $concern)
-                            <tr>
-                                <td>
-                                    <a href="{{ route("concerns.show", ['id' => $concern->id]) }}">
-                                        {{ $concern->type }}
-                                    </a>
-                                </td>
-                                <td>
-                                    @foreach($concern->tags as $tag)
-                                        <span class="badge badge-pill badge-primary">{{ $tag->name }}</span>
-                                    @endforeach
-                                </td>
-                                <td>{{ $concern->user->name }}</td>
-                                <td>{{ $concern->created_at }}</td>
-                                <td>{{ $concern->resolved_on ? $concern->resolved_on->diffForHumans() : '-' }}</td>
-                                <td>
-                                    @foreach($concern->groups as $group)
-                                        <button disabled class="btn btn-sm btn-danger">
-                                            {{ $group->name }}
-                                        </button>
-                                    @endforeach
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="card card-profile shadow">
+        <div class="col-xl-6">
+           <div class="card card-profile shadow">
                 <div class="row justify-content-center">
                     <div class="col-lg-3 order-lg-2">
                         <div class="card-profile-image">
@@ -92,16 +42,87 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-4">
+        <div class="col-xl-6">
             @component('partials.cards.card-chart')
                 @slot('title') Attendance {{ $student->attendance->start_date }} - {{ $student->attendance->end_date }} @endslot
                 @slot('body')
                     <chart type="pie" :datasets="{{ $attendance }}"></chart>
                 @endslot
             @endcomponent
+         </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6">
+            @component('partials.cards.card')
+                @slot('title') Exclusions @endslot
+                @slot('body')
+                    <table class="table align-items-center table-flush table-responsive">
+                        <thead class="thead-light">
+                            <th>Exclusion Type</th>
+                            <th>Reason Given</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Exclusion Length</th>
+                        </thead>
+                        <tbody>
+                            @foreach($student->exclusions as $exclusion)
+                                <tr>
+                                    <td>{{ $exclusion->type }}</td>
+                                    <td>{{ $exclusion->reason }}</td>
+                                    <td>{{ $exclusion->start_date }}</td>
+                                    <td>{{ $exclusion->end_date }}</td>
+                                    <td>{{ $exclusion->length }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endslot
+            @endcomponent
+        </div>
+        <div class="col-xl-6">
+            @component('partials.cards.card')
+                @slot('title') Concerns @endslot
+                @slot('body')
+                    <table class="table align-items-center table-flush table-responsive">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Summary</th>
+                            <th scope="col">Tagged</th>
+                            <th scope="col">Logged by</th>
+                            <th scope="col">Logged on</th>
+                            <th scope="col">Resolved</th>
+                            <th scope="col">Groups</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($student->concerns->sortByDesc('created_at') as $concern)
+                                <tr>
+                                    <td>
+                                        <a href="{{ route("concerns.show", ['id' => $concern->id]) }}">
+                                            {{ $concern->type }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @foreach($concern->tags as $tag)
+                                            <span class="badge badge-pill badge-primary">{{ $tag->name }}</span>
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $concern->user->name }}</td>
+                                    <td>{{ $concern->created_at }}</td>
+                                    <td>{{ $concern->resolved_on ? $concern->resolved_on->diffForHumans() : '-' }}</td>
+                                    <td>
+                                        @foreach($concern->groups as $group)
+                                            <button disabled class="btn btn-sm btn-danger">
+                                                {{ $group->name }}
+                                            </button>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endslot
+            @endcomponent
         </div>
     </div>
-
 @endsection

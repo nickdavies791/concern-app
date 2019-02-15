@@ -52,6 +52,14 @@ class Student extends Model implements Searchable
     }
 
     /**
+     * Returns the exclusions associated with a student
+     */
+    public function exclusions()
+    {
+        return $this->hasMany(Exclusion::class);
+    }
+
+    /**
      * Retrieves the siblings related to a student
      */
     public function siblings()

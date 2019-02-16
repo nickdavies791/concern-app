@@ -1,8 +1,7 @@
 <?php
 
 use App\User;
-use App\Group;
-use App\Student;
+use Carbon\Carbon;
 use Faker\Generator as Faker;
 
 $factory->define(App\Concern::class, function (Faker $faker) {
@@ -10,16 +9,15 @@ $factory->define(App\Concern::class, function (Faker $faker) {
         'user_id' => function(){
             return (User::inRandomOrder()->first())->id;
         },
-        'type' => $faker->sentence(),
+        'type' => $faker->randomElement(['Observation', 'Disclosure']),
         'body' => $faker->paragraph(),
         'concern_date' => now(),
         'resolved_on' => function() use($faker){
-            $coin = $faker->boolean($chanceOfGettingTrue = 50);
-
-            if($coin){
-                return $faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/London');
+            $isResolved = $faker->boolean(25);
+            if($isResolved)
+            {
+                return Carbon::now();
             }
-
             return null;
         }
     ];

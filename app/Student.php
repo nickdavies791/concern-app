@@ -11,16 +11,19 @@ class Student extends Model implements Searchable
 {
     use EncryptableTrait;
 
-     protected $appends = ['full_name'];
-
     /**
-    * Encrypted fields
-    * @var array
-    */
+     * Encrypted fields
+     * @var array
+     */
     protected $encryptable = [
         'upn',
+        'mis_id',
         'admission_number',
+        'ever_in_care',
+        'sen_category'
     ];
+
+    protected $appends = ['full_name'];
 
     /**
     * The attributes that are not mass assignable.

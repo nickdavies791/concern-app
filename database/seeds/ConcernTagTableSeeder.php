@@ -13,12 +13,9 @@ class ConcernTagTableSeeder extends Seeder
     public function run()
     {
         Concern::all()->each(function ($concern){
-            //Policy seeder makes 5 policies
             $tags = range(1, 13);
-            //shuffle array to get random order;
             shuffle($tags);
-            //attach random policies to each user
-            $concern->tags()->attach(array_slice($tags, 0, rand(1, 6)));
+            $concern->tags()->attach(array_slice($tags, 0, rand(1, 3)));
         });
     }
 }

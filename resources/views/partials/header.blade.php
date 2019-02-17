@@ -31,8 +31,8 @@
                 </div>
                 <div class="col-xl-3 col-lg-6">
                     @component('partials.cards.card-stats')
-                        @slot('title') Reported By Me This Year @endslot
-                        @slot('stats') {{ $countReportedByMeThisAcademicYear }} @endslot
+                        @slot('title') Reported Last Month @endslot
+                        @slot('stats') {{ $countReportedLastMonth }} @endslot
                         @slot('color') primary @endslot
                         @slot('main_icon') ni ni-single-02 @endslot
                     @endcomponent

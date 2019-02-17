@@ -27,6 +27,6 @@ class StatsWidgetComposer
         $view->with('countResolvedThisAcademicYear', $this->concerns->resolvedThisAcademicYear()->count());
         $view->with('countResolvedLastMonth', $this->concerns->resolvedLastMonth()->count());
         $view->with('countReportedThisAcademicYear', $this->concerns->reportedThisAcademicYear()->count());
-        $view->with('countReportedByMeThisAcademicYear', $this->concerns->reportedByAuthUserThisAcademicYear()->count());
+        $view->with('countReportedLastMonth', $this->concerns->reportedLastMonth()->count());
     }
 }

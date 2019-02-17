@@ -164,15 +164,12 @@ class Concern extends Model implements Searchable
     }
 
     /**
-     * Return all concerns reported by the authenticated user this academic year
+     * Return all concerns reported last month
      * @param $query
      * @return mixed
      */
-    public function scopeReportedByAuthUserThisAcademicYear($query)
+    public function scopeReportedLastMonth($query)
     {
-        $start = Carbon::createMidnightDate(Carbon::now()->subMonths(8)->year, 9, 1);
-        $end = Carbon::now();
-        return $query->where('user_id', Auth::user()->id)->whereBetween('created_at', [$start, $end]);
+        return $query->where('created_at', Carbon::parse('first day of last month'));
     }
-
 }

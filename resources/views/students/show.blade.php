@@ -104,7 +104,7 @@
                                     </td>
                                     <td>
                                         @foreach($concern->tags as $tag)
-                                            <span class="badge badge-pill badge-primary">{{ $tag->name }}</span>
+                                            <span class="badge badge-pill badge-primary">{{ $tag->name }}</span><br />
                                         @endforeach
                                     </td>
                                     <td>{{ $concern->user->name }}</td>

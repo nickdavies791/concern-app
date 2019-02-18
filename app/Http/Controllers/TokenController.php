@@ -8,53 +8,55 @@ use Illuminate\Http\Request;
 
 class TokenController extends Controller
 {
-    /**
-    * Show the form for creating a new resource.
-    * @param  \App\Token  $token
-    * @return \Illuminate\Http\Response
-    */
-    public function create(Token $token)
-    {
-        $query = http_build_query([
-            'redirect_uri' => config('services.assembly.redirect_uri'),
-            'client_id' => config('services.assembly.client_id'),
-            'response_type' => 'code',
-            'scope' => config('services.assembly.scopes'),
-            'state' => csrf_token()
-        ]);
+	/**
+	 * Show the form for creating a new resource.
+	 * @param  \App\Token $token
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create(Token $token)
+	{
+		$query = http_build_query([
+			'redirect_uri'  => config('services.assembly.redirect_uri'),
+			'client_id'     => config('services.assembly.client_id'),
+			'response_type' => 'code',
+			'scope'         => config('services.assembly.scopes'),
+			'state'         => csrf_token()
+		]);
 
-        //Token already exists, needs refreshing not authorising
-        if($token->first()){
-            alert()->info('Hey!', 'Your application has already been authorised, you\'re all set to go')->showConfirmButton('Got it!');
-            return redirect('settings');
-        }
-        return redirect('https://platform.assembly.education/oauth/authorize?'.$query);
-    }
+		// Token already exists, needs refreshing not authorising
+		if ($token->first()) {
+			return redirect('settings')->with([
+				'alert.warning' => 'Your application is already authorised'
+			]);
+		}
 
-    /**
-    * Stores Oauth token in the database.
-    * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Token  $token
-    * @return \Illuminate\Http\Response
-    */
-    public function store(Request $request, Token $token)
-    {
-        abort_unless($request->state == csrf_token(), 403);
+		return redirect('https://platform.assembly.education/oauth/authorize?' . $query);
+	}
 
-        //returns api oauth details i.e token, refresh-token
-        $assembly = $token->authorise($request->code);
+	/**
+	 * Stores OAuth token in the database.
+	 * @param  \Illuminate\Http\Request $request
+	 * @param  \App\Token $token
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request, Token $token)
+	{
+		abort_unless($request->state == csrf_token(), 403);
 
-        $token->create([
-            'secret' => $assembly->access_token,
-            'refresh_token' => $assembly->refresh_token,
-            'scopes' => implode(" ,", $assembly->scopes),
-            'expires_in' => $assembly->expires_in
-        ]);
+		//returns api oauth details i.e token, refresh-token
+		$assembly = $token->authorise($request->code);
 
-        $this->dispatch(new GetSchoolDetailsFromSims());
+		$token->create([
+			'secret'        => $assembly->access_token,
+			'refresh_token' => $assembly->refresh_token,
+			'scopes'        => implode(" ,", $assembly->scopes),
+			'expires_in'    => $assembly->expires_in
+		]);
 
-        alert()->success('Success', 'Your application has now been authorised, you can now sync your data from SIMS')
-        ->showConfirmButton('Got it!');
-        return redirect('/settings');
-    }
+		$this->dispatch(new GetSchoolDetailsFromSims());
+
+		return redirect('/settings')->with([
+			'alert.success' => 'Successfully authorised with SIMS! You can now sync your data'
+		]);
+	}
 }

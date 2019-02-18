@@ -11,63 +11,64 @@ use Spatie\Searchable\Search;
 
 class HomeController extends Controller
 {
-    protected $chart;
-    protected $concern;
-    protected $school;
+	protected $chart;
+	protected $concern;
+	protected $school;
 
-    /**
-     * HomeController constructor.
-     * @param Chart $chart
-     * @param Concern $concern
-     * @param School $school
-     */
-    public function __construct(Chart $chart, Concern $concern, School $school)
-    {
-        $this->chart = $chart;
-        $this->concern = $concern;
-        $this->school = $school;
-        $this->middleware('auth');
-    }
+	/**
+	 * HomeController constructor.
+	 * @param Chart $chart
+	 * @param Concern $concern
+	 * @param School $school
+	 */
+	public function __construct(Chart $chart, Concern $concern, School $school)
+	{
+		$this->chart = $chart;
+		$this->concern = $concern;
+		$this->school = $school;
+		$this->middleware('auth');
+	}
 
-    /**
-     * Show the application dashboard.
-     */
-    public function index()
-    {
-        $school = $this->school->first();
-        $totalConcernsByTag = $this->chart->totalConcernsByTag();
-        $concernsThisYear = $this->chart->concernsByMonthBreakdown();
-        $concerns = $this->concern->latestUnresolved()->limit(5)->get();
-        return view('home')->with([
-            'school' => $school,
-            'totalConcernsByTag' => $totalConcernsByTag,
-            'concernsThisYear' => $concernsThisYear,
-            'concerns' => $concerns
-        ]);
-    }
+	/**
+	 * Show the application dashboard.
+	 */
+	public function index()
+	{
+		$school = $this->school->first();
+		$totalConcernsByTag = $this->chart->totalConcernsByTag();
+		$concernsThisYear = $this->chart->concernsByMonthBreakdown();
+		$concerns = $this->concern->latestUnresolved()->limit(5)->get();
 
-    /**
-     * Perform the search
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function search(Request $request)
-    {
-        $results = (new Search())
-            ->registerModel(Student::class, ['forename', 'surname'])
-            ->registerModel(Concern::class, 'type')
-            ->search($request->input('query'));
+		return view('home')->with([
+			'school'             => $school,
+			'totalConcernsByTag' => $totalConcernsByTag,
+			'concernsThisYear'   => $concernsThisYear,
+			'concerns'           => $concerns
+		]);
+	}
 
-        return view('search')->with(['results' => $results]);
-    }
+	/**
+	 * Perform the search
+	 * @param Request $request
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function search(Request $request)
+	{
+		$results = (new Search())
+			->registerModel(Student::class, ['forename', 'surname'])
+			->registerModel(Concern::class, 'type')
+			->search($request->input('query'));
 
-    /**
-     * Settings view
-     *
-     * @return resource
-     */
-    public function settings()
-    {
-        return view('settings');
-    }
+		return view('search')->with(['results' => $results]);
+	}
+
+	/**
+	 * Settings view
+	 *
+	 * @return resource
+	 */
+	public function settings()
+	{
+		return view('settings');
+	}
 }

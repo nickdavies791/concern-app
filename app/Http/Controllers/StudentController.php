@@ -33,7 +33,8 @@ class StudentController extends Controller
 	 */
 	public function index()
 	{
-		return $this->student->select('id', 'mis_id', 'admission_number', 'forename', 'surname', 'year_group')
+		return $this->student
+			->select('id', 'mis_id', 'admission_number', 'forename', 'surname', 'year_group')
 			->get();
 	}
 
@@ -65,9 +66,8 @@ class StudentController extends Controller
 	{
 		$this->dispatch(new GetStudentsFromSims());
 
-		return redirect('settings')->with([
-			'alert.warning', 'The student data is currently syncing.'
-		]);
+		return redirect('settings')
+			->with('alert.warning', 'The student data is currently syncing.');
 	}
 
 	/**
@@ -80,9 +80,7 @@ class StudentController extends Controller
 	{
 		$excel::import(new StudentImport, $request->file('student-import'));
 
-		return redirect('settings')->with([
-			'alert.success', 'Students imported successfully!'
-		]);
+		return redirect('settings')->with('alert.success', 'Students imported successfully!');
 	}
 
 	/**
@@ -94,5 +92,4 @@ class StudentController extends Controller
 	{
 		return $excel::download(new StudentExport, 'students.xlsx');
 	}
-
 }

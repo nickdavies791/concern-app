@@ -44,9 +44,7 @@ class GroupController extends Controller
 	{
 		$excel::import(new GroupImport, $request->file('group-import'));
 
-		return redirect('settings')->with([
-			'alert.success', 'Groups imported successfully!'
-		]);
+		return redirect('settings')->with('alert.success', 'Groups imported successfully!');
 	}
 
 	/**

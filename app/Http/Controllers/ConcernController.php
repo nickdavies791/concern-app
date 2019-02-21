@@ -87,8 +87,6 @@ class ConcernController extends Controller
 			]);
 		}
 
-
-
 		$concern = $this->concern->create([
 			'user_id'      => $request->user_id,
 			'type'         => $request->type,

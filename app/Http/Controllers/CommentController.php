@@ -33,9 +33,7 @@ class CommentController extends Controller
 			return back()->with('alert.danger', 'You do not have access to this page.');
 		}
 
-		return view('comments.create', [
-			'concerns' => $this->concern->all()
-		]);
+		return view('comments.create');
 	}
 
 	/**
@@ -48,7 +46,7 @@ class CommentController extends Controller
 	{
 		$concern = $this->concern->find($request->concern);
 		if (auth()->user()->cannot('view', $concern)) {
-			return back()->with('alert.danger', 'You do not have access to add comments to this concern.');
+			return back()->with('alert.danger', 'You are not authorised to add comments to this concern.');
 		}
 		$this->comment->create([
 			'user_id'      => $request->user_id,
@@ -76,7 +74,7 @@ class CommentController extends Controller
 			return back()->with('alert.danger', 'You do not have access to edit this comment.');
 		}
 
-		return view('comments.edit', ['comment' => $comment]);
+		return view('comments.edit')->with('comment', $comment);
 	}
 
 	/**
@@ -124,5 +122,4 @@ class CommentController extends Controller
 			->route('concerns.show', ['id' => $comment->concern->id])
 			->with('alert.success', 'The specified comment was deleted');
 	}
-
 }

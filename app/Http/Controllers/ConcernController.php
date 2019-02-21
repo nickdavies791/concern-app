@@ -81,6 +81,8 @@ class ConcernController extends Controller
 			return redirect('home')->with('alert.danger', 'You do not have access to this page.');
 		}
 
+
+
 		$concern = $this->concern->create([
 			'user_id'      => $request->user_id,
 			'type'         => $request->type,

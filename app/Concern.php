@@ -128,6 +128,29 @@ class Concern extends Model implements Searchable
 		return $this->attributes['concern_date'] = Carbon::parse($value)->format('Y-m-d H:i:s');
 	}
 
+	public function saveFiles($files, $concern)
+	{
+		foreach($files as $file) {
+			$file->storeAs('concerns/' . $concern->id, $file->getClientOriginalName(), 'public');
+			$concern->attachments()->create([
+				'concern_id' => $concern->id,
+				'file_name'  => 'concerns/' . $concern->id . '/' . $file->getClientOriginalName(),
+			]);
+		}
+	}
+
+	public function saveBodyMap($bodymap, $concern)
+	{
+		$image = new \App\Repositories\Image;
+		$location = $image->location('concerns/' . $concern->id);
+		$image->save($bodymap, $location, date('Y-m-d_His') . '_bodymap.png');
+
+		$concern->attachments()->create([
+			'concern_id' => $concern->id,
+			'file_name'  => $location . '/' . date('Y-m-d_His') . '_bodymap.png',
+		]);
+	}
+
 	/**
 	 * Return all unresolved concerns in latest order
 	 * @param $query

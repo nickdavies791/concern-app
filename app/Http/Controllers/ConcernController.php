@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Group;
 use App\Student;
 use App\Concern;
-use App\Repositories\Image;
 use App\Events\ConcernCreated;
 use App\Http\Requests\ConcernRequest;
 use Carbon\Carbon;
@@ -22,14 +21,12 @@ class ConcernController extends Controller
 	 * @param Concern $concern
 	 * @param Group $group
 	 * @param Student $student
-	 * @param Image $image
 	 */
-	public function __construct(Concern $concern, Group $group, Student $student, Image $image)
+	public function __construct(Concern $concern, Group $group, Student $student)
 	{
 		$this->concern = $concern;
 		$this->group = $group;
 		$this->student = $student;
-		$this->image = $image;
 	}
 
 	/**
@@ -67,9 +64,9 @@ class ConcernController extends Controller
 		}
 
 		return view('concerns.create')->with([
-				'groups'   => $this->group->all(),
-				'students' => $this->student->all()
-			]);
+			'groups'   => $this->group->all(),
+			'students' => $this->student->all()
+		]);
 	}
 
 	/**
@@ -80,48 +77,36 @@ class ConcernController extends Controller
 	 */
 	public function store(ConcernRequest $request)
 	{
-
 		if (auth()->user()->cannot('create', $this->concern)) {
 			return redirect('home')->with([
 				'alert.danger', 'You do not have access to this page.'
 			]);
 		}
 
-		$concern = $this->concern->create([
-			'user_id'      => $request->user_id,
-			'type'         => $request->type,
-			'body'         => $request->body,
-			'concern_date' => $request->concern_date,
-		]);
+		try {
+			$concern = $this->concern->create([
+				'user_id'      => $request->user_id,
+				'type'         => $request->type,
+				'body'         => $request->body,
+				'concern_date' => $request->concern_date,
+			]);
 
-		if ($request->hasfile('files')) {
-			foreach ($request->file('files') as $file) {
-				$file->storeAs('concerns/' . $concern->id, $file->getClientOriginalName(), 'public');
-				$concern->attachments()->create([
-					'concern_id' => $concern->id,
-					'file_name'  => 'concerns/' . $concern->id . '/' . $file->getClientOriginalName(),
-				]);
+			if ($request->hasFile('files')) {
+				$concern->saveFiles($request->file('files'), $concern);
 			}
+			if ($request->has('image')) {
+				$concern->saveBodyMap($request->image, $concern);
+			}
+
+			// Sorts relationships and notifies selected groups
+			event(new ConcernCreated($concern, $request));
+
+			return redirect()
+				->route('concerns.show', ['id' => $concern->id])
+				->with('alert.success', 'Your concern has been saved.');
+		} catch (\Exception $e) {
+			return $e->getMessage();
 		}
-
-		if ($request->image) {
-			$location = $this->image->location('concerns/' . $concern->id);
-			$this->image->save($request->image, $location, date('Y-m-d_His') . '_bodymap.png');
-
-			$concern->attachments()->create([
-				'concern_id' => $concern->id,
-				'file_name'  => $location . '/' . date('Y-m-d_His') . '_bodymap.png',
-			]);
-		}
-
-		// Sorts relationships and notifies selected groups
-		event(new ConcernCreated($concern, $request));
-
-		return redirect()
-			->route('concerns.show')->with([
-				'id' => $concern->id,
-				'alert.success', 'Your concern has been saved and a notification has been sent.'
-			]);
 	}
 
 	/**

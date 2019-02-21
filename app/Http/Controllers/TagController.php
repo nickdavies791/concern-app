@@ -41,7 +41,9 @@ class TagController extends Controller
 	{
 		$excel::import(new TagImport, $request->file('tag-import'));
 
-		return redirect('settings')->with('alert.success', 'Tags imported successfully!');
+		return redirect('settings')->with([
+			'alert.success', 'Tags imported successfully!'
+		]);
 	}
 
 	/**

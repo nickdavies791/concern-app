@@ -25,7 +25,9 @@ class TokenController extends Controller
 
 		// Token already exists, needs refreshing not authorising
 		if ($token->first()) {
-			return redirect('settings')->with('alert.warning', 'Your application is already authorised');
+			return redirect('settings')->with([
+				'alert.warning' => 'Your application is already authorised'
+			]);
 		}
 
 		return redirect('https://platform.assembly.education/oauth/authorize?' . $query);
@@ -53,7 +55,8 @@ class TokenController extends Controller
 
 		$this->dispatch(new GetSchoolDetailsFromSims());
 
-		return redirect('/settings')
-			->with('alert.success', 'Successfully authorised with SIMS! You can now sync your data');
+		return redirect('/settings')->with([
+			'alert.success' => 'Successfully authorised with SIMS! You can now sync your data'
+		]);
 	}
 }

@@ -47,7 +47,9 @@ class DocumentController extends Controller
 	public function create()
 	{
 		if (auth()->user()->cannot('create', $this->document)) {
-			return redirect('home')->with('alert.danger', 'You do not have access to upload documents.');
+			return redirect('home')->with([
+				'alert.danger', 'You do not have access to upload documents.'
+			]);
 		}
 
 		return view('documents.create');
@@ -62,7 +64,9 @@ class DocumentController extends Controller
 	public function store(Request $request)
 	{
 		if (auth()->user()->cannot('create', $this->document)) {
-			return redirect('home')->with('alert.danger', 'You do not have access to upload documents.');
+			return redirect('home')->with([
+				'alert.danger', 'You do not have access to upload documents.'
+			]);
 		}
 
 		// Store the document in Storage
@@ -79,8 +83,9 @@ class DocumentController extends Controller
 		// Assign the document to the selected groups
 		$this->group->assignDocuments($request->groups, $document->id);
 
-		return redirect('documents')
-			->with('alert.success', 'Your document has been uploaded successfully!');
+		return redirect('documents')->with([
+			'alert.success', 'Your document has been uploaded successfully!'
+		]);
 	}
 
 	/**
@@ -110,7 +115,9 @@ class DocumentController extends Controller
 	public function destroy($id)
 	{
 		if (auth()->user()->cannot('delete', $this->document)) {
-			return redirect('home')->with('alert.danger', 'You do not have access to remove documents.');
+			return redirect('home')->with([
+				'alert.danger', 'You do not have access to remove documents.'
+			]);
 		}
 
 		$document = $this->document->where('id', '=', $id)->first();

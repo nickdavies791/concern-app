@@ -40,7 +40,9 @@ class ConcernController extends Controller
 	public function index()
 	{
 		if (auth()->user()->cannot('view-all', $this->concern)) {
-			return redirect('home')->with('alert.danger', 'You do not have access to this page.');
+			return redirect('home')->with([
+				'alert.danger', 'You do not have access to this page.'
+			]);
 		}
 		$concerns = $this->concern->with([
 			'user:id,name',
@@ -59,7 +61,9 @@ class ConcernController extends Controller
 	public function create()
 	{
 		if (auth()->user()->cannot('create', $this->concern)) {
-			return redirect('home')->with('alert.danger', 'You do not have access to this page.');
+			return redirect('home')->with([
+				'alert.danger', 'You do not have access to this page.'
+			]);
 		}
 
 		return view('concerns.create')->with([
@@ -78,7 +82,9 @@ class ConcernController extends Controller
 	{
 
 		if (auth()->user()->cannot('create', $this->concern)) {
-			return redirect('home')->with('alert.danger', 'You do not have access to this page.');
+			return redirect('home')->with([
+				'alert.danger', 'You do not have access to this page.'
+			]);
 		}
 
 
@@ -114,8 +120,10 @@ class ConcernController extends Controller
 		event(new ConcernCreated($concern, $request));
 
 		return redirect()
-			->route('concerns.show', ['id' => $concern->id])
-			->with('alert.success', 'Your concern has been saved and a notification has been sent.');
+			->route('concerns.show')->with([
+				'id' => $concern->id,
+				'alert.success', 'Your concern has been saved and a notification has been sent.'
+			]);
 	}
 
 	/**
@@ -127,7 +135,9 @@ class ConcernController extends Controller
 	public function show(Concern $concern)
 	{
 		if (auth()->user()->cannot('view', $concern)) {
-			return back()->with('alert.danger', 'You do not have access to view this concern.');
+			return back()->with([
+				'alert.danger', 'You do not have access to view this concern.'
+			]);
 		}
 
 		$concern = $this->concern->with([
@@ -155,7 +165,9 @@ class ConcernController extends Controller
 		$concern = $this->concern->findOrFail($id);
 
 		if (auth()->user()->cannot('update', $concern)) {
-			return back()->with('alert.danger', 'You do not have access to edit this concern.');
+			return back()->with([
+				'alert.danger', 'You do not have access to edit this concern.'
+			]);
 		}
 
 		return view('concerns.edit')->with([
@@ -176,7 +188,9 @@ class ConcernController extends Controller
 		$concern = $this->concern->findOrFail($id);
 
 		if (auth()->user()->cannot('update', $concern)) {
-			return back()->with('alert.danger', 'You do not have access to edit this concern.');
+			return back()->with([
+				'alert.danger', 'You do not have access to edit this concern.'
+			]);
 		}
 
 		if ($request->resolved) {
@@ -203,7 +217,9 @@ class ConcernController extends Controller
 	public function delete(Concern $concern)
 	{
 		if (auth()->user()->cannot('delete', $concern)) {
-			return redirect('home')->with('alert.danger', 'You do not have access to delete this concern.');
+			return redirect('home')->with([
+				'alert.danger', 'You do not have access to delete this concern.'
+			]);
 		}
 
 		$concern->delete();
@@ -222,7 +238,9 @@ class ConcernController extends Controller
 	public function destroy(Concern $id)
 	{
 		if (auth()->user()->cannot('destroy', $this->concern)) {
-			return redirect('home')->with('alert.danger', 'You do not have access to delete this concern.');
+			return redirect('home')->with([
+				'alert.danger', 'You do not have access to delete this concern.'
+			]);
 		}
 
 		$this->concern->destroy($id);

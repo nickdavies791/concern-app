@@ -35,7 +35,9 @@ class UserController extends Controller
 	public function concerns()
 	{
 		if (auth()->user()->cannot('view-own', $this->concern)) {
-			return redirect('home')->with('alert.danger', 'You do not have access to this page.');
+			return redirect('home')->with([
+				'alert.danger', 'You do not have access to this page.'
+			]);
 		}
 		$concerns = auth()->user()->concerns()->with([
 			'user:id,name',
@@ -55,7 +57,9 @@ class UserController extends Controller
 	{
 		$this->dispatch(new GetStaffMembersFromSims());
 
-		return redirect('settings')->with('alert.warning', 'The staff data is currently syncing.');
+		return redirect('settings')->with([
+			'alert.warning', 'The staff data is currently syncing.'
+		]);
 	}
 
 	/**
@@ -68,7 +72,9 @@ class UserController extends Controller
 	{
 		$excel::import(new StaffImport, $request->file('staff-import'));
 
-		return redirect('settings')->with('alert.success', 'Staff imported successfully!');
+		return redirect('settings')->with([
+			'alert.success', 'Staff imported successfully!'
+		]);
 	}
 
 	/**
@@ -101,6 +107,8 @@ class UserController extends Controller
 	{
 		$excel::import(new GroupUserImport, $request->file('group-user-import'));
 
-		return redirect('settings')->with('alert.success', 'Users assigned to groups successfully!');
+		return redirect('settings')->with([
+			'alert.success', 'Users assigned to groups successfully!'
+		]);
 	}
 }

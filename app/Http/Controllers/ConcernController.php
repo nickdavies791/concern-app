@@ -37,17 +37,14 @@ class ConcernController extends Controller
 	public function index()
 	{
 		if (auth()->user()->cannot('view-all', $this->concern)) {
-			return redirect('home')->with([
-				'alert.danger', 'You do not have access to this page.'
-			]);
+			return redirect('home')->with('alert.danger', 'You do not have access to this page.');
 		}
 		$concerns = $this->concern->with([
 			'user:id,name',
 			'students:student_id,forename,surname,year_group',
 		])->latest()->simplePaginate(5);
 
-		return view('concerns.index')
-			->with(['concerns' => $concerns]);
+		return view('concerns.index')->with('concerns', $concerns);
 	}
 
 	/**
@@ -58,9 +55,7 @@ class ConcernController extends Controller
 	public function create()
 	{
 		if (auth()->user()->cannot('create', $this->concern)) {
-			return redirect('home')->with([
-				'alert.danger', 'You do not have access to this page.'
-			]);
+			return redirect('home')->with('alert.danger', 'You do not have access to this page.');
 		}
 
 		return view('concerns.create')->with([
@@ -78,9 +73,7 @@ class ConcernController extends Controller
 	public function store(ConcernRequest $request)
 	{
 		if (auth()->user()->cannot('create', $this->concern)) {
-			return redirect('home')->with([
-				'alert.danger', 'You do not have access to this page.'
-			]);
+			return redirect('home')->with('alert.danger', 'You do not have access to this page.');
 		}
 
 		$concern = $this->concern->create([
@@ -114,9 +107,7 @@ class ConcernController extends Controller
 	public function show(Concern $concern)
 	{
 		if (auth()->user()->cannot('view', $concern)) {
-			return back()->with([
-				'alert.danger', 'You do not have access to view this concern.'
-			]);
+			return back()->with('alert.danger', 'You do not have access to view this concern.');
 		}
 
 		$concern = $this->concern->with([
@@ -128,9 +119,7 @@ class ConcernController extends Controller
 			}
 		])->find($concern->id);
 
-		return view('concerns.show')->with([
-			'concern' => $concern
-		]);
+		return view('concerns.show')->with('concern', $concern);
 	}
 
 	/**
@@ -144,14 +133,10 @@ class ConcernController extends Controller
 		$concern = $this->concern->findOrFail($id);
 
 		if (auth()->user()->cannot('update', $concern)) {
-			return back()->with([
-				'alert.danger', 'You do not have access to edit this concern.'
-			]);
+			return back()->with('alert.danger', 'You do not have access to edit this concern.');
 		}
 
-		return view('concerns.edit')->with([
-			'concern' => $concern
-		]);
+		return view('concerns.edit')->with('concern', $concern);
 	}
 
 
@@ -167,11 +152,12 @@ class ConcernController extends Controller
 		$concern = $this->concern->findOrFail($id);
 
 		if (auth()->user()->cannot('update', $concern)) {
-			return back()->with([
-				'alert.danger', 'You do not have access to edit this concern.'
-			]);
+			return back()->with('alert.danger', 'You do not have access to edit this concern.');
 		}
 
+		/*
+		 * TODO: Move this into the Concern model; e.g. $concern->markResolved()
+		 */
 		if ($request->resolved) {
 			$concern->resolved_on = Carbon::now();
 		} else {
@@ -180,10 +166,7 @@ class ConcernController extends Controller
 		$concern->body = $request->body;
 		$concern->save();
 
-		return redirect('concerns.show')->with([
-			'id' => $id,
-			'alert.success', 'Your concern has been updated.'
-		]);
+		return redirect('concerns.show', ['id' => $id])->with('alert.success', 'Your concern has been updated.');
 	}
 
 	/**
@@ -196,16 +179,12 @@ class ConcernController extends Controller
 	public function delete(Concern $concern)
 	{
 		if (auth()->user()->cannot('delete', $concern)) {
-			return redirect('home')->with([
-				'alert.danger', 'You do not have access to delete this concern.'
-			]);
+			return redirect('home')->with('alert.danger', 'You do not have access to delete this concern.');
 		}
 
 		$concern->delete();
 
-		return redirect('home')->with([
-			'alert.success', 'The specified concern was deleted'
-		]);
+		return redirect('home')->with('alert.success', 'The specified concern was deleted');
 	}
 
 	/**
@@ -217,9 +196,7 @@ class ConcernController extends Controller
 	public function destroy(Concern $id)
 	{
 		if (auth()->user()->cannot('destroy', $this->concern)) {
-			return redirect('home')->with([
-				'alert.danger', 'You do not have access to delete this concern.'
-			]);
+			return redirect('home')->with('alert.danger', 'You do not have access to delete this concern.');
 		}
 
 		$this->concern->destroy($id);

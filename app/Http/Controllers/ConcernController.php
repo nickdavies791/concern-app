@@ -83,30 +83,26 @@ class ConcernController extends Controller
 			]);
 		}
 
-		try {
-			$concern = $this->concern->create([
-				'user_id'      => $request->user_id,
-				'type'         => $request->type,
-				'body'         => $request->body,
-				'concern_date' => $request->concern_date,
-			]);
+		$concern = $this->concern->create([
+			'user_id'      => $request->user_id,
+			'type'         => $request->type,
+			'body'         => $request->body,
+			'concern_date' => $request->concern_date,
+		]);
 
-			if ($request->hasFile('files')) {
-				$concern->saveFiles($request->file('files'), $concern);
-			}
-			if ($request->has('image')) {
-				$concern->saveBodyMap($request->image, $concern);
-			}
-
-			// Sorts relationships and notifies selected groups
-			event(new ConcernCreated($concern, $request));
-
-			return redirect()
-				->route('concerns.show', ['id' => $concern->id])
-				->with('alert.success', 'Your concern has been saved.');
-		} catch (\Exception $e) {
-			return $e->getMessage();
+		if ($request->hasFile('files')) {
+			$concern->saveFiles($request->file('files'), $concern);
 		}
+		if ($request->has('image')) {
+			$concern->saveBodyMap($request->image, $concern);
+		}
+
+		// Sorts relationships and notifies selected groups
+		event(new ConcernCreated($concern, $request));
+
+		return redirect()
+			->route('concerns.show', ['id' => $concern->id])
+			->with('alert.success', 'Your concern has been saved.');
 	}
 
 	/**

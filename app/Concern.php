@@ -2,11 +2,11 @@
 
 namespace App;
 
+use App\Repositories\Image;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Auth;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -128,6 +128,12 @@ class Concern extends Model implements Searchable
 		return $this->attributes['concern_date'] = Carbon::parse($value)->format('Y-m-d H:i:s');
 	}
 
+	/**
+	 * Save the supporting files and attach to the associated concern
+	 * @param $files
+	 * @param $concern
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+	 */
 	public function saveFiles($files, $concern)
 	{
 		foreach($files as $file) {
@@ -137,11 +143,19 @@ class Concern extends Model implements Searchable
 				'file_name'  => 'concerns/' . $concern->id . '/' . $file->getClientOriginalName(),
 			]);
 		}
+
+		return response(200);
 	}
 
+	/**
+	 * Save the body map and attach to the associated concern
+	 * @param $bodymap
+	 * @param $concern
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+	 */
 	public function saveBodyMap($bodymap, $concern)
 	{
-		$image = new \App\Repositories\Image;
+		$image = new Image;
 		$location = $image->location('concerns/' . $concern->id);
 		$image->save($bodymap, $location, date('Y-m-d_His') . '_bodymap.png');
 
@@ -149,6 +163,8 @@ class Concern extends Model implements Searchable
 			'concern_id' => $concern->id,
 			'file_name'  => $location . '/' . date('Y-m-d_His') . '_bodymap.png',
 		]);
+
+		return response(200);
 	}
 
 	/**

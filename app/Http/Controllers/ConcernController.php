@@ -12,21 +12,14 @@ use Illuminate\Http\Request;
 class ConcernController extends Controller
 {
 	protected $concern;
-	protected $group;
-	protected $student;
-	protected $image;
 
 	/**
 	 * ConcernController constructor.
 	 * @param Concern $concern
-	 * @param Group $group
-	 * @param Student $student
 	 */
-	public function __construct(Concern $concern, Group $group, Student $student)
+	public function __construct(Concern $concern)
 	{
 		$this->concern = $concern;
-		$this->group = $group;
-		$this->student = $student;
 	}
 
 	/**
@@ -50,17 +43,19 @@ class ConcernController extends Controller
 	/**
 	 * Show the form for creating a new resource.
 	 *
+	 * @param Group $group
+	 * @param Student $student
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
+	public function create(Group $group, Student $student)
 	{
 		if (auth()->user()->cannot('create', $this->concern)) {
 			return redirect('home')->with('alert.danger', 'You do not have access to this page.');
 		}
 
 		return view('concerns.create')->with([
-			'groups'   => $this->group->all(),
-			'students' => $this->student->all()
+			'groups'   => $group->all(),
+			'students' => $student->all()
 		]);
 	}
 

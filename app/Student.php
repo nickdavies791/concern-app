@@ -76,7 +76,7 @@ class Student extends Model implements Searchable
 	 */
 	public function concerns()
 	{
-		return $this->belongsToMany(Concern::class);
+		return $this->belongsToMany(Concern::class)->orderBy('created_at', 'DESC');
 	}
 
 	/**

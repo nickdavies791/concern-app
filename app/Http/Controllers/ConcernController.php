@@ -86,7 +86,7 @@ class ConcernController extends Controller
 		if ($request->hasFile('files')) {
 			$concern->saveFiles($request->file('files'), $concern);
 		}
-		if ($request->has('image')) {
+		if ($request->image) {
 			$concern->saveBodyMap($request->image, $concern);
 		}
 

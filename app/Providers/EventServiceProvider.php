@@ -22,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\HandleConcernRelationships',
             'App\Listeners\NotifyGroups',
         ],
+		'App\Events\CommentCreated' => [
+			'App\Listeners\NotifyConcernAuthor'
+		]
     ];
 
     /**

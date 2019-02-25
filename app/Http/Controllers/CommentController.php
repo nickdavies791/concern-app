@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Concern;
+use App\Events\CommentCreated;
 use App\Http\Requests\CommentRequest;
 
 class CommentController extends Controller
@@ -48,12 +49,14 @@ class CommentController extends Controller
 		if (auth()->user()->cannot('view', $concern)) {
 			return back()->with('alert.danger', 'You are not authorised to add comments to this concern.');
 		}
-		$this->comment->create([
+		$comment = $this->comment->create([
 			'user_id'      => $request->user_id,
 			'concern_id'   => $request->concern,
 			'body'         => $request->body,
 			'action_taken' => $request->action_taken
 		]);
+
+		event(new CommentCreated($concern, $comment));
 
 		return redirect()
 			->route('concerns.show', ['id' => $request->concern])

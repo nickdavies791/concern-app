@@ -136,7 +136,7 @@ class Concern extends Model implements Searchable
 	 */
 	public function saveFiles($files, $concern)
 	{
-		foreach($files as $file) {
+		foreach ($files as $file) {
 			$file->storeAs('concerns/' . $concern->id, $file->getClientOriginalName(), 'public');
 			$concern->attachments()->create([
 				'concern_id' => $concern->id,
@@ -165,6 +165,18 @@ class Concern extends Model implements Searchable
 		]);
 
 		return response(200);
+	}
+
+	/**
+	 * Updates the resolved_on attribute of a concern
+	 * @param $current
+	 * @return Carbon|null
+	 */
+	public function updateResolvedStatus($current)
+	{
+		$status = $current ? Carbon::now() : null;
+
+		return $this->attributes['resolved_on'] = $status;
 	}
 
 	/**

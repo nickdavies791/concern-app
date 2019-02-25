@@ -7,7 +7,7 @@ use App\Student;
 use App\Concern;
 use App\Events\ConcernCreated;
 use App\Http\Requests\ConcernRequest;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class ConcernController extends Controller
 {
@@ -155,18 +155,13 @@ class ConcernController extends Controller
 			return back()->with('alert.danger', 'You do not have access to edit this concern.');
 		}
 
-		/*
-		 * TODO: Move this into the Concern model; e.g. $concern->markResolved()
-		 */
-		if ($request->resolved) {
-			$concern->resolved_on = Carbon::now();
-		} else {
-			$concern->resolved_on = null;
-		}
+		$concern->updateResolvedStatus($request->resolved);
+
 		$concern->body = $request->body;
 		$concern->save();
 
-		return redirect('concerns.show', ['id' => $id])->with('alert.success', 'Your concern has been updated.');
+		return redirect()->route('concerns.show', ['id' => $id])
+			->with('alert.success', 'Your concern has been updated.');
 	}
 
 	/**

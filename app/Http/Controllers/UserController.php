@@ -40,7 +40,7 @@ class UserController extends Controller
 		$concerns = auth()->user()->concerns()->with([
 			'user:id,name',
 			'students:student_id,forename,surname,year_group',
-		])->simplePaginate(5);
+		])->latest()->simplePaginate(5);
 
 		return view('users.concerns')->with('concerns', $concerns);
 	}

@@ -19,7 +19,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($concerns->sortByDesc('created_at') as $concern)
+                        @foreach($concerns as $concern)
                             <tr>
                                 <td>
                                     <a href="{{ route('concerns.show', ['concern' => $concern->id]) }}">{{ $concern->type }}</a>

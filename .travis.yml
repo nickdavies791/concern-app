@@ -21,11 +21,6 @@ script:
   - vendor/bin/phpunit
 
 deploy:
-  # deploy dev branch to development server
-  - provider: script
-    script: bash scripts/deploy/development.sh
-    on:
-      branch: dev
   # deploy master branch to production server
   - provider: script
     script: bash scripts/deploy/production.sh

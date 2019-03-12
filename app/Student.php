@@ -17,7 +17,6 @@ class Student extends Model implements Searchable
 	 */
 	protected $encryptable = [
 		'upn',
-		'mis_id',
 		'admission_number',
 		'ever_in_care',
 		'sen_category'

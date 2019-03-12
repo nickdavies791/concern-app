@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.com/nickdavies791/concern-app.svg?token=AKHPVKdbg1AC3SzMc9z6&branch=master)](https://travis-ci.com/nickdavies791/concern-app)
-
+[![Build Status](https://travis-ci.com/clptwebdev/concern-app.svg?token=RB32h14h24WNR1tMDvBz&branch=master)](https://travis-ci.com/clptwebdev/concern-app)
 # Concerns
 An app built in Laravel to record and manage safeguarding concerns for schools.
 

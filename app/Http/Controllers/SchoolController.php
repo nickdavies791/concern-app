@@ -7,8 +7,7 @@ use App\Jobs\GetSchoolDetailsFromSims;
 class SchoolController extends Controller
 {
 	/**
-	 * Update the specified resource in storage.
-	 *
+	 * get the schools details from Assembly API.
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update()

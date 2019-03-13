@@ -2,8 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Repositories\Assembly;
 use Illuminate\Bus\Queueable;
+use App\Jobs\SyncStaffMembers;
+use App\Repositories\Assembly;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,18 +32,16 @@ class GetStaffMembersFromSims implements ShouldQueue
      */
     public function handle()
     {
-        $response = (new Assembly())->getStaffMembers();
+        $response = json_decode((new Assembly())->getStaffMembers());
+        $staffMembers = collect($response->data);
 
-        $staffMembers = json_decode($response);
+        $data = $staffMembers->mapWithKeys(function($staffMember){
+            return [$staffMember->id => [
+                'code' => $staffMember->staff_code,
+                'name' => $staffMember->first_name .' '. $staffMember->last_name
+            ]];
+        });
 
-        foreach ($staffMembers->data as $staff) {
-            $data[$staff->id] = [
-                'code' => $staff->staff_code,
-                'name' => $staff->first_name .' '. $staff->last_name
-            ];
-        }
-
-        $sync = json_decode(json_encode($data), FALSE);
-        dispatch(new SyncStaffMembers($sync));
+        dispatch(new SyncStaffMembers($data));
     }
 }

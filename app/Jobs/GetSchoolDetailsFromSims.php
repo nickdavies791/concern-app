@@ -2,19 +2,18 @@
 
 namespace App\Jobs;
 
-use App\Repositories\Assembly;
+use App\School;
 use Illuminate\Bus\Queueable;
+use App\Repositories\Assembly;
+use App\Jobs\SyncSchoolDetails;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Log;
 
 class GetSchoolDetailsFromSims implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    protected $data = [];
 
     /**
      * Create a new job instance.
@@ -23,7 +22,7 @@ class GetSchoolDetailsFromSims implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        
     }
 
     /**
@@ -32,24 +31,27 @@ class GetSchoolDetailsFromSims implements ShouldQueue
      * @return void
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function handle()
+    public function handle(School $school)
     {
-        $response = (new Assembly())->getSchoolDetails();
+        $response = json_decode((new Assembly())->getSchoolDetails());
 
-        $school = json_decode($response);
+        //For debugging
+        info('Processing school details...', ['Data: ' => $response]);
 
-        $this->data[$school->urn] = [
-            'urn' => $school->urn,
-            'name' => $school->name,
-            'headteacher' => $school->head_teacher,
-            'la_name' => $school->la_name,
-            'street' => $school->street,
-            'town' => $school->town,
-            'postcode' => $school->postcode,
-        ];
+        try {
+            $school->updateOrCreate(['urn' => $response->urn], [
+                'urn' => $response->urn,
+                'name' => $response->name,
+                'headteacher' => $response->head_teacher,
+                'la_name' => $response->la_name,
+                'street' => $response->street,
+                'town' => $response->town,
+                'postcode' => $response->postcode
+            ]);
+        } catch (\Exception $e) {
+            info('Error adding school details', ['Error: ' => $e]);
+        }
 
-        Log::info('School details retrieved from API');
-        $sync = json_decode(json_encode($this->data), FALSE);
-        dispatch(new SyncSchoolDetails($sync));
+        info('School details saved.');
     }
 }

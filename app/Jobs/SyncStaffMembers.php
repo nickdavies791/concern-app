@@ -14,16 +14,16 @@ class SyncStaffMembers implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $data;
+    protected $staffMembers;
 
     /**
      * Create a new job instance.
      *
      * @param $data
      */
-    public function __construct($data)
+    public function __construct($staffMembers)
     {
-        $this->data = $data;
+        $this->staffMembers = $staffMembers;
     }
 
     /**
@@ -34,17 +34,17 @@ class SyncStaffMembers implements ShouldQueue
      */
     public function handle(User $user)
     {
-        foreach ($this->data as $api) {
+        foreach ($this->staffMembers as $staffMember) {
             try {
-                $staffMember = $user->updateOrCreate(['staff_code' => $api->code],[
-                    'staff_code' => $api->code,
-                    'name' => $api->name,
+                $member = $user->updateOrCreate(['staff_code' => $staffMember['code']],[
+                    'staff_code' => $staffMember['code'],
+                    'name' => $staffMember['name'],
                 ]);
 
-                if ($staffMember->wasRecentlyCreated) {
-                    $staffMember->role_id = 1;
-                    $staffMember->password = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; // secret
-                    $staffMember->save();
+                if ($member->wasRecentlyCreated) {
+                    $member->role_id = 1;
+                    $member->password = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; // secret
+                    $member->save();
                 }
             } catch (\Exception $e) {
                 Log::info('Error: ', ['Error: ' => $e]);

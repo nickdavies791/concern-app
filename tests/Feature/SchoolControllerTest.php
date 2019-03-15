@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use Mockery;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Queue;
 use App\Jobs\GetSchoolDetailsFromSims;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Repositories\Assembly;
 
 class SchoolControllerTest extends TestCase
 {

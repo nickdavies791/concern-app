@@ -25,27 +25,29 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('group/export', 'GroupExportController@index')->name('group.export');
 
     // Should create this in app, rather than importing
-    // Route::post('group/staff/import', 'UserController@importGroups')->name('group.staff.import');
-    
-    Route::get('group/staff/export', 'UserController@exportGroups')->name('group.staff.export');
-    Route::resource('groups', 'GroupController');
+    //Route::post('group/staff/import', 'UserController@importGroups')->name('group.staff.import');
+    //Route::get('group/staff/export', 'UserController@exportGroups')->name('group.staff.export');
+    Route::get('groups', 'GroupController@index');
 
+    // Concern Tag Routes
+    Route::get('tag/import', 'TagImportController@index')->name('tag.import.index');
+    Route::post('tag/import', 'TagImportController@store')->name('tag.import');
+    Route::get('tag/export', 'TagExportController@index')->name('tag.export');
+    Route::get('tags', 'TagSearchController@index');
+    
     // Student related routes
-    Route::post('student/import', 'StudentController@import')->name('student.import');
-    Route::get('student/export', 'StudentController@export')->name('student.export');
+    Route::post('students/import', 'StudentImportController@store')->name('student.import');
+    Route::get('students/export', 'StudentExportController@index')->name('student.export');
     Route::get('students/sync', 'StudentController@update')->name('syncStudents');
     Route::resource('students', 'StudentController')->except(['update']);
-    Route::resource('siblings', 'SiblingController');
-    
-    // Concern Tag Routes
-    Route::post('tag/import', 'TagController@import')->name('tag.import');
-    Route::get('tag/export', 'TagController@export')->name('tag.export');
-    Route::resource('tags', 'TagController');
+    // Route::resource('siblings', 'SiblingController'); //Not used
 
     // Concern related routes
-    Route::get('concerns/shared', 'ConcernController@shared')->name('concerns.shared');
+    Route::get('concerns/shared', 'ConcernController@shared')->name('concerns.shared'); //Method doesn't exist
     Route::resource('concerns', 'ConcernController');
     Route::delete('concerns/{concern}', 'ConcernController@delete')->name('concerns.delete');
+
+    // Comment related routes
     Route::resource('comments', 'CommentController');
     Route::delete('comments/{comment}', 'CommentController@delete')->name('comments.delete');
     Route::get('users/me/concerns', 'UserConcernController@index')->name('user.concerns');
@@ -54,7 +56,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('documents/all', 'DocumentController@all');
     Route::resource('documents', 'DocumentController');
     Route::get('storage/{folderA}/{folderB}/{filename}', 'StorageController@addToSubFolder');
-    Route::get('storage/{folder}/{filename}', 'StorageController@addToFolder');
+    Route::get('storage/{folder}/{filename}', 'StorageController@addToFolder')->name('storage');
 
     // Misc Routes
     Route::get('charts/total-concerns-by-tag', 'ChartController@totalConcernsByTag');

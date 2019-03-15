@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Jobs\GetAttendanceFromSims;
+use App\Jobs\GetAttendanceData;
 use App\Jobs\GetExclusionsFromSims;
 use App\Jobs\GetStaffMembersFromSims;
 use App\Jobs\GetStudentsFromSims;
@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         // Schedule Students Sync
         $schedule->job(new GetStudentsFromSims())->weeklyOn(1, '6:00');
         // Schedule Attendance Sync
-        $schedule->job(new GetAttendanceFromSims())->dailyAt('6:00');
+        $schedule->job(new GetAttendanceData())->dailyAt('6:00');
         // Schedule Exclusions Sync
         $schedule->job(new GetExclusionsFromSims())->dailyAt('6:00');
         // Schedule Staff Sync

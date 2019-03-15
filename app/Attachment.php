@@ -2,8 +2,8 @@
 
 namespace App;
 
-use GregoryDuckworth\Encryptable\EncryptableTrait;
 use Illuminate\Database\Eloquent\Model;
+use GregoryDuckworth\Encryptable\EncryptableTrait;
 
 class Attachment extends Model
 {
@@ -24,8 +24,8 @@ class Attachment extends Model
 	protected $guarded = [];
 
 	/**
-	 * Return the concerns associated with an attachment
-	 */
+	* Return the concerns associated with an attachment
+	*/
 	public function concern()
 	{
 		return $this->belongsTo(Concern::class);

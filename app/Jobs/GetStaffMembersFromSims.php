@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
+use App\User;
 use Illuminate\Bus\Queueable;
-use App\Jobs\SyncStaffMembers;
 use App\Repositories\Assembly;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -15,33 +15,31 @@ class GetStaffMembersFromSims implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Execute the job.
      *
      * @return void
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function handle()
+    public function handle(Assembly $assembly, User $user)
     {
-        $response = json_decode((new Assembly())->getStaffMembers());
-        $staffMembers = collect($response->data);
+        $assembly->getStaffMembers()->each(function ($staff) use ($user) {
+            try {
+                $member = $user->updateOrCreate(
+                    ['staff_code' => $staff->code],
+                    [
+                        'staff_code' => $staff->code,
+                        'name' => $staff->name,
+                    ]
+                );
 
-        $data = $staffMembers->mapWithKeys(function($staffMember){
-            return [$staffMember->id => [
-                'code' => $staffMember->staff_code,
-                'name' => $staffMember->first_name .' '. $staffMember->last_name
-            ]];
+                if ($member->wasRecentlyCreated) {
+                    $member->role_id = 1;
+                    $member->password = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; // secret
+                    $member->save();
+                }
+            } catch (\Exception $e) {
+                info('Error: ', ['Error: ' => $e]);
+            }
         });
-
-        dispatch(new SyncStaffMembers($data));
     }
 }

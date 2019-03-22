@@ -2,27 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\StudentExport;
-use App\Imports\StudentImport;
-use App\Jobs\GetStudentsFromSims;
-use App\Repositories\Chart;
 use App\Student;
-use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Repositories\Chart;
+use App\Jobs\GetStudentsFromSims;
 
 class StudentController extends Controller
 {
-	protected $student;
 	protected $chart;
 
 	/**
 	 * StudentController constructor.
-	 * @param Student $student
 	 * @param Chart $chart
 	 */
-	public function __construct(Student $student, Chart $chart)
+	public function __construct(Chart $chart)
 	{
-		$this->student = $student;
 		$this->chart = $chart;
 	}
 
@@ -31,9 +24,9 @@ class StudentController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(Student $student)
 	{
-		return $this->student->select('id', 'mis_id', 'admission_number', 'forename', 'surname', 'year_group')->get();
+		return $student->select('id', 'mis_id', 'admission_number', 'forename', 'surname', 'year_group')->get();
 	}
 
 	/**
@@ -42,16 +35,11 @@ class StudentController extends Controller
 	 * @param  int $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id)
+	public function show(Student $student)
 	{
-		$student = $this->student->where('id', '=', $id)->with([
-			'concerns', 'siblings', 'exclusions'
-		])->first();
-		$attendance = $this->chart->getStudentAttendance($student->id);
-
 		return view('students.show')->with([
-			'student'    => $student,
-			'attendance' => $attendance
+			'student' => $student->with(['concerns', 'siblings', 'exclusions'])->where('id', $student->id)->first(),
+			'attendance' => $this->chart->getStudentAttendance($student->id)
 		]);
 	}
 
@@ -66,28 +54,4 @@ class StudentController extends Controller
 
 		return redirect('settings')->with('alert.warning', 'The student data is currently syncing.');
 	}
-
-	/**
-	 * Import students into the database
-	 * @param Request $request
-	 * @param Excel $excel
-	 * @return \Illuminate\Http\RedirectResponse
-	 */
-	public function import(Request $request, Excel $excel)
-	{
-		$excel::import(new StudentImport, $request->file('student-import'));
-
-		return redirect('settings')->with('alert.success', 'Students imported successfully!');
-	}
-
-	/**
-	 * Export students
-	 * @param Excel $excel
-	 * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
-	 */
-	public function export(Excel $excel)
-	{
-		return $excel::download(new StudentExport, 'students.xlsx');
-	}
-
 }

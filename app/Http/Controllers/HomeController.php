@@ -2,17 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Concern;
-use App\Repositories\Chart;
 use App\School;
 use App\Student;
+use App\Concern;
+use App\Repositories\Chart;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
 
 class HomeController extends Controller
 {
+	/**
+	 * Chart object
+	 * @var App\Repositories\Chart
+	 */
 	protected $chart;
+
+	/**
+	 * Concern Model
+	 * @var App\Concern
+	 */
 	protected $concern;
+
+	/**
+	 * School Model
+	 * @var App\School
+	 */
 	protected $school;
 
 	/**
@@ -26,7 +40,6 @@ class HomeController extends Controller
 		$this->chart = $chart;
 		$this->concern = $concern;
 		$this->school = $school;
-		$this->middleware('auth');
 	}
 
 	/**
@@ -34,16 +47,11 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
-		$school = $this->school->first();
-		$totalConcernsByTag = $this->chart->totalConcernsByTag();
-		$concernsThisYear = $this->chart->concernsByMonthBreakdown();
-		$concerns = $this->concern->latestUnresolved()->limit(5)->get();
-
 		return view('home')->with([
-			'school'             => $school,
-			'totalConcernsByTag' => $totalConcernsByTag,
-			'concernsThisYear'   => $concernsThisYear,
-			'concerns'           => $concerns
+			'school'             => $this->school->first(),
+			'totalConcernsByTag' => $this->chart->totalConcernsByTag(),
+			'concernsThisYear'   => $this->chart->concernsByMonthBreakdown(),
+			'concerns'           => $this->concern->latestUnresolved()->limit(5)->get()
 		]);
 	}
 
@@ -60,15 +68,5 @@ class HomeController extends Controller
 			->search($request->input('query'));
 
 		return view('search')->with(['results' => $results]);
-	}
-
-	/**
-	 * Settings view
-	 *
-	 * @return resource
-	 */
-	public function settings()
-	{
-		return view('settings');
 	}
 }

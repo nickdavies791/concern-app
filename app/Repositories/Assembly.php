@@ -90,7 +90,7 @@ class Assembly
 			]
 		]);
 
-		return $response->getBody()->getContents();
+		return json_decode($response->getBody()->getContents());
 	}
 
 	/**
@@ -112,7 +112,9 @@ class Assembly
 			]
 		]);
 
-		return $response->getBody()->getContents();
+		$students = json_decode($response->getBody()->getContents());
+
+		return $students->data;
 	}
 
 	/**
@@ -130,7 +132,26 @@ class Assembly
 			]
 		]);
 
-		return $response->getBody()->getContents();
+		$staffMembers = json_decode($response->getBody()->getContents());
+
+		return $this->formatStaffData($staffMembers->data);
+	}
+
+	/**
+	* Returns a collection of staff data
+	* @param object $exclusions
+	* @return Illuminate\Support\Collection
+	*/
+	private function formatStaffData($staffMembers)
+	{
+		$staffMembersData = collect($staffMembers)->mapWithKeys(function($staffMember){
+            return [$staffMember->id => (object)[
+                'code' => $staffMember->staff_code,
+                'name' => $staffMember->first_name .' '. $staffMember->last_name
+            ]];
+		});
+		
+		return $staffMembersData;
 	}
 
 	/**
@@ -141,6 +162,7 @@ class Assembly
 	public function getAttendance()
 	{
 		$client = $this->configureClient();
+		
 		$response = $client->request('GET', config('services.assembly.endpoint') . '/attendances/summaries', [
 			'form_params' => [
 				'page'     => '1',
@@ -148,7 +170,35 @@ class Assembly
 			]
 		]);
 
-		return $response->getBody()->getContents();
+		$attendances = json_decode($response->getBody()->getContents());
+
+		return $this->formatAttendanceData($attendances->data);
+	}
+
+	/**
+	* Returns a collection of attendance data
+	* @param object $exclusions
+	* @return Illuminate\Support\Collection
+	*/
+	private function formatAttendanceData($attendances)
+	{
+		$attendanceData = collect($attendances)->mapWithKeys(function ($attendanceData) {
+			return [
+				$attendanceData->id => (object)[
+					'id' => $attendanceData->id,
+					'student_id' => $attendanceData->student_id,
+					'start_date' => $attendanceData->start_date,
+					'end_date' => $attendanceData->end_date,
+					'possible_sessions' => $attendanceData->possible_sessions,
+					'attended_sessions' => $attendanceData->attended_sessions,
+					'late_sessions' => $attendanceData->late_sessions,
+					'authorised_absence_sessions' => $attendanceData->authorised_absence_sessions,
+					'unauthorised_absence_sessions' => $attendanceData->unauthorised_absence_sessions,
+				]
+			];
+		});
+
+		return $attendanceData;
 	}
 
 	/**
@@ -166,6 +216,34 @@ class Assembly
 			]
 		]);
 
-		return $response->getBody()->getContents();
+		$exclusions = json_decode($response->getBody()->getContents());
+
+		return $this->formatExclusions($exclusions->data);
+	}
+
+	/**
+	 * Returns a collection of exclusions 
+	 * @param object $exclusions
+	 * @return Illuminate\Support\Collection
+	 */
+	private function formatExclusions($exclusions)
+	{
+		$exclusionsData = collect($exclusions)->mapWithKeys(function ($exclusion) {
+			return [
+				$exclusion->id => (object)[
+					'id' => $exclusion->id,
+					'student_id' => $exclusion->student_id,
+					'type' => $exclusion->exclusion_type,
+					'reason' => $exclusion->exclusion_reason,
+					'start_date' => $exclusion->start_date,
+					'start_session' => $exclusion->start_session,
+					'end_date' => $exclusion->end_date,
+					'end_session' => $exclusion->end_session,
+					'length' => $exclusion->exclusion_length,
+				]
+			];
+		});
+		
+		return $exclusionsData;
 	}
 }

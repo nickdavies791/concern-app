@@ -2,29 +2,17 @@
 
 namespace App\Jobs;
 
+use App\Exclusion;
 use App\Repositories\Assembly;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Log;
 
 class GetExclusionsFromSims implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    protected $data = [];
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Execute the job.
@@ -32,27 +20,24 @@ class GetExclusionsFromSims implements ShouldQueue
      * @return void
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function handle()
+    public function handle(Assembly $assembly, Exclusion $exclusion)
     {
-        $response = (new Assembly())->getExclusions();
-
-        $exclusions = json_decode($response);
-
-        foreach ($exclusions->data as $exclusion) {
-            $this->data[$exclusion->id] = [
-                'id' => $exclusion->id,
-                'student_id' => $exclusion->student_id,
-                'type' => $exclusion->exclusion_type,
-                'reason' => $exclusion->exclusion_reason,
-                'start_date' => $exclusion->start_date,
-                'start_session' => $exclusion->start_session,
-                'end_date' => $exclusion->end_date,
-                'end_session' => $exclusion->end_session,
-                'length' => $exclusion->exclusion_length,
-            ];
+        foreach ( $assembly->getExclusions() as $exclusionData) {
+            try {
+                $exclusion->updateOrCreate(['student_id' => $exclusionData->student_id], [
+                    'id' => $exclusionData->id,
+                    'student_id' => $exclusionData->student_id,
+                    'type' => $exclusionData->type,
+                    'reason' => $exclusionData->reason,
+                    'start_date' => $exclusionData->start_date,
+                    'start_session' => $exclusionData->start_session,
+                    'end_date' => $exclusionData->end_date,
+                    'end_session' => $exclusionData->end_session,
+                    'length' => $exclusionData->length,
+                ]);
+            } catch (\Exception $e) {
+                info('Error: ', ['Error: ' => $e]);
+            }
         }
-        Log::info('Exclusions retrieved from API');
-        $sync = json_decode(json_encode($this->data), FALSE);
-        dispatch(new SyncExclusions($sync));
     }
 }

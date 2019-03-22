@@ -4,7 +4,7 @@ Auth::routes(['register' => false, 'reset' => false]);
 
 Route::group(['middleware' => ['auth']], function () {
     //Home Routes
-    Route::view('/', 'welcome');
+    Route::get('/', function () { return redirect('home'); });
     Route::get('/home', 'HomeController@index')->name('home');
     Route::view('settings','settings')->name('settings');
     Route::post('search', 'HomeController@search')->name('search');

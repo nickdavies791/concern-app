@@ -39,9 +39,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-                "App\\Providers\\TelescopeServiceProvider"
-            ]
+            "dont-discover": []
         }
     },
     "autoload": {

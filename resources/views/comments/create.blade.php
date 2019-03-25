@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-xl-10 mx-auto">
             @component('partials.cards.card')
-                @slot('title') Concern {{ Request::get('id') }} - Add Comment @endslot
+                @slot('title') Add a Comment to this concern @endslot
                 @slot('body')
                     <div class="card-body">
                         @include('partials.errors.errors')
@@ -15,10 +15,6 @@
                             <div class="form-group">
                                 <label>Comment</label>
                                 <textarea name="body" class="form-control"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Action Taken</label>
-                                <textarea name="action_taken" class="form-control"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary btn-lg">Save Comment</button>
                         </form>

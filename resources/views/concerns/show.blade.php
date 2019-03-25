@@ -127,7 +127,6 @@
                         </div>
                         <h4>{{ $comment->user->name }} on {{ $comment->posted_at }}</h4>
                         <small>{{ $comment->body }}</small><br>
-                        <small>{{ $comment->action_taken }}</small>
                     </li>
                 @empty
                     <li class="bg-white shadow mb-3 text-center">There are no comments for this concern.</li>

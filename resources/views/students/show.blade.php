@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-xl-6">
+        <div class="col-xl-4">
            <div class="card card-profile shadow">
                 <div class="row justify-content-center">
                     <div class="col-lg-3 order-lg-2">
@@ -42,44 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-6">
-            @component('partials.cards.card-chart')
-                @slot('title') Attendance {{ $student->attendance->start_date }} - {{ $student->attendance->end_date }} @endslot
-                @slot('body')
-                    <chart type="pie" :datasets="{{ $attendance }}"></chart>
-                @endslot
-            @endcomponent
-         </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-6">
-            @component('partials.cards.card')
-                @slot('title') Exclusions @endslot
-                @slot('body')
-                    <table class="table align-items-center table-flush table-responsive">
-                        <thead class="thead-light">
-                            <th>Exclusion Type</th>
-                            <th>Reason Given</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Exclusion Length</th>
-                        </thead>
-                        <tbody>
-                            @foreach($student->exclusions as $exclusion)
-                                <tr>
-                                    <td>{{ $exclusion->type }}</td>
-                                    <td>{{ $exclusion->reason }}</td>
-                                    <td>{{ $exclusion->start_date }}</td>
-                                    <td>{{ $exclusion->end_date }}</td>
-                                    <td>{{ $exclusion->length }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endslot
-            @endcomponent
-        </div>
-        <div class="col-xl-6">
+        <div class="col-xl-8">
             @component('partials.cards.card')
                 @slot('title') Concerns @endslot
                 @slot('body')
@@ -117,6 +80,43 @@
                                             </button>
                                         @endforeach
                                     </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endslot
+            @endcomponent
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-xl-4">
+            @component('partials.cards.card-chart')
+                @slot('title') Attendance {{ $student->attendance->start_date }} - {{ $student->attendance->end_date }} @endslot
+                @slot('body')
+                    <chart type="pie" :datasets="{{ $attendance }}"></chart>
+                @endslot
+            @endcomponent
+         </div>
+       <div class="col-xl-8">
+            @component('partials.cards.card')
+                @slot('title') Exclusions @endslot
+                @slot('body')
+                    <table class="table align-items-center table-flush table-responsive">
+                        <thead class="thead-light">
+                            <th>Exclusion Type</th>
+                            <th>Reason Given</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Exclusion Length</th>
+                        </thead>
+                        <tbody>
+                            @foreach($student->exclusions as $exclusion)
+                                <tr>
+                                    <td>{{ $exclusion->type }}</td>
+                                    <td>{{ $exclusion->reason }}</td>
+                                    <td>{{ $exclusion->start_date }}</td>
+                                    <td>{{ $exclusion->end_date }}</td>
+                                    <td>{{ $exclusion->length }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

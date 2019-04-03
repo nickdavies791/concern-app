@@ -18,7 +18,6 @@ class CreateCommentsTable extends Migration
             $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('concern_id')->index();
             $table->text('body');
-            $table->text('action_taken');
             $table->timestamps();
             $table->softDeletes();
         });

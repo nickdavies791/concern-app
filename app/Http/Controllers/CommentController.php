@@ -53,7 +53,6 @@ class CommentController extends Controller
 			'user_id'      => $request->user_id,
 			'concern_id'   => $request->concern,
 			'body'         => $request->body,
-			'action_taken' => $request->action_taken
 		]);
 
 		event(new CommentCreated($concern, $comment));
@@ -96,7 +95,6 @@ class CommentController extends Controller
 		}
 
 		$comment->body = $request->body;
-		$comment->action_taken = $request->action_taken;
 		$comment->save();
 
 		return redirect()

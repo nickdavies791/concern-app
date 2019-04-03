@@ -13,6 +13,5 @@ $factory->define(App\Comment::class, function (Faker $faker) {
             return (User::inRandomOrder()->first())->id;
         },
         'body' => $faker->paragraph(),
-        'action_taken' => $faker->paragraph()
     ];
 });

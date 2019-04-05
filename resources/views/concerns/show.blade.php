@@ -85,11 +85,14 @@
             @component('partials.cards.card')
                 @slot('title')Attachments @endslot
                 @slot('body')
+                    <div class="mb-3">
+                        <a href="{{ route('attachments.create', ['concern' => $concern]) }}">+ Add File</a>
+                    </div>
                     <ul class="list-group list-group-flush">
-                        @foreach($concern->attachments as $attachment)
+                        @foreach($media as $attachment)
                             <li class="list-group-item d-flex align-items-center justify-content-between">
                                 <small>
-                                    <a target="_blank" href="{{ asset('storage/'.$attachment->file_name) }}">
+                                    <a target="_blank" href="{{ asset('storage/'.$attachment->id).'/'.$attachment->file_name }}">
                                         {{ $attachment->file_name }}
                                     </a>
                                 </small>

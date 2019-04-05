@@ -7,13 +7,16 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-class Concern extends Model implements Searchable
+class Concern extends Model implements Searchable, HasMedia
 {
 	use EncryptableTrait;
 	use SoftDeletes;
+	use HasMediaTrait;
 
 	/**
 	 * Encrypted Fields

@@ -106,7 +106,17 @@
                     {{ $comment->body }}
                 </div>
                 <div class="card-footer">
-                    <small>{{ $comment->posted_at }} by {{ $comment->user->name }}</small>
+                    <small class="mr-3">{{ $comment->posted_at }} by {{ $comment->user->name }}</small>
+                    @can('update', $comment)
+                        <a class="btn btn-sm btn-warning" href="{{ route('comments.update', ['id' => $comment->id]) }}">Edit</a>
+                    @endcan
+                    @can('delete', $comment)
+                        <form class="d-inline" method="POST" action="{{ route('comments.delete', ['id' => $comment->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    @endcan
                 </div>
             </div>
         @empty

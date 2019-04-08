@@ -13,12 +13,14 @@
                             @csrf
                             <div class="form-group">
                                 <label>Add Supporting Files</label>
-                                <div style="font-size: 14px" class="custom-file form-control-alternative">
-                                    <input name="attachment" type="file" class="custom-file-input form-control form-control-alternative">
-                                    <label class="custom-file-label border-0">Select</label>
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input name="files[]" type="file" multiple class="custom-file-input" id="inputGroupFile02">
+                                        <label class="custom-file-label" for="inputGroupFile02">Choose files</label>
+                                    </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-lg">Save File</button>
+                            <button type="submit" class="btn btn-primary btn-lg">Save Files</button>
                         </form>
                     </div>
                 @endslot

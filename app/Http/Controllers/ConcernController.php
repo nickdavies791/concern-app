@@ -80,12 +80,7 @@ class ConcernController extends Controller
 			'concern_date' => $request->concern_date,
 		]);
 
-		if ($request->hasFile('files')) {
-			$concern->saveFiles($request->file('files'), $concern);
-		}
-		if ($request->image) {
-			$concern->saveBodyMap($request->image, $concern);
-		}
+		$concern->saveMedia($request->only(['files', 'bodymap']));
 
 		// Sorts relationships and notifies selected groups
 		event(new ConcernCreated($concern, $request));

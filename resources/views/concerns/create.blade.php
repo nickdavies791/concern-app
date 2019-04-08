@@ -46,7 +46,7 @@
                             </div>
                             <div class="form-group">
                                 <a href="#" class="text-primary" data-toggle="modal" data-target="#body-map">Include a Body Map</a>
-                                <input type="hidden" id="url" name="image" value="">
+                                <input type="hidden" id="url" name="bodymap" value="">
                             </div>
                             <div class="form-group">
                                 <label>Assigned Groups</label>

@@ -19,7 +19,7 @@
                     </ul>
                     <div class="tab-content pt-3" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-details" role="tabpanel" aria-labelledby="pills-details-tab">
-                            <h4>Logged by {{ $concern->user->name }}</h4>
+                            <h4>Reported by {{ $concern->user->name }}</h4>
                             <p>{{ $concern->body }}</p>
                             <div class="mt-3">
                                 @forelse($concern->tags as $tag)

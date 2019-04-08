@@ -104,7 +104,7 @@ class ConcernController extends Controller
 
 		$concern = $this->concern->with([
 			'user:id,name',
-			'students:student_id,forename,surname,year_group',
+			'students:student_id,admission_number,upn,birth_date,mis_id,forename,surname,year_group',
 			'comments' => function ($query) {
 				$query->orderBy('created_at', 'desc');
 			}
@@ -112,7 +112,7 @@ class ConcernController extends Controller
 
 		return view('concerns.show')->with([
 		    'concern' => $concern,
-            'media' => $concern->getMedia('attachments')
+            'attachments' => $concern->getMedia('attachments')
         ]);
 	}
 

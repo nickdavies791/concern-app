@@ -35,6 +35,8 @@ class ConcernController extends Controller
 		$concerns = $this->concern->with([
 			'user:id,name',
 			'students:student_id,forename,surname,year_group',
+            'tags:name',
+            'groups:name'
 		])->latest()->simplePaginate(5);
 
 		return view('concerns.index')->with('concerns', $concerns);
@@ -78,12 +80,7 @@ class ConcernController extends Controller
 			'concern_date' => $request->concern_date,
 		]);
 
-		if ($request->hasFile('files')) {
-			$concern->saveFiles($request->file('files'), $concern);
-		}
-		if ($request->image) {
-			$concern->saveBodyMap($request->image, $concern);
-		}
+		$concern->saveMedia($request->all());
 
 		// Sorts relationships and notifies selected groups
 		event(new ConcernCreated($concern, $request));
@@ -107,14 +104,16 @@ class ConcernController extends Controller
 
 		$concern = $this->concern->with([
 			'user:id,name',
-			'students:student_id,forename,surname,year_group',
-			'attachments',
+			'students:student_id,admission_number,upn,birth_date,mis_id,forename,surname,year_group',
 			'comments' => function ($query) {
 				$query->orderBy('created_at', 'desc');
 			}
 		])->find($concern->id);
 
-		return view('concerns.show')->with('concern', $concern);
+		return view('concerns.show')->with([
+		    'concern' => $concern,
+            'attachments' => $concern->getMedia('attachments')
+        ]);
 	}
 
 	/**

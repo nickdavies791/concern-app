@@ -39,14 +39,16 @@
                             <div class="form-group">
                                 @csrf
                                 <label>Add Supporting Files</label>
-                                <div style="font-size: 14px" class="custom-file form-control-alternative">
-                                    <input name="files[]" type="file" multiple class="custom-file-input form-control form-control-alternative">
-                                    <label class="custom-file-label border-0">Select</label>
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input name="files[]" type="file" multiple class="custom-file-input" id="inputGroupFile02">
+                                        <label class="custom-file-label" for="inputGroupFile02">Choose files</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <a href="#" class="text-primary" data-toggle="modal" data-target="#body-map">Include a Body Map</a>
-                                <input type="hidden" id="url" name="image" value="">
+                                <input type="hidden" id="url" name="bodymap" value="">
                             </div>
                             <div class="form-group">
                                 <label>Assigned Groups</label>

@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Attachment extends Model
 {
-	use EncryptableTrait;
+	use EncryptableTrait, HasMediaTrait;
 
 	/**
 	 * Encrypted Fields

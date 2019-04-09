@@ -92,6 +92,7 @@ $(function () {
     });
     $("#clear").on("click", function () {
         clearCanvas();
+        clearInput();
     });
 
     // Draw the image onto the canvas
@@ -129,6 +130,11 @@ $(function () {
         context.clearRect(0, 0, canvas.width, canvas.height);
         pointCount = 0;
         drawImage();
+    }
+
+    // Clear the base64 data from the URL field
+    function clearInput() {
+        $("#url").val('');
     }
 
     // Get the Data URL for the canvas and pass to the textarea

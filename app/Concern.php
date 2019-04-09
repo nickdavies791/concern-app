@@ -7,13 +7,16 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use GregoryDuckworth\Encryptable\EncryptableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-class Concern extends Model implements Searchable
+class Concern extends Model implements Searchable, HasMedia
 {
 	use EncryptableTrait;
 	use SoftDeletes;
+	use HasMediaTrait;
 
 	/**
 	 * Encrypted Fields
@@ -128,44 +131,27 @@ class Concern extends Model implements Searchable
 		return $this->attributes['concern_date'] = Carbon::parse($value)->format('Y-m-d H:i:s');
 	}
 
-	/**
-	 * Save the supporting files and attach to the associated concern
-	 * @param $files
-	 * @param $concern
-	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-	 */
-	public function saveFiles($files, $concern)
-	{
-		foreach ($files as $file) {
-			$file->storeAs('concerns/' . $concern->id, $file->getClientOriginalName(), 'public');
-			$concern->attachments()->create([
-				'concern_id' => $concern->id,
-				'file_name'  => 'concerns/' . $concern->id . '/' . $file->getClientOriginalName(),
-			]);
-		}
+    /**
+     * Save requested attachments to media collection.
+     *
+     * @param array $media
+     * @return \Illuminate\Http\Response
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded\InvalidBase64Data
+     */
+    public function saveMedia(array $media)
+    {
+        $this->addAllMediaFromRequest()->each(function ($add) {
+            $add->toMediaCollection('attachments');
+        });
+        if (key_exists('bodymap', $media)) {
+            $this->addMediaFromBase64($media['bodymap'])
+                ->usingFileName(Carbon::now()->format('Y-m-d_His').'_bodymap')
+                ->toMediaCollection('attachments');
+        }
 
-		return response(200);
-	}
-
-	/**
-	 * Save the body map and attach to the associated concern
-	 * @param $bodymap
-	 * @param $concern
-	 * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
-	 */
-	public function saveBodyMap($bodymap, $concern)
-	{
-		$image = new Image;
-		$location = $image->location('concerns/' . $concern->id);
-		$image->save($bodymap, $location, date('Y-m-d_His') . '_bodymap.png');
-
-		$concern->attachments()->create([
-			'concern_id' => $concern->id,
-			'file_name'  => $location . '/' . date('Y-m-d_His') . '_bodymap.png',
-		]);
-
-		return response(200);
-	}
+        return response(200);
+    }
 
 	/**
 	 * Updates the resolved_on attribute of a concern

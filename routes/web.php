@@ -47,6 +47,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('concerns', 'ConcernController');
     Route::delete('concerns/{concern}', 'ConcernController@delete')->name('concerns.delete');
 
+    // Attachment related routes
+    Route::resource('attachments', 'ConcernAttachmentController');
+
     // Comment related routes
     Route::resource('comments', 'CommentController');
     Route::delete('comments/{comment}', 'CommentController@delete')->name('comments.delete');

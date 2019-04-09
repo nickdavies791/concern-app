@@ -54,6 +54,6 @@ class Comment extends Model
 	 */
 	public function getPostedAtAttribute()
 	{
-		return $this->created_at->format('d M Y g:ia');
+		return $this->created_at->format('j F Y g:ia');
 	}
 }

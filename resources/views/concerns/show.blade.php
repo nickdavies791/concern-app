@@ -1,138 +1,132 @@
 @extends('layouts.argon')
 
 @section('content')
-    <div class="row">
-        <div class="col-xl-8">
-            @component('partials.cards.card')
-                @slot('title')
-                    {{ $concern->type }}
-                    <div class="float-right text-muted">
-                        <button disabled class="btn btn-sm {{ $concern->resolved_on ? 'btn-success' : 'btn-danger' }}">
-                            {{ $concern->resolved_on ? 'RESOLVED' : 'UNRESOLVED' }}
-                        </button>
-                        @can('update', $concern)
-                            <a href="{{ route('concerns.edit', ['id' => $concern->id]) }}" class="btn btn-sm btn-primary">
-                                Edit
-                            </a>
-                        @endcan
-                        @can('delete', $concern)
-                            <form class="d-inline" method="POST" action="{{ route('concerns.delete', ['id' => $concern->id]) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-primary">Delete</button>
-                            </form>
-                        @endcan
-                    </div>
-                    <small class="d-block text-muted">{{$concern->concern_date}}</small>
-                @endslot
-                @slot('body')
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-xl-9">
-                                <div class="mb-3">
-                                    <h3 class="mb-0">Concern Details</h3>
-                                    <small class="text-muted d-block mb-2">
-                                        Occurred on -
-                                        {{ $concern->concern_date }}
-                                    </small>
-                                    <small>{{ $concern->body }}</small>
-                                </div>
-                            </div>
-                            <div class="col-xl-3">
-                                <div class="mb-3">
-                                    <h3 class="mb-2">Groups Notified</h3>
-                                    <div class="d-flex align-items-center flex-wrap">
-                                        @forelse ($concern->groups as $group)
-                                            <button disabled class="btn btn-sm btn-primary mr-2 mb-1">
-                                                {{$group->name}}
-                                            </button>
-                                        @empty
-                                            <small>No groups notified.</small>
-                                        @endforelse
-                                    </div>
-                                </div>
-                                <h3>Students Involved</h3>
-                                <ul class="list-unstyled">
-                                    @foreach($concern->students as $student)
-                                        <li>
-                                            <small>
-                                                <a href="{{route("students.show", ['id' => $student->student_id])}}">
-                                                    {{ $student->forename }} {{ $student->surname }} (Year {{ $student->year_group }})
-                                                </a>
-                                            </small>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                                <h3>Tagged As</h3>
-                                <ul class="list-unstyled">
-                                    <div class="d-flex align-items-center flex-wrap">
-                                        @forelse ($concern->tags as $tag)
-                                            <button disabled class="btn btn-sm btn-primary mr-2 mb-1">
-                                                {{ $tag->name }}
-                                            </button>
-                                        @empty
-                                            <small>No tags added.</small>
-                                        @endforelse
-                                    </div>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                @endslot
-            @endcomponent
-        </div>
-        <div class="col-xl-4">
-            @component('partials.cards.card')
-                @slot('title')Attachments @endslot
-                @slot('body')
-                    <ul class="list-group list-group-flush">
-                        @foreach($concern->attachments as $attachment)
-                            <li class="list-group-item d-flex align-items-center justify-content-between">
-                                <small>
-                                    <a target="_blank" href="{{ asset('storage/'.$attachment->file_name) }}">
-                                        {{ $attachment->file_name }}
-                                    </a>
-                                </small>
-                                <small class="text-muted">
-                                    {{$attachment->created_at->diffForHumans()}}
-                                </small>
-                            </li>
-                        @endforeach
+    <div class="container-fluid">
+        @component('partials.cards.card')
+            @slot('title') {{ $concern->type }} @endslot
+            @slot('body')
+                <div class="card-body">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-details-tab" data-toggle="pill" href="#pills-details" role="tab" aria-controls="pills-details" aria-selected="true">Concern Details</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-attachments-tab" data-toggle="pill" href="#pills-attachments" role="tab" aria-controls="pills-attachments" aria-selected="false">Attachments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-students-tab" data-toggle="pill" href="#pills-students" role="tab" aria-controls="pills-students" aria-selected="false">Students Involved</a>
+                        </li>
                     </ul>
-                @endslot
-            @endcomponent
-        </div>
-    </div>
-    <div class="row mt-4">
-        <div class="col-xl-12">
-            <h2 class="">Comments -
-                <a href="{{ route('comments.create', ['id' => $concern->id]) }}" class="btn btn-sm btn-primary">New Comment</a>
-            </h2>
-            <ul class="comments mt-3">
-                @forelse($concern->comments as $comment)
-                    <li class="bg-white shadow mb-3">
-                        <div class="mb-3 float-right">
-                            @can('update', $comment)
-                                <a href="{{ route('comments.edit', ['id' => $comment->id]) }}" class="btn btn-sm btn-primary">
-                                    Edit
-                                </a>
-                            @endcan
-                            @can('delete', $comment)
-                                <form class="d-inline" method="POST" action="{{ route('comments.delete', ['id' => $comment->id]) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-primary">Delete</button>
-                                </form>
-                            @endcan
+                    <div class="tab-content pt-3" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-details" role="tabpanel" aria-labelledby="pills-details-tab">
+                            <h4>Reported by {{ $concern->user->name }}</h4>
+                            <p>{{ $concern->body }}</p>
+                            <div class="mt-3">
+                                @forelse($concern->tags as $tag)
+                                    <span class="badge badge-pill badge-success">{{ $tag->name }}</span>
+                                @empty
+                                @endforelse
+                            </div>
                         </div>
-                        <h4>{{ $comment->user->name }} on {{ $comment->posted_at }}</h4>
-                        <small>{{ $comment->body }}</small><br>
-                    </li>
-                @empty
-                    <li class="bg-white shadow mb-3 text-center">There are no comments for this concern.</li>
-                @endforelse
-            </ul>
+                        <div class="tab-pane fade" id="pills-attachments" role="tabpanel" aria-labelledby="pills-attachments-tab">
+                            <p><a class="btn btn-sm btn-primary" href="{{ route('attachments.create', ['concern' => $concern->id]) }}">+ Add Files</a></p>
+                            <ul class="list-unstyled">
+                                @if($attachments->count() > 0)
+                                    <table class="table table-bordered">
+                                        <thead class="thead-light">
+                                        <tr>
+                                            <th>Attachment Name</th>
+                                            <th>File Type</th>
+                                            <th>Upload Date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($attachments as $attachment)
+                                            <tr>
+                                                <td>
+                                                    <a target="_blank" href="{{ asset('/storage/' . $attachment->id . '/' . $attachment->file_name) }}">{{ $attachment->file_name }}</a>
+                                                </td>
+                                                <td>
+                                                    {{ $attachment->mime_type }}
+                                                </td>
+                                                <td>
+                                                    {{ $attachment->created_at }}
+                                                </td>
+                                            </tr>
+
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <p>No attachments for this concern.</p>
+                                @endif
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="pills-students" role="tabpanel" aria-labelledby="pills-students-tab">
+                            @foreach($concern->students as $student)
+                                <table class="table table-bordered mb-3">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th colspan="5">{{ $student->fullname }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Photo</th>
+                                            <th>Admission Number</th>
+                                            <th>UPN</th>
+                                            <th>Year Group</th>
+                                            <th>Birth Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <a href="{{ route('students.show', ['id' => $student->student_id]) }}">
+                                                    <img height="100px" src="{{ asset('/storage/students/'.$student->mis_id.'.jpg') }}">
+                                                </a>
+                                            </td>
+                                            <td>{{ $student->admission_number }}</td>
+                                            <td>{{ $student->upn }}</td>
+                                            <td>{{ $student->year_group }}</td>
+                                            <td>{{ $student->birth_date }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    @can('update', App\Concern::class)
+                        <a class="btn btn-sm btn-warning" href="{{ route('concerns.edit', ['id' => $concern->id]) }}">Edit</a>
+                    @endcan
+                </div>
+            @endslot
+        @endcomponent
+        @forelse($concern->comments as $comment)
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    {{ $comment->body }}
+                </div>
+                <div class="card-footer">
+                    <small class="mr-3">{{ $comment->posted_at }} by {{ $comment->user->name }}</small>
+                    @can('update', $comment)
+                        <a class="btn btn-sm btn-warning" href="{{ route('comments.update', ['id' => $comment->id]) }}">Edit</a>
+                    @endcan
+                    @can('delete', $comment)
+                        <form class="d-inline" method="POST" action="{{ route('comments.delete', ['id' => $comment->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    @endcan
+                </div>
+            </div>
+        @empty
+        @endforelse
+        <div class="card shadow mb-3">
+            <div class="card-body">
+                <a href="{{ route('comments.create', ['id' => $concern->id]) }}">+ Add Comment</a>
+            </div>
         </div>
     </div>
-
 @endsection

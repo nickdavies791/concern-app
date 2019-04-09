@@ -20383,6 +20383,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .multiselect__tags {
   padding: 10px 40px 0 10px;
+  border: 1px solid #cad1d7;
 }
 
 .multiselect__content-wrapper {

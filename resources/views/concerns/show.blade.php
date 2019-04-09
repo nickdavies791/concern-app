@@ -31,16 +31,17 @@
                         <div class="tab-pane fade" id="pills-attachments" role="tabpanel" aria-labelledby="pills-attachments-tab">
                             <p><a class="btn btn-sm btn-primary" href="{{ route('attachments.create', ['concern' => $concern->id]) }}">+ Add Files</a></p>
                             <ul class="list-unstyled">
-                                <table class="table table-bordered">
-                                    <thead class="thead-light">
+                                @if($attachments->count() > 0)
+                                    <table class="table table-bordered">
+                                        <thead class="thead-light">
                                         <tr>
                                             <th>Attachment Name</th>
                                             <th>File Type</th>
                                             <th>Upload Date</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($attachments as $attachment)
+                                        </thead>
+                                        <tbody>
+                                        @foreach($attachments as $attachment)
                                             <tr>
                                                 <td>
                                                     <a target="_blank" href="{{ asset('/storage/' . $attachment->id . '/' . $attachment->file_name) }}">{{ $attachment->file_name }}</a>
@@ -52,12 +53,13 @@
                                                     {{ $attachment->created_at }}
                                                 </td>
                                             </tr>
-                                        @empty
-                                            <p>No attachments for this concern.</p>
-                                        @endforelse
-                                    </tbody>
-                                </table>
 
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <p>No attachments for this concern.</p>
+                                @endif
                             </ul>
                         </div>
                         <div class="tab-pane fade" id="pills-students" role="tabpanel" aria-labelledby="pills-students-tab">

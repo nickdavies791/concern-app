@@ -144,9 +144,11 @@ class Concern extends Model implements Searchable, HasMedia
         $this->addAllMediaFromRequest()->each(function ($add) {
             $add->toMediaCollection('attachments');
         });
-        $this->addMediaFromBase64($media['bodymap'])
-            ->usingFileName(Carbon::now()->format('Y-m-d_His').'_bodymap')
-            ->toMediaCollection('attachments');
+        if ($media['bodymap']) {
+            $this->addMediaFromBase64($media['bodymap'])
+                ->usingFileName(Carbon::now()->format('Y-m-d_His').'_bodymap')
+                ->toMediaCollection('attachments');
+        }
 
         return response(200);
     }

@@ -60,12 +60,12 @@
                 @slot('body')
                     <div class="card-body">
                         @can('create', App\Concern::class)
-                            <a href="{{ route('concerns.create') }}" class="btn btn-icon btn-3 btn-danger" type="button">
+                            <a href="{{ route('concerns.create') }}" class="btn mb-3 btn-icon btn-3 btn-danger" type="button">
                                 <span class="btn-inner--icon"><i class="ni ni-chat-round"></i></span>
                                 <span class="btn-inner--text">Report a Concern</span>
                             </a>
                         @endcan
-                        <a href="{{ route('documents.index') }}" class="btn btn-icon btn-3 btn-primary" type="button">
+                        <a href="{{ route('documents.index') }}" class="btn mb-3 btn-icon btn-3 btn-primary" type="button">
                             <span class="btn-inner--icon"><i class="ni ni-books"></i></span>
                             <span class="btn-inner--text">View Policies</span>
                         </a>

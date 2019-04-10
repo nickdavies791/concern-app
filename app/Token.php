@@ -2,19 +2,21 @@
 
 namespace App;
 
-use App\Repositories\Assembly;
+use App\Services\Interfaces\MISInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class Token extends Model
 {
-	/**
+    /**
 	 * The attributes that are not mass assignable.
+     *
 	 * @var array
 	 */
 	protected $guarded = [];
 
 	/**
-	 * Checks if token has expired
+	 * Check if token has expired.
+     *
 	 * @param  string $value expires_in datetime value
 	 * @return boolean
 	 */
@@ -23,13 +25,15 @@ class Token extends Model
 		return now() > $this->updated_at->addSeconds($value);
 	}
 
-	/**
-	 * Authorise the application for using the SIMS API
-	 * @param  string $code code returned in Assembly OAuth flow
-	 * @return object OAuth details
-	 */
-	public function authorise($code)
+    /**
+     * Authorise the application to use MIS service.
+     *
+     * @param MISInterface $mis
+     * @param  string $code code returned in OAuth flow
+     * @return object OAuth details
+     */
+	public function authorise(MISInterface $mis, $code)
 	{
-		return (new Assembly)->authorise($code);
+		return $mis->authorise($code);
 	}
 }

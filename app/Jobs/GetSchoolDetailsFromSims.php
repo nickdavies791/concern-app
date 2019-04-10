@@ -3,8 +3,8 @@
 namespace App\Jobs;
 
 use App\School;
+use App\Services\Interfaces\MISInterface;
 use Illuminate\Bus\Queueable;
-use App\Repositories\Assembly;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,12 +17,13 @@ class GetSchoolDetailsFromSims implements ShouldQueue
     /**
      * Execute the job.
      *
+     * @param MISInterface $mis
+     * @param School $school
      * @return void
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function handle(School $school, Assembly $assembly)
+    public function handle(MISInterface $mis, School $school)
     {
-        $schoolData = $assembly->getSchoolDetails();
+        $schoolData = $mis->getSchoolDetails();
 
         try {
             $school->updateOrCreate(['urn' => $schoolData->urn], [

@@ -20,7 +20,7 @@ class SyncStudentPhotos implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param $students
      */
     public function __construct($students)
     {
@@ -31,7 +31,6 @@ class SyncStudentPhotos implements ShouldQueue
      * Execute the job.
      *
      * @return void
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function handle()
     {
@@ -49,6 +48,7 @@ class SyncStudentPhotos implements ShouldQueue
 
     /**
      * Stores image from API on students disk
+     *
      * @param integer $studentId
      * @param object $studentPhoto
      * @return void

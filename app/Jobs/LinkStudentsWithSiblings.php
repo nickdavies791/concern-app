@@ -18,7 +18,7 @@ class LinkStudentsWithSiblings implements ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param $students
      */
     public function __construct($students)
     {
@@ -38,8 +38,10 @@ class LinkStudentsWithSiblings implements ShouldQueue
             // Formats the siblings into arrays so they can be synced properly
             $siblings = collect($studentData->siblings)->flatten(1)->pluck('student_id');
 
-            Student::whereMisId($studentData->mis_id)->first()
-                ->siblings()->syncWithoutDetaching($siblings);
+            Student::whereMisId($studentData->mis_id)
+                ->first()
+                ->siblings()
+                ->syncWithoutDetaching($siblings);
         });
     }
 }

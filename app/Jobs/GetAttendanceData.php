@@ -3,8 +3,8 @@
 namespace App\Jobs;
 
 use App\Attendance;
+use App\Services\Interfaces\MISInterface;
 use Illuminate\Bus\Queueable;
-use App\Repositories\Assembly;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -15,14 +15,15 @@ class GetAttendanceData implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-    * Formats attendance data and syncs it with database data.
-    *
-    * @return void
-    * @throws \GuzzleHttp\Exception\GuzzleException
-    */
-    public function handle(Attendance $attendance, Assembly $assembly)
+     * Formats attendance data and syncs it with database data.
+     *
+     * @param MISInterface $mis
+     * @param Attendance $attendance
+     * @return void
+     */
+    public function handle(MISInterface $mis, Attendance $attendance)
     {
-        foreach ( $assembly->getAttendance() as $data) {
+        foreach ( $mis->getAttendance() as $data) {
             try {
                 $attendance->updateOrCreate(
                     ['student_id' => $data->student_id],

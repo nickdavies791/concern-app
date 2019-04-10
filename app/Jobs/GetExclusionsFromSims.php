@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Exclusion;
-use App\Repositories\Assembly;
+use App\Services\Interfaces\MISInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -17,12 +17,13 @@ class GetExclusionsFromSims implements ShouldQueue
     /**
      * Execute the job.
      *
+     * @param MISInterface $mis
+     * @param Exclusion $exclusion
      * @return void
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function handle(Assembly $assembly, Exclusion $exclusion)
+    public function handle(MISInterface $mis, Exclusion $exclusion)
     {
-        foreach ( $assembly->getExclusions() as $exclusionData) {
+        foreach ( $mis->getExclusions() as $exclusionData) {
             try {
                 $exclusion->updateOrCreate(['student_id' => $exclusionData->student_id], [
                     'id' => $exclusionData->id,

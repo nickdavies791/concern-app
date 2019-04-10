@@ -2,10 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Services\Interfaces\MISInterface;
 use App\Student;
 use Illuminate\Bus\Queueable;
-use App\Repositories\Assembly;
-use App\Jobs\GetExclusionsFromSims;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,13 +17,13 @@ class GetStudentsFromSims implements ShouldQueue
     /**
      * Execute the job.
      *
+     * @param MISInterface $mis
+     * @param Student $student
      * @return void
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function handle(Assembly $assembly, Student $student)
+    public function handle(MISInterface $mis, Student $student)
     {
-        // Not in assembly class like others because it gets passed on to other jobs
-        $students = collect( $assembly->getStudents())->mapWithKeys(function ($student) {
+        $students = collect( $mis->getStudents())->mapWithKeys(function ($student) {
             return [
                 $student->id => (object)[
                     'id' => $student->id,

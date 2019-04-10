@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Services\Interfaces\MISInterface;
 use App\User;
 use Illuminate\Bus\Queueable;
-use App\Repositories\Assembly;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,12 +17,13 @@ class GetStaffMembersFromSims implements ShouldQueue
     /**
      * Execute the job.
      *
+     * @param MISInterface $mis
+     * @param User $user
      * @return void
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function handle(Assembly $assembly, User $user)
+    public function handle(MISInterface $mis, User $user)
     {
-        $assembly->getStaffMembers()->each(function ($staff) use ($user) {
+        $mis->getStaffMembers()->each(function ($staff) use ($user) {
             try {
                 $member = $user->updateOrCreate(
                     ['staff_code' => $staff->code],

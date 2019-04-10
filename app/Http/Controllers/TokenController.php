@@ -3,12 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\GetSchoolDetailsFromSims;
+use App\Services\Interfaces\MISInterface;
 use App\Token;
 use Illuminate\Http\Request;
 
 class TokenController extends Controller
 {
-	/**
+    /**
+     * The MISInterface implementation.
+     *
+     * @var MISInterface
+     */
+    protected $mis;
+
+    /**
+     * TokenController constructor.
+     * @param MISInterface $mis
+     */
+    public function __construct(MISInterface $mis)
+    {
+        $this->mis = $mis;
+    }
+
+    /**
 	 * Show the form for creating a new resource.
 	 * @param  \App\Token $token
 	 * @return \Illuminate\Http\Response
@@ -42,7 +59,7 @@ class TokenController extends Controller
 		abort_unless($request->state == csrf_token(), 403);
 
 		//returns api oauth details i.e token, refresh-token
-		$assembly = $token->authorise($request->code);
+		$assembly = $token->authorise($this->mis, $request->code);
 
 		$token->create([
 			'secret'        => $assembly->access_token,

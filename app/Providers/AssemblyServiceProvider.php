@@ -25,7 +25,7 @@ class AssemblyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind(MISInterface::class, function () {
+        $this->app->singleton(MISInterface::class, function () {
             return new Assembly(
                 config('services.assembly.client_id'),
                 config('services.assembly.client_secret')

@@ -15,7 +15,12 @@ class AssemblyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(MISInterface::class, function () {
+            return new Assembly(
+                config('services.assembly.client_id'),
+                config('services.assembly.client_secret')
+            );
+        });
     }
 
     /**
@@ -25,11 +30,6 @@ class AssemblyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->singleton(MISInterface::class, function () {
-            return new Assembly(
-                config('services.assembly.client_id'),
-                config('services.assembly.client_secret')
-            );
-        });
+        //
     }
 }

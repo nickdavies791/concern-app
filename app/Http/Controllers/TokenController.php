@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\GetSchoolDetailsFromSims;
+use App\Jobs\GetSchoolDetails;
 use App\Services\Interfaces\MISInterface;
 use App\Token;
 use Illuminate\Http\Request;
@@ -68,7 +68,7 @@ class TokenController extends Controller
 			'expires_in'    => $assembly->expires_in
 		]);
 
-		$this->dispatch(new GetSchoolDetailsFromSims());
+		$this->dispatch(new GetSchoolDetails());
 
 		return redirect('/settings')->with('alert.success', 'Successfully authorised with SIMS! You can now sync your data');
 	}

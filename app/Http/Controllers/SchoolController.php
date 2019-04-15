@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\GetSchoolDetailsFromSims;
+use App\Jobs\GetSchoolDetails;
 
 class SchoolController extends Controller
 {
@@ -12,7 +12,7 @@ class SchoolController extends Controller
 	 */
 	public function update()
 	{
-		$this->dispatch(new GetSchoolDetailsFromSims());
+		$this->dispatch(new GetSchoolDetails());
 
 		return redirect('settings');
 	}

@@ -2,10 +2,10 @@
 
 namespace App\Console;
 
-use App\Jobs\GetAttendanceData;
-use App\Jobs\GetExclusionsFromSims;
-use App\Jobs\GetStaffMembersFromSims;
-use App\Jobs\GetStudentsFromSims;
+use App\Jobs\GetAttendance;
+use App\Jobs\GetExclusions;
+use App\Jobs\GetStaffMembers;
+use App\Jobs\GetStudents;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,13 +28,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Schedule Students Sync
-        $schedule->job(new GetStudentsFromSims())->weeklyOn(1, '6:00');
+        $schedule->job(new GetStudents())->weeklyOn(1, '6:00');
         // Schedule Attendance Sync
-        $schedule->job(new GetAttendanceData())->dailyAt('6:00');
+        $schedule->job(new GetAttendance())->dailyAt('6:00');
         // Schedule Exclusions Sync
-        $schedule->job(new GetExclusionsFromSims())->dailyAt('6:00');
+        $schedule->job(new GetExclusions())->dailyAt('6:00');
         // Schedule Staff Sync
-        $schedule->job(new GetStaffMembersFromSims())->weeklyOn(1, '6:00');
+        $schedule->job(new GetStaffMembers())->weeklyOn(1, '6:00');
     }
     /**
      * Register the commands for the application.

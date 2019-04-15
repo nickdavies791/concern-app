@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\GetStaffMembersFromSims;
+use App\Jobs\GetStaffMembers;
 
 class UserController extends Controller
 {
@@ -12,7 +12,7 @@ class UserController extends Controller
 	 */
 	public function update()
 	{
-		dispatch(new GetStaffMembersFromSims());
+		dispatch(new GetStaffMembers());
 
 		return redirect('settings')->with('alert.warning', 'The staff data is currently syncing.');
 	}

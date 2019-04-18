@@ -1,6 +1,6 @@
 <?php
 
-Auth::routes(['register' => false, 'reset' => false]);
+Auth::routes(['register' => false]);
 
 Route::group(['middleware' => ['auth']], function () {
     //Home Routes

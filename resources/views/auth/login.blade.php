@@ -72,10 +72,10 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-6">
-                            <a href="#" class="text-light"><small>Forgot password?</small></a>
+                            <a href="{{ route('password.request') }}" class="text-light"><small>Reset password</small></a>
                         </div>
                         <div class="col-6 text-right">
-                            <a href="#" class="text-light"><small>Report an issue</small></a>
+                            <a href="mailto:concerns@clpt.co.uk" class="text-light"><small>Report an issue</small></a>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
             <div class="row align-items-center justify-content-xl-between">
                 <div class="col-xl-6">
                     <div class="copyright text-center text-xl-left text-muted">
-                        &copy; @php echo date('Y'); @endphp <a href="#" class="font-weight-bold ml-1" target="_blank">The Central Learning Partnership Trust</a>
+                        &copy; @php echo date('Y'); @endphp <a href="#" class="font-weight-bold ml-1">The Central Learning Partnership Trust</a>
                     </div>
                 </div>
             </div>

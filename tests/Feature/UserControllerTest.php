@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Support\Facades\Queue;
-use App\Jobs\GetStaffMembersFromSims;
+use App\Jobs\GetStaffMembers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserControllerTest extends TestCase
@@ -23,6 +23,6 @@ class UserControllerTest extends TestCase
         $this->get('staff/sync')
             ->assertRedirect('settings');
 
-        Queue::assertPushed( GetStaffMembersFromSims::class);
+        Queue::assertPushed( GetStaffMembers::class);
     }
 }

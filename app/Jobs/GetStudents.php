@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class GetStudentsFromSims implements ShouldQueue
+class GetStudents implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -65,7 +65,7 @@ class GetStudentsFromSims implements ShouldQueue
 
         dispatch(new LinkStudentsWithSiblings($students));
         dispatch(new SyncStudentPhotos($students));
-        dispatch(new GetAttendanceData());
-        dispatch(new GetExclusionsFromSims());
+        dispatch(new GetAttendance());
+        dispatch(new GetExclusions());
     }
 }

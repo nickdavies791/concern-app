@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use App\Jobs\GetStudentsFromSims;
+use App\Jobs\GetStudents;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -82,6 +82,6 @@ class StudentControllerTest extends TestCase
         $this->get('students/sync')
             ->assertRedirect('settings');
 
-        Queue::assertPushed(GetStudentsFromSims::class);
+        Queue::assertPushed(GetStudents::class);
     }
 }

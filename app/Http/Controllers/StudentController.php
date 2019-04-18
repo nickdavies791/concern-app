@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Student;
 use App\Repositories\Chart;
-use App\Jobs\GetStudentsFromSims;
+use App\Jobs\GetStudents;
 
 class StudentController extends Controller
 {
@@ -50,7 +50,7 @@ class StudentController extends Controller
 	 */
 	public function update()
 	{
-		$this->dispatch(new GetStudentsFromSims());
+		$this->dispatch(new GetStudents());
 
 		return redirect('settings')->with('alert.warning', 'The student data is currently syncing.');
 	}

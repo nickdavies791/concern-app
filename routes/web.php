@@ -13,10 +13,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('assembly/token/create', 'TokenController@create')->name('authorise-assembly');
     Route::get('assembly/token/authorise', 'TokenController@store');
 
-    Route::get('school/sync', 'SchoolController@update')->name('syncSchool');
+    Route::get('school/sync', 'SchoolController@update')->name('syncSchool')->middleware('throttle:3,1');
     
     // Staff (main users) related routes
-    Route::get('staff/sync', 'UserController@update')->name('syncStaff');
+    Route::get('staff/sync', 'UserController@update')->name('syncStaff')->middleware('throttle:3,1');
     Route::post('staff/import', 'StaffImportController@store')->name('staff.import');
     Route::get('staff/export', 'StaffExportController@index')->name('staff.export');
 
@@ -38,7 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Student related routes
     Route::post('students/import', 'StudentImportController@store')->name('student.import');
     Route::get('students/export', 'StudentExportController@index')->name('student.export');
-    Route::get('students/sync', 'StudentController@update')->name('syncStudents');
+    Route::get('students/sync', 'StudentController@update')->name('syncStudents')->middleware('throttle:3,1');
     Route::resource('students', 'StudentController')->except(['update']);
     // Route::resource('siblings', 'SiblingController'); //Not used
 

@@ -35,6 +35,8 @@ class Kernel extends ConsoleKernel
         $schedule->job(new GetExclusions())->dailyAt('6:00');
         // Schedule Staff Sync
         $schedule->job(new GetStaffMembers())->weeklyOn(1, '6:00');
+        // Prune Telescope data older than 24 hours
+        $schedule->command('telescope:prune')->daily();
     }
     /**
      * Register the commands for the application.

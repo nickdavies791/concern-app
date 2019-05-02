@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\CommentCreated;
+use App\Events\ConcernCreated;
+use App\Listeners\HandleConcernRelationships;
+use App\Listeners\SendNewCommentNotification;
+use App\Listeners\SendNewConcernNotification;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -18,13 +23,13 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        'App\Events\ConcernCreated' => [
-            'App\Listeners\HandleConcernRelationships',
-            'App\Listeners\NotifyGroups',
+        ConcernCreated::class => [
+            HandleConcernRelationships::class,
+            SendNewConcernNotification::class,
         ],
-		'App\Events\CommentCreated' => [
-			'App\Listeners\NotifyConcernAuthor'
-		]
+        CommentCreated::class => [
+            SendNewCommentNotification::class
+        ]
     ];
 
     /**

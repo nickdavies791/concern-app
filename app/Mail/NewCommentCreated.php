@@ -3,28 +3,33 @@
 namespace App\Mail;
 
 use App\Concern;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NotifyConcernGroups extends Mailable
+class NewCommentCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
+    /**
+     * The Concern instance.
+     */
     public $concern;
 
+    /**
+     * The recipient of the email.
+     */
     public $user;
-
-    public $loggedBy;
 
     /**
      * Create a new message instance.
      *
      * @param Concern $concern
-     * @param $user
+     * @param User $user
      */
-    public function __construct(Concern $concern, $user)
+    public function __construct(Concern $concern, User $user)
     {
         $this->concern = $concern;
         $this->user = $user;
@@ -37,7 +42,6 @@ class NotifyConcernGroups extends Mailable
      */
     public function build()
     {
-        $this->loggedBy = ($this->concern->where('id', $this->concern->id)->first())->user->name;
-        return $this->markdown('emails.concerns.notify');
+        return $this->markdown('emails.comments.notify');
     }
 }

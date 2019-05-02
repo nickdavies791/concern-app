@@ -2,8 +2,8 @@
 
 namespace App\Events;
 
-use App\Comment;
 use App\Concern;
+use Illuminate\Http\Request;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -18,17 +18,17 @@ class CommentCreated
 
     public $concern;
 
-    public $comment;
+    public $request;
 
-	/**
-	 * Create a new event instance.
-	 *
-	 * @param Concern $concern
-	 * @param Comment $comment
-	 */
-    public function __construct(Concern $concern, Comment $comment)
+    /**
+     * Create a new event instance.
+     *
+     * @param Concern $concern
+     * @param Request $request
+     */
+    public function __construct(Concern $concern, Request $request)
     {
         $this->concern = $concern;
-        $this->comment = $comment;
+        $this->request = $request;
     }
 }

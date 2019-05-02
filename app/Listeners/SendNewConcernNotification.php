@@ -3,13 +3,13 @@
 namespace App\Listeners;
 
 use App\Events\ConcernCreated;
-use App\Mail\NotifyConcernGroups;
+use App\Mail\NewConcernCreated;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 
-class NotifyGroups
+class SendNewConcernNotification
 {
     use InteractsWithQueue, SerializesModels;
     /**
@@ -38,7 +38,7 @@ class NotifyGroups
             {
                 // Dispatch mail to the job queue
                 Mail::to($user->email)->queue(
-                    new NotifyConcernGroups($event->concern, $user
+                    new NewConcernCreated($event->concern, $user
                 ));
             });
         }

@@ -28,7 +28,7 @@ class ConcernCreated
      */
     public function __construct(Concern $concern, Request $request)
     {
-        $this->request = $request;
         $this->concern = $concern;
+        $this->request = $request;
     }
 }

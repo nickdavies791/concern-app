@@ -6,6 +6,7 @@ use App\Jobs\GetAttendance;
 use App\Jobs\GetExclusions;
 use App\Jobs\GetStaffMembers;
 use App\Jobs\GetStudents;
+use App\Token;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
